@@ -1,0 +1,16 @@
+.github/**
+.vscode/**
+.vscode-test/**
+adrs/**
+dist/**
+node_modules/**
+src/**
+.adr-dir
+.gitignore
+**/tsconfig.json
+**/tslint.json
+**/*.map
+**/*.ts
+wallaby.js
+jest.config.js
+yarn-error.log

@@ -1,0 +1,78 @@
+{
+  "name": "slides",
+  "version": "0.0.1",
+  "displayName": "Slides",
+  "publisher": "nicoespeon",
+  "description": "VS Code as a presentation tool",
+  "author": "Nicolas Carlo <nicolascarlo.espeon@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nicoespeon/vscode-slides.git"
+  },
+  "homepage": "https://github.com/nicoespeon/vscode-slides",
+  "bugs": "https://github.com/nicoespeon/vscode-slides/issues",
+  "keywords": [
+    "slides",
+    "presentation",
+    "conference",
+    "meetup",
+    "talk",
+    "keybindings"
+  ],
+  "categories": [
+    "Themes",
+    "Other"
+  ],
+  "icon": "assets/logo.png",
+  "galleryBanner": {
+    "theme": "light"
+  },
+  "engines": {
+    "vscode": "^1.39.0"
+  },
+  "main": "./out/extension.js",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack --mode none",
+    "watch": "webpack --mode none --watch",
+    "prepackage": "rm -rf dist/*.vsix && rm -rf out/",
+    "vscode:prepublish": "webpack --mode production",
+    "package": "vsce package",
+    "postpackage": "mkdir -p dist && mv *.vsix dist",
+    "package:install": "code --install-extension dist/*.vsix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "devDependencies": {
+    "@types/jest": "24.0.13",
+    "@types/node": "10.12.21",
+    "@types/vscode": "1.39.0",
+    "husky": "3.0.9",
+    "jest": "24.9.0",
+    "prettier": "1.18.2",
+    "pretty-quick": "2.0.0",
+    "ts-jest": "24.1.0",
+    "ts-loader": "6.0.4",
+    "tslint": "5.20.0",
+    "typescript": "3.6.4",
+    "vsce": "1.68.0",
+    "vscode-test": "1.2.0",
+    "webpack": "4.41.2",
+    "webpack-cli": "3.3.9"
+  },
+  "activationEvents": [
+    "onCommand:slides.toggle"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "slides.toggle",
+        "title": "Toggle Slides"
+      }
+    ]
+  }
+}
