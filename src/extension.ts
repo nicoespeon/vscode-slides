@@ -13,14 +13,13 @@ class VSCodeEditor implements Editor {
   }
 
   async openAllFiles() {
-    const files = fs.readdirSync(this.rootFolderPath).reduce(
-      (files, fileOrDirectory) => {
-        return fs.statSync(this.pathTo(fileOrDirectory)).isDirectory()
-          ? files
-          : [...files, fileOrDirectory];
-      },
-      [] as string[]
-    );
+    const files = fs
+      .readdirSync(this.rootFolderPath)
+      .filter(
+        fileOrDirectory =>
+          !fs.statSync(this.pathTo(fileOrDirectory)).isDirectory()
+      )
+      .filter(file => !file.startsWith("."));
 
     await Promise.all(
       files.map(async file => {
