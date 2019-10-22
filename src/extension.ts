@@ -2,10 +2,10 @@ import * as vscode from "vscode";
 import * as fs from "fs";
 
 class VSCodeEditor implements Editor {
-  private rootFolderPath: Path;
+  private rootFolder: Folder;
 
-  constructor(rootFolderPath: Path) {
-    this.rootFolderPath = rootFolderPath;
+  constructor(rootFolder: Folder) {
+    this.rootFolder = rootFolder;
   }
 
   async closeAllTabs() {
@@ -13,18 +13,10 @@ class VSCodeEditor implements Editor {
   }
 
   async openAllFiles() {
-    const files = fs
-      .readdirSync(this.rootFolderPath)
-      .filter(
-        fileOrDirectory =>
-          !fs.statSync(this.pathTo(fileOrDirectory)).isDirectory()
-      )
-      .filter(file => !file.startsWith("."));
-
     await Promise.all(
-      files.map(async file => {
+      this.rootFolder.visibleFiles.map(async file => {
         const document = await vscode.workspace.openTextDocument(
-          this.pathTo(file)
+          this.rootFolder.pathTo(file)
         );
 
         return vscode.window.showTextDocument(document, {
@@ -71,22 +63,42 @@ class VSCodeEditor implements Editor {
   }
 
   private get pathToSettings(): Path {
-    return this.pathTo("/.vscode/settings.json");
+    return this.rootFolder.pathTo(".vscode/settings.json");
+  }
+}
+
+import * as path from "path";
+
+class Folder {
+  private path: Path;
+
+  constructor(path: Path) {
+    this.path = path;
   }
 
-  private pathTo(relativePath: Path): Path {
-    return `${this.rootFolderPath}/${relativePath}`;
+  get visibleFiles(): Path[] {
+    return fs
+      .readdirSync(this.path)
+      .filter(
+        fileOrDirectory =>
+          !fs.statSync(this.pathTo(fileOrDirectory)).isDirectory()
+      )
+      .filter(file => !file.startsWith("."));
+  }
+
+  pathTo(relativePath: Path): Path {
+    return path.join(this.path, relativePath);
   }
 }
 
 type Path = string;
 
 class FileSystemRepository implements Repository {
-  private rootFolderPath: Path;
+  private rootFolder: Folder;
   private encoding = "utf-8";
 
-  constructor(rootFolderPath: Path) {
-    this.rootFolderPath = rootFolderPath;
+  constructor(rootFolder: Folder) {
+    this.rootFolder = rootFolder;
   }
 
   async store(newState: Partial<State>) {
@@ -134,17 +146,17 @@ class FileSystemRepository implements Repository {
   }
 
   private get pathToState(): Path {
-    return `${this.rootFolderPath}/.vscode-slides.json`;
+    return this.rootFolder.pathTo(".vscode-slides.json");
   }
 }
 
 export function activate(context: vscode.ExtensionContext) {
-  const fsRepository = new FileSystemRepository(getWorkspacePath());
+  const fsRepository = new FileSystemRepository(getWorkspaceFolder());
 
   const toggleSlides = vscode.commands.registerCommand(
     "slides.toggle",
     async () => {
-      const vscodeEditor = new VSCodeEditor(getWorkspacePath());
+      const vscodeEditor = new VSCodeEditor(getWorkspaceFolder());
       const { isActive } = await fsRepository.get();
 
       if (isActive) {
@@ -177,7 +189,7 @@ export function activate(context: vscode.ExtensionContext) {
   const exitSlides = vscode.commands.registerCommand(
     "slides.exit",
     async () => {
-      const vscodeEditor = new VSCodeEditor(getWorkspacePath());
+      const vscodeEditor = new VSCodeEditor(getWorkspaceFolder());
       const { isActive } = await fsRepository.get();
 
       if (isActive) {
@@ -192,7 +204,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(exitSlides);
 }
 
-function getWorkspacePath(): Path {
+function getWorkspaceFolder(): Folder {
   const workspaceFolders = vscode.workspace.workspaceFolders;
 
   if (!workspaceFolders || workspaceFolders.length < 1) {
@@ -201,7 +213,7 @@ function getWorkspacePath(): Path {
     );
   }
 
-  return workspaceFolders[0].uri.path;
+  return new Folder(workspaceFolders[0].uri.path);
 }
 
 async function exit(editor: Editor, repository: Repository) {
