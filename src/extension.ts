@@ -83,21 +83,23 @@ class VSCodeEditor implements Editor {
 type Path = string;
 
 class InMemoryRepository implements Repository {
-  private settings: Settings | null = null;
+  private state: State = { settings: null, isActive: false };
 
-  async store(settings: Settings | null) {
-    this.settings = settings;
+  constructor(initialState: Partial<State>) {
+    this.store(initialState);
   }
 
-  async get() {
-    return this.settings;
+  async store(newState: Partial<State>) {
+    this.state = { ...this.state, ...newState };
+  }
+
+  async get(): Promise<State> {
+    return this.state;
   }
 }
 
 export function activate(context: vscode.ExtensionContext) {
-  const inMemoryRepository = new InMemoryRepository();
-
-  let isActive = false;
+  const inMemoryRepository = new InMemoryRepository({ isActive: false });
 
   const toggleSlides = vscode.commands.registerCommand(
     "slides.toggle",
@@ -111,6 +113,8 @@ export function activate(context: vscode.ExtensionContext) {
 
       const vscodeEditor = new VSCodeEditor(workspaceFolders[0].uri.path);
 
+      const { isActive } = await inMemoryRepository.get();
+
       if (isActive) {
         await restoreSettings(vscodeEditor, inMemoryRepository);
         await vscodeEditor.showSideBar();
@@ -120,7 +124,7 @@ export function activate(context: vscode.ExtensionContext) {
         await vscodeEditor.hideSideBar();
       }
 
-      isActive = !isActive;
+      inMemoryRepository.store({ isActive: !isActive });
     }
   );
 
@@ -130,7 +134,7 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 async function restoreSettings(editor: Editor, repository: Repository) {
-  const settings = await repository.get();
+  const { settings } = await repository.get();
 
   if (settings) {
     await editor.setSettings(settings);
@@ -140,7 +144,9 @@ async function restoreSettings(editor: Editor, repository: Repository) {
 import { settings } from "./settings";
 
 async function setSlidesSettings(editor: Editor, repository: Repository) {
-  await repository.store(await editor.getSettings());
+  await repository.store({
+    settings: await editor.getSettings()
+  });
   await editor.setSettings(settings);
 }
 
@@ -159,8 +165,13 @@ interface Editor {
 }
 
 interface Repository {
-  store(settings: Settings | null): Promise<void>;
-  get(): Promise<Settings | null>;
+  store(state: Partial<State>): Promise<void>;
+  get(): Promise<State>;
+}
+
+interface State {
+  settings: Settings | null;
+  isActive: boolean;
 }
 
 type Settings = string;
