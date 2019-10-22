@@ -1,41 +1,51 @@
 import * as vscode from "vscode";
+import * as fs from "fs";
 
 class VSCodeEditor implements Editor {
-  async closeAllTabs() {}
+  private rootFolderPath: string;
 
-  async openAllFiles() {}
+  constructor(rootFolderPath: string) {
+    this.rootFolderPath = rootFolderPath;
+  }
 
-  async getSettings() {
-    const workspaceFolders = vscode.workspace.workspaceFolders;
-    if (!workspaceFolders || workspaceFolders.length < 1) {
-      throw new Error(
-        "There are no workspace folder. We can't retrieve VS Code settings."
-      );
-    }
+  async closeAllTabs() {
+    await vscode.commands.executeCommand("workbench.action.closeAllEditors");
+  }
 
-    const rootFolderPath = workspaceFolders[0].uri.path;
-    const settingsFileUri = vscode.Uri.file(
-      `${rootFolderPath}/.vscode/settings.json`
+  async openAllFiles() {
+    const files = fs.readdirSync(this.rootFolderPath).reduce(
+      (files, fileOrDirectory) => {
+        return fs.statSync(this.pathTo(fileOrDirectory)).isDirectory()
+          ? files
+          : [...files, fileOrDirectory];
+      },
+      [] as string[]
     );
 
-    const settings = await vscode.workspace.openTextDocument(settingsFileUri);
+    await Promise.all(
+      files.map(async file => {
+        const document = await vscode.workspace.openTextDocument(
+          this.pathTo(file)
+        );
 
-    // TODO: return null if doesn't exist
+        return vscode.window.showTextDocument(document, {
+          preview: false
+        });
+      })
+    );
+
+    await vscode.commands.executeCommand("workbench.action.openEditorAtIndex1");
+  }
+
+  async getSettings() {
+    const settings = await vscode.workspace.openTextDocument(
+      this.pathToSettings
+    );
     return settings.getText();
   }
 
   async setSettings(settings: Settings) {
-    const workspaceFolders = vscode.workspace.workspaceFolders;
-    if (!workspaceFolders || workspaceFolders.length < 1) {
-      throw new Error(
-        "There are no workspace folder. We can't retrieve VS Code settings."
-      );
-    }
-
-    const rootFolderPath = workspaceFolders[0].uri.path;
-    const settingsFileUri = vscode.Uri.file(
-      `${rootFolderPath}/.vscode/settings.json`
-    );
+    const settingsFileUri = vscode.Uri.file(this.pathToSettings);
 
     // We perform distinct operations so the combination always work.
     // Sometimes it didn't work when we batched them in one `applyEdit()`.
@@ -50,7 +60,17 @@ class VSCodeEditor implements Editor {
     // Save to apply changes directly.
     await vscode.workspace.saveAll();
   }
+
+  private get pathToSettings(): Path {
+    return this.pathTo("/.vscode/settings.json");
+  }
+
+  private pathTo(relativePath: Path): Path {
+    return `${this.rootFolderPath}/${relativePath}`;
+  }
 }
+
+type Path = string;
 
 class InMemoryRepository implements Repository {
   private settings: Settings | null = null;
@@ -65,7 +85,6 @@ class InMemoryRepository implements Repository {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-  const vscodeEditor = new VSCodeEditor();
   const inMemoryRepository = new InMemoryRepository();
 
   let isActive = false;
@@ -73,6 +92,15 @@ export function activate(context: vscode.ExtensionContext) {
   const toggleSlides = vscode.commands.registerCommand(
     "slides.toggle",
     async () => {
+      const workspaceFolders = vscode.workspace.workspaceFolders;
+      if (!workspaceFolders || workspaceFolders.length < 1) {
+        throw new Error(
+          "There are no workspace folder. We can't retrieve VS Code settings."
+        );
+      }
+
+      const vscodeEditor = new VSCodeEditor(workspaceFolders[0].uri.path);
+
       if (isActive) {
         await restoreSettings(vscodeEditor, inMemoryRepository);
       } else {
