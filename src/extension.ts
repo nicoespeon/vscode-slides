@@ -1,155 +1,6 @@
 import * as vscode from "vscode";
 import * as fs from "fs";
 
-class VSCodeEditor implements Editor {
-  private rootFolder: Folder;
-
-  constructor(rootFolder: Folder) {
-    this.rootFolder = rootFolder;
-  }
-
-  async closeAllTabs() {
-    await vscode.commands.executeCommand("workbench.action.closeAllEditors");
-  }
-
-  async openAllFiles() {
-    await Promise.all(
-      this.rootFolder.visibleFiles.map(async file => {
-        const document = await vscode.workspace.openTextDocument(
-          this.rootFolder.pathTo(file)
-        );
-
-        return vscode.window.showTextDocument(document, {
-          preview: false
-        });
-      })
-    );
-
-    await vscode.commands.executeCommand("workbench.action.openEditorAtIndex1");
-  }
-
-  async hideSideBar() {
-    await vscode.commands.executeCommand("workbench.action.maximizeEditor");
-  }
-
-  async showSideBar() {
-    await vscode.commands.executeCommand(
-      "workbench.action.toggleSidebarVisibility"
-    );
-  }
-
-  async getSettings() {
-    const settings = await vscode.workspace.openTextDocument(
-      this.pathToSettings
-    );
-    return settings.getText();
-  }
-
-  async setSettings(settings: Settings) {
-    const settingsFileUri = vscode.Uri.file(this.pathToSettings);
-
-    // We perform distinct operations so the combination always work.
-    // Sometimes it didn't work when we batched them in one `applyEdit()`.
-    const createFile = new vscode.WorkspaceEdit();
-    createFile.createFile(settingsFileUri, { overwrite: true });
-    await vscode.workspace.applyEdit(createFile);
-
-    const writeSettings = new vscode.WorkspaceEdit();
-    writeSettings.insert(settingsFileUri, new vscode.Position(0, 0), settings);
-    await vscode.workspace.applyEdit(writeSettings);
-
-    // Save to apply changes directly.
-    await vscode.workspace.saveAll();
-  }
-
-  private get pathToSettings(): Path {
-    return this.rootFolder.pathTo(".vscode/settings.json");
-  }
-}
-
-import * as path from "path";
-
-class Folder {
-  private path: Path;
-
-  constructor(path: Path) {
-    this.path = path;
-  }
-
-  get visibleFiles(): Path[] {
-    return fs
-      .readdirSync(this.path)
-      .filter(
-        fileOrDirectory =>
-          !fs.statSync(this.pathTo(fileOrDirectory)).isDirectory()
-      )
-      .filter(file => !file.startsWith("."));
-  }
-
-  pathTo(relativePath: Path): Path {
-    return path.join(this.path, relativePath);
-  }
-}
-
-type Path = string;
-
-class FileSystemRepository implements Repository {
-  private rootFolder: Folder;
-  private encoding = "utf-8";
-
-  constructor(rootFolder: Folder) {
-    this.rootFolder = rootFolder;
-  }
-
-  async store(newState: Partial<State>) {
-    const storedState = { ...this.state, ...newState };
-    fs.writeFileSync(this.pathToState, JSON.stringify(storedState), {
-      encoding: this.encoding
-    });
-  }
-
-  async get(): Promise<State> {
-    return this.state;
-  }
-
-  private get state(): State {
-    const defaultState: State = { settings: null, isActive: false };
-
-    if (!fs.existsSync(this.pathToState)) {
-      return defaultState;
-    }
-
-    const storedState = JSON.parse(
-      fs.readFileSync(this.pathToState, {
-        encoding: this.encoding
-      })
-    );
-
-    if (!this.isValidState(storedState)) {
-      return defaultState;
-    }
-
-    return storedState;
-  }
-
-  private isValidState(data: unknown): data is State {
-    return (
-      typeof data === "object" &&
-      data !== null &&
-      "settings" in data &&
-      // @ts-ignore https://github.com/microsoft/TypeScript/issues/21732
-      (typeof data.settings === "string" || data.settings === null) &&
-      "isActive" in data &&
-      // @ts-ignore https://github.com/microsoft/TypeScript/issues/21732
-      typeof data.isActive === "boolean"
-    );
-  }
-
-  private get pathToState(): Path {
-    return this.rootFolder.pathTo(".vscode-slides.json");
-  }
-}
-
 export function activate(context: vscode.ExtensionContext) {
   const fsRepository = new FileSystemRepository(getWorkspaceFolder());
 
@@ -216,6 +67,161 @@ function getWorkspaceFolder(): Folder {
   return new Folder(workspaceFolders[0].uri.path);
 }
 
+// Adapters
+
+import * as path from "path";
+
+class VSCodeEditor implements Editor {
+  private rootFolder: Folder;
+
+  constructor(rootFolder: Folder) {
+    this.rootFolder = rootFolder;
+  }
+
+  async closeAllTabs() {
+    await vscode.commands.executeCommand("workbench.action.closeAllEditors");
+  }
+
+  async openAllFiles() {
+    await Promise.all(
+      this.rootFolder.visibleFiles.map(async file => {
+        const document = await vscode.workspace.openTextDocument(
+          this.rootFolder.pathTo(file)
+        );
+
+        return vscode.window.showTextDocument(document, {
+          preview: false
+        });
+      })
+    );
+
+    await vscode.commands.executeCommand("workbench.action.openEditorAtIndex1");
+  }
+
+  async hideSideBar() {
+    await vscode.commands.executeCommand("workbench.action.maximizeEditor");
+  }
+
+  async showSideBar() {
+    await vscode.commands.executeCommand(
+      "workbench.action.toggleSidebarVisibility"
+    );
+  }
+
+  async getSettings() {
+    const settings = await vscode.workspace.openTextDocument(
+      this.pathToSettings
+    );
+    return settings.getText();
+  }
+
+  async setSettings(settings: Settings) {
+    const settingsFileUri = vscode.Uri.file(this.pathToSettings);
+
+    // We perform distinct operations so the combination always work.
+    // Sometimes it didn't work when we batched them in one `applyEdit()`.
+    const createFile = new vscode.WorkspaceEdit();
+    createFile.createFile(settingsFileUri, { overwrite: true });
+    await vscode.workspace.applyEdit(createFile);
+
+    const writeSettings = new vscode.WorkspaceEdit();
+    writeSettings.insert(settingsFileUri, new vscode.Position(0, 0), settings);
+    await vscode.workspace.applyEdit(writeSettings);
+
+    // Save to apply changes directly.
+    await vscode.workspace.saveAll();
+  }
+
+  private get pathToSettings(): Path {
+    return this.rootFolder.pathTo(".vscode/settings.json");
+  }
+}
+
+class FileSystemRepository implements Repository {
+  private rootFolder: Folder;
+  private encoding = "utf-8";
+
+  constructor(rootFolder: Folder) {
+    this.rootFolder = rootFolder;
+  }
+
+  async store(newState: Partial<State>) {
+    const storedState = { ...this.state, ...newState };
+    fs.writeFileSync(this.pathToState, JSON.stringify(storedState), {
+      encoding: this.encoding
+    });
+  }
+
+  async get(): Promise<State> {
+    return this.state;
+  }
+
+  private get state(): State {
+    const defaultState: State = { settings: null, isActive: false };
+
+    if (!fs.existsSync(this.pathToState)) {
+      return defaultState;
+    }
+
+    const storedState = JSON.parse(
+      fs.readFileSync(this.pathToState, {
+        encoding: this.encoding
+      })
+    );
+
+    if (!this.isValidState(storedState)) {
+      return defaultState;
+    }
+
+    return storedState;
+  }
+
+  private isValidState(data: unknown): data is State {
+    return (
+      typeof data === "object" &&
+      data !== null &&
+      "settings" in data &&
+      // @ts-ignore https://github.com/microsoft/TypeScript/issues/21732
+      (typeof data.settings === "string" || data.settings === null) &&
+      "isActive" in data &&
+      // @ts-ignore https://github.com/microsoft/TypeScript/issues/21732
+      typeof data.isActive === "boolean"
+    );
+  }
+
+  private get pathToState(): Path {
+    return this.rootFolder.pathTo(".vscode-slides.json");
+  }
+}
+
+class Folder {
+  private path: Path;
+
+  constructor(path: Path) {
+    this.path = path;
+  }
+
+  get visibleFiles(): Path[] {
+    return fs
+      .readdirSync(this.path)
+      .filter(
+        fileOrDirectory =>
+          !fs.statSync(this.pathTo(fileOrDirectory)).isDirectory()
+      )
+      .filter(file => !file.startsWith("."));
+  }
+
+  pathTo(relativePath: Path): Path {
+    return path.join(this.path, relativePath);
+  }
+}
+
+type Path = string;
+
+// Domain
+
+import { settings } from "./settings";
+
 async function exit(editor: Editor, repository: Repository) {
   await restoreSettings(editor, repository);
   await editor.showSideBar();
@@ -229,8 +235,6 @@ async function restoreSettings(editor: Editor, repository: Repository) {
     await editor.setSettings(settings);
   }
 }
-
-import { settings } from "./settings";
 
 async function start(editor: Editor, repository: Repository) {
   await setSlidesSettings(editor, repository);
