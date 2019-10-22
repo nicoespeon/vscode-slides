@@ -37,6 +37,16 @@ class VSCodeEditor implements Editor {
     await vscode.commands.executeCommand("workbench.action.openEditorAtIndex1");
   }
 
+  async hideSideBar() {
+    await vscode.commands.executeCommand("workbench.action.maximizeEditor");
+  }
+
+  async showSideBar() {
+    await vscode.commands.executeCommand(
+      "workbench.action.toggleSidebarVisibility"
+    );
+  }
+
   async getSettings() {
     const settings = await vscode.workspace.openTextDocument(
       this.pathToSettings
@@ -103,9 +113,11 @@ export function activate(context: vscode.ExtensionContext) {
 
       if (isActive) {
         await restoreSettings(vscodeEditor, inMemoryRepository);
+        await vscodeEditor.showSideBar();
       } else {
         await setSlidesSettings(vscodeEditor, inMemoryRepository);
         await openAllSlides(vscodeEditor);
+        await vscodeEditor.hideSideBar();
       }
 
       isActive = !isActive;
@@ -140,6 +152,8 @@ async function openAllSlides(editor: Editor) {
 interface Editor {
   closeAllTabs(): Promise<void>;
   openAllFiles(): Promise<void>;
+  hideSideBar(): Promise<void>;
+  showSideBar(): Promise<void>;
   getSettings(): Promise<Settings | null>;
   setSettings(settings: Settings): Promise<void>;
 }
