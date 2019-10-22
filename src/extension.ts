@@ -81,35 +81,76 @@ class VSCodeEditor implements Editor {
 
 type Path = string;
 
-class InMemoryRepository implements Repository {
-  private state: State = { settings: null, isActive: false };
+class FileSystemRepository implements Repository {
+  private rootFolderPath: Path;
+  private encoding = "utf-8";
 
-  constructor(initialState: Partial<State>) {
-    this.store(initialState);
+  constructor(rootFolderPath: Path) {
+    this.rootFolderPath = rootFolderPath;
   }
 
   async store(newState: Partial<State>) {
-    this.state = { ...this.state, ...newState };
+    const storedState = { ...this.state, ...newState };
+    fs.writeFileSync(this.pathToState, JSON.stringify(storedState), {
+      encoding: this.encoding
+    });
   }
 
   async get(): Promise<State> {
     return this.state;
   }
+
+  private get state(): State {
+    const defaultState: State = { settings: null, isActive: false };
+
+    if (!fs.existsSync(this.pathToState)) {
+      return defaultState;
+    }
+
+    const storedState = JSON.parse(
+      fs.readFileSync(this.pathToState, {
+        encoding: this.encoding
+      })
+    );
+
+    if (!this.isValidState(storedState)) {
+      return defaultState;
+    }
+
+    return storedState;
+  }
+
+  private isValidState(data: unknown): data is State {
+    return (
+      typeof data === "object" &&
+      data !== null &&
+      "settings" in data &&
+      // @ts-ignore https://github.com/microsoft/TypeScript/issues/21732
+      (typeof data.settings === "string" || data.settings === null) &&
+      "isActive" in data &&
+      // @ts-ignore https://github.com/microsoft/TypeScript/issues/21732
+      typeof data.isActive === "boolean"
+    );
+  }
+
+  private get pathToState(): Path {
+    return `${this.rootFolderPath}/.vscode-slides.json`;
+  }
 }
 
 export function activate(context: vscode.ExtensionContext) {
-  const inMemoryRepository = new InMemoryRepository({ isActive: false });
+  const fsRepository = new FileSystemRepository(getWorkspacePath());
 
   const toggleSlides = vscode.commands.registerCommand(
     "slides.toggle",
     async () => {
       const vscodeEditor = new VSCodeEditor(getWorkspacePath());
-      const { isActive } = await inMemoryRepository.get();
+      const { isActive } = await fsRepository.get();
 
       if (isActive) {
-        await exit(vscodeEditor, inMemoryRepository);
+        await exit(vscodeEditor, fsRepository);
       } else {
-        await start(vscodeEditor, inMemoryRepository);
+        await start(vscodeEditor, fsRepository);
       }
     }
   );
@@ -117,7 +158,7 @@ export function activate(context: vscode.ExtensionContext) {
   const previousSlide = vscode.commands.registerCommand(
     "slides.previous",
     async () => {
-      const { isActive } = await inMemoryRepository.get();
+      const { isActive } = await fsRepository.get();
 
       if (isActive) {
         await vscode.commands.executeCommand("workbench.action.previousEditor");
@@ -126,7 +167,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   const nextSlide = vscode.commands.registerCommand("slides.next", async () => {
-    const { isActive } = await inMemoryRepository.get();
+    const { isActive } = await fsRepository.get();
 
     if (isActive) {
       await vscode.commands.executeCommand("workbench.action.nextEditor");
@@ -137,10 +178,10 @@ export function activate(context: vscode.ExtensionContext) {
     "slides.exit",
     async () => {
       const vscodeEditor = new VSCodeEditor(getWorkspacePath());
-      const { isActive } = await inMemoryRepository.get();
+      const { isActive } = await fsRepository.get();
 
       if (isActive) {
-        await exit(vscodeEditor, inMemoryRepository);
+        await exit(vscodeEditor, fsRepository);
       }
     }
   );
