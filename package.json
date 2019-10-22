@@ -65,13 +65,15 @@
     "webpack-cli": "3.3.9"
   },
   "activationEvents": [
-    "onCommand:slides.toggle"
+    "onCommand:slides.toggle",
+    "onCommand:slides.previous",
+    "onCommand:slides.next"
   ],
   "contributes": {
     "commands": [
       {
         "command": "slides.toggle",
-        "title": "Toggle Slides"
+        "title": "Toggle Slides mode"
       }
     ],
     "keybindings": [
@@ -79,6 +81,14 @@
         "command": "slides.toggle",
         "key": "ctrl+alt+p",
         "mac": "cmd+alt+p"
+      },
+      {
+        "command": "slides.previous",
+        "key": "left"
+      },
+      {
+        "command": "slides.next",
+        "key": "right"
       }
     ]
   }

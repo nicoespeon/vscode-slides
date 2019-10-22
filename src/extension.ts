@@ -127,9 +127,28 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  // TODO: go to prev/next slide when isActive
+  const previousSlide = vscode.commands.registerCommand(
+    "slides.previous",
+    async () => {
+      const { isActive } = await inMemoryRepository.get();
+
+      if (isActive) {
+        await vscode.commands.executeCommand("workbench.action.previousEditor");
+      }
+    }
+  );
+
+  const nextSlide = vscode.commands.registerCommand("slides.next", async () => {
+    const { isActive } = await inMemoryRepository.get();
+
+    if (isActive) {
+      await vscode.commands.executeCommand("workbench.action.nextEditor");
+    }
+  });
 
   context.subscriptions.push(toggleSlides);
+  context.subscriptions.push(previousSlide);
+  context.subscriptions.push(nextSlide);
 }
 
 async function restoreSettings(editor: Editor, repository: Repository) {
