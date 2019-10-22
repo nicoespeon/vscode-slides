@@ -67,7 +67,8 @@
   "activationEvents": [
     "onCommand:slides.toggle",
     "onCommand:slides.previous",
-    "onCommand:slides.next"
+    "onCommand:slides.next",
+    "onCommand:slides.exit"
   ],
   "contributes": {
     "commands": [
@@ -89,6 +90,10 @@
       {
         "command": "slides.next",
         "key": "right"
+      },
+      {
+        "command": "slides.exit",
+        "key": "escape"
       }
     ]
   }

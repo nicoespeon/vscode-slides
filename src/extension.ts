@@ -2,9 +2,9 @@ import * as vscode from "vscode";
 import * as fs from "fs";
 
 class VSCodeEditor implements Editor {
-  private rootFolderPath: string;
+  private rootFolderPath: Path;
 
-  constructor(rootFolderPath: string) {
+  constructor(rootFolderPath: Path) {
     this.rootFolderPath = rootFolderPath;
   }
 
@@ -103,27 +103,14 @@ export function activate(context: vscode.ExtensionContext) {
   const toggleSlides = vscode.commands.registerCommand(
     "slides.toggle",
     async () => {
-      const workspaceFolders = vscode.workspace.workspaceFolders;
-      if (!workspaceFolders || workspaceFolders.length < 1) {
-        throw new Error(
-          "There are no workspace folder. We can't retrieve VS Code settings."
-        );
-      }
-
-      const vscodeEditor = new VSCodeEditor(workspaceFolders[0].uri.path);
-
+      const vscodeEditor = new VSCodeEditor(getWorkspacePath());
       const { isActive } = await inMemoryRepository.get();
 
       if (isActive) {
-        await restoreSettings(vscodeEditor, inMemoryRepository);
-        await vscodeEditor.showSideBar();
+        await exit(vscodeEditor, inMemoryRepository);
       } else {
-        await setSlidesSettings(vscodeEditor, inMemoryRepository);
-        await openAllSlides(vscodeEditor);
-        await vscodeEditor.hideSideBar();
+        await start(vscodeEditor, inMemoryRepository);
       }
-
-      inMemoryRepository.store({ isActive: !isActive });
     }
   );
 
@@ -146,9 +133,40 @@ export function activate(context: vscode.ExtensionContext) {
     }
   });
 
+  const exitSlides = vscode.commands.registerCommand(
+    "slides.exit",
+    async () => {
+      const vscodeEditor = new VSCodeEditor(getWorkspacePath());
+      const { isActive } = await inMemoryRepository.get();
+
+      if (isActive) {
+        await exit(vscodeEditor, inMemoryRepository);
+      }
+    }
+  );
+
   context.subscriptions.push(toggleSlides);
   context.subscriptions.push(previousSlide);
   context.subscriptions.push(nextSlide);
+  context.subscriptions.push(exitSlides);
+}
+
+function getWorkspacePath(): Path {
+  const workspaceFolders = vscode.workspace.workspaceFolders;
+
+  if (!workspaceFolders || workspaceFolders.length < 1) {
+    throw new Error(
+      "There are no workspace folder. We can't retrieve VS Code settings."
+    );
+  }
+
+  return workspaceFolders[0].uri.path;
+}
+
+async function exit(editor: Editor, repository: Repository) {
+  await restoreSettings(editor, repository);
+  await editor.showSideBar();
+  await repository.store({ isActive: false });
 }
 
 async function restoreSettings(editor: Editor, repository: Repository) {
@@ -160,6 +178,13 @@ async function restoreSettings(editor: Editor, repository: Repository) {
 }
 
 import { settings } from "./settings";
+
+async function start(editor: Editor, repository: Repository) {
+  await setSlidesSettings(editor, repository);
+  await openAllSlides(editor);
+  await editor.hideSideBar();
+  await repository.store({ isActive: true });
+}
 
 async function setSlidesSettings(editor: Editor, repository: Repository) {
   await repository.store({
