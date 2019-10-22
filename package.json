@@ -73,6 +73,13 @@
         "command": "slides.toggle",
         "title": "Toggle Slides"
       }
+    ],
+    "keybindings": [
+      {
+        "command": "slides.toggle",
+        "key": "ctrl+alt+p",
+        "mac": "cmd+alt+p"
+      }
     ]
   }
 }
