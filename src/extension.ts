@@ -85,6 +85,9 @@ class VSCodeEditor implements Editor {
   async openAllFiles() {
     this.rootFolder.visibleFiles.forEach(file => this.openFile(file));
 
+    // Wait so VS Code opens every file before we focus on the first one.
+    await wait(100);
+
     await vscode.commands.executeCommand("workbench.action.openEditorAtIndex1");
   }
 
