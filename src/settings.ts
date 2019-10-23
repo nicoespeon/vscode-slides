@@ -24,6 +24,7 @@ export const settings = `{
   "editor.renderIndentGuides": false,
 
   "//f": "This is GitHub font style",
+  "!f": "You need to install this font on your machine",
   "editor.fontFamily": "SF Mono",
   "terminal.integrated.fontFamily": "SF Mono",
 
