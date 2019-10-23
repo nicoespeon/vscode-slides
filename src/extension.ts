@@ -83,9 +83,7 @@ class VSCodeEditor implements Editor {
   }
 
   async openAllFiles() {
-    await Promise.all(
-      this.rootFolder.visibleFiles.map(file => this.openFile(file))
-    );
+    this.rootFolder.visibleFiles.forEach(file => this.openFile(file));
 
     await vscode.commands.executeCommand("workbench.action.openEditorAtIndex1");
   }
@@ -126,6 +124,9 @@ class VSCodeEditor implements Editor {
 
     // Save to apply changes directly.
     await vscode.workspace.saveAll();
+
+    // Wait so VS Code adopts new settings before we move on.
+    await wait(200);
   }
 
   showError(message: string) {
@@ -136,19 +137,20 @@ class VSCodeEditor implements Editor {
     vscode.window.showInformationMessage(message);
   }
 
-  private async openFile(file: Path): Promise<void> {
-    const document = await vscode.workspace.openTextDocument(
-      this.rootFolder.pathTo(file)
+  private openFile(file: Path): void {
+    vscode.commands.executeCommand(
+      "vscode.open",
+      vscode.Uri.file(this.rootFolder.pathTo(file))
     );
-
-    await vscode.window.showTextDocument(document, {
-      preview: false
-    });
   }
 
   private get pathToSettings(): Path {
     return this.rootFolder.pathTo(".vscode/settings.json");
   }
+}
+
+function wait(delayInMs: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, delayInMs));
 }
 
 class FileSystemRepository implements Repository {

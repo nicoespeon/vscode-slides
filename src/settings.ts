@@ -40,5 +40,8 @@ export const settings = `{
   "terminal.integrated.shell.osx": "/bin/bash",
 
   "//j": "Prevent the editor to magically edit code on save",
-  "editor.formatOnSave": false
+  "editor.formatOnSave": false,
+
+  "//k": "Disable preview so we can open all files at once",
+  "workbench.editor.enablePreview": false
 }`;
