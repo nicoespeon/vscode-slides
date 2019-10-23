@@ -7,4 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-[unreleased]: https://github.com/nicoespeon/abracadabra/compare/TBD...HEAD
+### Added
+
+- **Toggle Slides mode**. It applies optimized settings for VS Code when activated, and reset original settings when deactivated.
+- **Open all files in alphabetical order** when activated.
+- **Shortcuts to navigate between slides** when activated.
+- **Shortcut to deactivate Slides** when activated.
+
+[unreleased]: https://github.com/nicoespeon/abracadabra/compare/8fdc599d586b5ad4614d038d232c840eeebe2412...HEAD

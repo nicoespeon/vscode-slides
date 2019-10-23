@@ -1,65 +1,111 @@
-# VS Code Slides
+# 👩‍🏫 VS Code Slides
 
-This is the README for your extension "slides". After writing up a brief description, we recommend including the following sections.
+Slides is a Visual Studio Code extension that helps you use your editor as a presentation tool.
+
+This is inspired from [André Staltz's post][andre-staltz-post] where he explained how you can use VS Code **only** to give a pleasant, "live coding"-like presentation.
+
+[> Give a feedback][create-new-issue]
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+### Toggle Slides mode
 
-For example if there is an image subfolder under your extension project workspace:
+Use `Ctrl Alt p` (`⌘ ⌥ p` on Mac) to toggle Slides mode.
 
-\!\[feature X\]\(images/feature-x.png\)
+**When you activate Slides**, a few things happen:
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+- Your settings got stored, so they can be reset
+- Settings get replaced with others that are optimized for presentation
+- All files are open in the alphabetical order, as tabs
+- You can navigate between each tab with convenient shortcuts (see below)
 
-## Requirements
+**When you deactivate Slides**, your original settings get restored.
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+### Navigate between tabs (when Slides is active)
 
-## Extension Settings
+| Shortcut  | Operation            |
+| --------- | -------------------- |
+| `Alt →`   | Go to next slide     |
+| `Alt ←`   | Go to previous slide |
+| `Alt Esc` | Deactivate Slides    |
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+You can also re-use _Toggle Slides mode_ to deactivate Slides.
 
-For example:
+## Pre-requisite
 
-This extension contributes the following settings:
+Slides is opinionated. To work efficiently, you first need to install:
 
-- `myExtension.enable`: enable/disable this extension
-- `myExtension.thing`: set to `blah` to do something
+1. [The "GitHub Clean White" theme][recommended-theme] on VS Code
+1. [The "SF Mono" font][recommended-font] on your machine
 
-## Known Issues
+## Installation
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+1. Click on the Extensions icon (usually on the left-hand side of your editor).
+1. Search for "Slides".
+1. Find the extension in the list and click the install button.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+[Have a look at our CHANGELOG][changelog] to get the details of all changes between versions.
 
-### 1.0.0
+### Versioning
 
-Initial release of ...
+We follow [SemVer][semver] convention for versionning.
 
-### 1.0.1
+That means our releases use the following format:
 
-Fixed issue #.
+```
+<major>.<minor>.<patch>
+```
 
-### 1.1.0
+- Breaking changes bump `<major>` (and reset `<minor>` & `<patch>`)
+- Backward compatible changes bump `<minor>` (and reset `<patch>`)
+- Bug fixes bump `<patch>`
 
-Added features X, Y, and Z.
+## Contributing
 
----
+### [Contributing Guide][contributing]
 
-## Working with Markdown
+Read our [contributing guide][contributing] to learn about our development process, how to propose bugfixes and improvements, and how to build and test your changes to Abracadabra.
 
-**Note:** You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
+### [Good First Issues][good-first-issues]
 
-- Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-- Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-- Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
+To help you get your feet wet and become familiar with our contribution process, we have a list of [good first issues][good-first-issues] that contains things with a relatively limited scope. This is a great place to get started!
 
-### For more information
+## Contributors ✨
 
-- [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-- [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+Thanks goes to these wonderful people ([emoji key][all-contributors-emoji]):
 
-**Enjoy!**
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+<table><tr><td align="center"><a href="https://nicoespeon.com"><img src="https://avatars.githubusercontent.com/u/1094774?v=3" width="100px;" alt="Nicolas Carlo"/><br /><sub><b>Nicolas Carlo</b></sub></a><br /><a href="#question-nicoespeon" title="Answering Questions">💬</a> <a href="https://github.com/nicoespeon/abracadabra/commits?author=nicoespeon" title="Code">💻</a> <a href="https://github.com/nicoespeon/abracadabra/commits?author=nicoespeon" title="Documentation">📖</a><br /><a href="#review-nicoespeon" title="Reviewed Pull Requests">👀</a> <a href="#ideas-nicoespeon" title="Ideas">🤔</a></td></tr></table>
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors][all-contributors] specification.
+
+Contributions of any kind are welcome!
+
+## License
+
+💁 [MIT][license]
+
+<!-- Links -->
+
+[andre-staltz-post]: https://staltz.com/your-ide-as-a-presentation-tool.html
+[change-keybindings]: https://code.visualstudio.com/docs/getstarted/keybindings
+[semver]: http://semver.org/
+[all-contributors]: https://allcontributors.org
+[all-contributors-emoji]: https://allcontributors.org/docs/en/emoji-key
+[recommended-theme]: https://marketplace.visualstudio.com/items?itemName=saviorisdead.Theme-GitHubCleanWhite
+[recommended-font]: https://github.com/ZulwiyozaPutra/SF-Mono-Font
+
+<!-- Repo links -->
+
+[changelog]: https://github.com/nicoespeon/vscode-slides/blob/master/CHANGELOG.md
+[contributing]: https://github.com/nicoespeon/vscode-slides/blob/master/CONTRIBUTING.md
+[license]: https://github.com/nicoespeon/vscode-slides/blob/master/LICENSE.md
+[good-first-issues]: https://github.com/nicoespeon/vscode-slides/issues?q=is%3Aissue+is%3Aopen+label%3A%22%3Awave%3A+Good+first+issue%22
+[create-new-issue]: https://github.com/nicoespeon/vscode-slides/issues/new/choose
+
+<!-- Assets -->
