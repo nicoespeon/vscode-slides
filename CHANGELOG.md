@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2019-10-23
+
 ### Breaking changes
 
 - Change navigation shortcuts to use `Ctrl` instead of `Alt`, so we don't override standard shortcuts as it's a less common combination.
@@ -26,5 +28,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Shortcuts to navigate between slides** when activated.
 - **Shortcut to deactivate Slides** when activated.
 
-[unreleased]: https://github.com/nicoespeon/vscode-slides/compare/0.1.0...HEAD
+[unreleased]: https://github.com/nicoespeon/vscode-slides/compare/0.2.0...HEAD
+[0.2.0]: https://github.com/nicoespeon/vscode-slides/compare/0.1.0...0.2.0
 [0.1.0]: https://github.com/nicoespeon/vscode-slides/compare/8fdc599d586b5ad4614d038d232c840eeebe2412...0.1.0
