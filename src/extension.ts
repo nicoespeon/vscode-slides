@@ -84,15 +84,7 @@ class VSCodeEditor implements Editor {
 
   async openAllFiles() {
     await Promise.all(
-      this.rootFolder.visibleFiles.map(async file => {
-        const document = await vscode.workspace.openTextDocument(
-          this.rootFolder.pathTo(file)
-        );
-
-        return vscode.window.showTextDocument(document, {
-          preview: false
-        });
-      })
+      this.rootFolder.visibleFiles.map(async file => await this.openFile(file))
     );
 
     await vscode.commands.executeCommand("workbench.action.openEditorAtIndex1");
@@ -134,6 +126,16 @@ class VSCodeEditor implements Editor {
 
     // Save to apply changes directly.
     await vscode.workspace.saveAll();
+  }
+
+  private async openFile(file: Path): Promise<void> {
+    const document = await vscode.workspace.openTextDocument(
+      this.rootFolder.pathTo(file)
+    );
+
+    await vscode.window.showTextDocument(document, {
+      preview: false
+    });
   }
 
   private get pathToSettings(): Path {
