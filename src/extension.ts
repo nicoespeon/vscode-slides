@@ -84,7 +84,7 @@ class VSCodeEditor implements Editor {
 
   async openAllFiles() {
     await Promise.all(
-      this.rootFolder.visibleFiles.map(async file => await this.openFile(file))
+      this.rootFolder.visibleFiles.map(file => this.openFile(file))
     );
 
     await vscode.commands.executeCommand("workbench.action.openEditorAtIndex1");
@@ -126,6 +126,14 @@ class VSCodeEditor implements Editor {
 
     // Save to apply changes directly.
     await vscode.workspace.saveAll();
+  }
+
+  showError(message: string) {
+    vscode.window.showErrorMessage(message);
+  }
+
+  showMessage(message: string) {
+    vscode.window.showInformationMessage(message);
   }
 
   private async openFile(file: Path): Promise<void> {
@@ -244,7 +252,18 @@ async function restoreSettings(editor: Editor, repository: Repository) {
 
 async function start(editor: Editor, repository: Repository) {
   await setSlidesSettings(editor, repository);
-  await openAllSlides(editor);
+
+  try {
+    await openAllSlides(editor);
+  } catch (error) {
+    editor.showMessage(
+      "I kept the sidebar open so you can open files manually!"
+    );
+    editor.showError(`I failed to open all slides because: ${error}`);
+    await repository.store({ isActive: true });
+    return;
+  }
+
   await editor.hideSideBar();
   await repository.store({ isActive: true });
 }
@@ -268,6 +287,8 @@ interface Editor {
   showSideBar(): Promise<void>;
   getSettings(): Promise<Settings | null>;
   setSettings(settings: Settings): Promise<void>;
+  showError(message: string): void;
+  showMessage(message: string): void;
 }
 
 interface Repository {

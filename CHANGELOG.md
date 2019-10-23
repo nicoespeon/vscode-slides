@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Make the extension work when workspace has no settings set.
+- Gracefully handle when files can't be open.
 
 ## [0.1.0] - 2019-10-22
 
