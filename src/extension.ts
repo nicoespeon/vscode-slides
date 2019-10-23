@@ -109,6 +109,10 @@ class VSCodeEditor implements Editor {
   }
 
   async getSettings() {
+    if (!fs.existsSync(this.pathToSettings)) {
+      return "{}";
+    }
+
     const settings = await vscode.workspace.openTextDocument(
       this.pathToSettings
     );
