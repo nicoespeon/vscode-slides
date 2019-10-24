@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2019-10-24
+
 ### Fixed
 
 - Specify macOS shortcuts for navigation so they work too
@@ -32,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Shortcuts to navigate between slides** when activated.
 - **Shortcut to deactivate Slides** when activated.
 
-[unreleased]: https://github.com/nicoespeon/vscode-slides/compare/0.2.0...HEAD
+[unreleased]: https://github.com/nicoespeon/vscode-slides/compare/0.2.1...HEAD
+[0.2.1]: https://github.com/nicoespeon/vscode-slides/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/nicoespeon/vscode-slides/compare/0.1.0...0.2.0
 [0.1.0]: https://github.com/nicoespeon/vscode-slides/compare/8fdc599d586b5ad4614d038d232c840eeebe2412...0.1.0
