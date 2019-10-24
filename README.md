@@ -2,6 +2,8 @@
 
 Slides is a Visual Studio Code extension that helps you use your editor as a presentation tool.
 
+![Demo of Slides features][slides-showcase]
+
 This is inspired from [André Staltz's post][andre-staltz-post] where he explained how you can use VS Code **only** to give a pleasant, "live coding"-like presentation.
 
 [> Give a feedback][create-new-issue]
@@ -109,3 +111,5 @@ Contributions of any kind are welcome!
 [create-new-issue]: https://github.com/nicoespeon/vscode-slides/issues/new/choose
 
 <!-- Assets -->
+
+[slides-showcase]: https://github.com/nicoespeon/vscode-slides/blob/master/assets/showcase.gif?raw=true
