@@ -85,15 +85,18 @@
       },
       {
         "command": "slides.previous",
-        "key": "ctrl+left"
+        "key": "ctrl+left",
+        "mac": "cmd+left"
       },
       {
         "command": "slides.next",
-        "key": "ctrl+right"
+        "key": "ctrl+right",
+        "mac": "cmd+right"
       },
       {
         "command": "slides.exit",
-        "key": "ctrl+escape"
+        "key": "ctrl+escape",
+        "mac": "cmd+escape"
       }
     ]
   }

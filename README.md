@@ -23,11 +23,11 @@ Use `Ctrl Alt p` (`⌘ ⌥ p` on Mac) to toggle Slides mode.
 
 ### Navigate between tabs (when Slides is active)
 
-| Shortcut   | Operation            |
-| ---------- | -------------------- |
-| `Ctrl →`   | Go to next slide     |
-| `Ctrl ←`   | Go to previous slide |
-| `Ctrl Esc` | Deactivate Slides    |
+| Shortcut   | Shortcut on Mac | Operation            |
+| ---------- | --------------- | -------------------- |
+| `Ctrl →`   | `⌘ →`           | Go to next slide     |
+| `Ctrl ←`   | `⌘ ←`           | Go to previous slide |
+| `Ctrl Esc` | `⌘ Esc`         | Deactivate Slides    |
 
 You can also re-use _Toggle Slides mode_ to deactivate Slides.
 
