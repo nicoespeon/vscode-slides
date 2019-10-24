@@ -10,6 +10,10 @@ This is inspired from [André Staltz's post][andre-staltz-post] where he explain
 
 ## Features
 
+- ⚡ Toggle Slides mode with a shortcut
+- 🎨 Apply optimized settings for presentation
+- 👐 Handy shortcuts to navigate between slides
+
 ### Toggle Slides mode
 
 Use `Ctrl Alt p` (`⌘ ⌥ p` on Mac) to toggle Slides mode.
@@ -45,6 +49,16 @@ Slides is opinionated. To work efficiently, you first need to install:
 1. Click on the Extensions icon (usually on the left-hand side of your editor).
 1. Search for "Slides".
 1. Find the extension in the list and click the install button.
+
+## How to use best
+
+1. Create one file per "slide"
+1. Name them by number: `01.md`, `02.js`, `03.01.md`, `03.02.png`, etc.
+1. Toggle Slides before you start your talk 🎤
+
+### Tips
+
+- Prefer to keep coding files empty, or with easy content supposed to be known.
 
 ## Release Notes
 
