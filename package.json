@@ -1,6 +1,6 @@
 {
   "name": "slides",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "displayName": "Slides",
   "publisher": "nicoespeon",
   "description": "VS Code as a presentation tool",

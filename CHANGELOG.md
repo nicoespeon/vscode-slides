@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2019-10-24
+
 ### Added
 
 - Improve README instructions to get started with the Extension
@@ -38,7 +40,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Shortcuts to navigate between slides** when activated.
 - **Shortcut to deactivate Slides** when activated.
 
-[unreleased]: https://github.com/nicoespeon/vscode-slides/compare/0.2.1...HEAD
+[unreleased]: https://github.com/nicoespeon/vscode-slides/compare/1.0.0...HEAD
+[1.0.0]: https://github.com/nicoespeon/vscode-slides/compare/0.2.1...1.0.0
 [0.2.1]: https://github.com/nicoespeon/vscode-slides/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/nicoespeon/vscode-slides/compare/0.1.0...0.2.0
 [0.1.0]: https://github.com/nicoespeon/vscode-slides/compare/8fdc599d586b5ad4614d038d232c840eeebe2412...0.1.0
