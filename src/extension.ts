@@ -2,18 +2,18 @@ import * as vscode from "vscode";
 import * as fs from "fs";
 
 export function activate(context: vscode.ExtensionContext) {
-  const fsRepository = new FileSystemRepository(getWorkspaceFolder());
+  const repository = new VSCodeRepository(context);
 
   const toggleSlides = vscode.commands.registerCommand(
     "slides.toggle",
     async () => {
       const vscodeEditor = new VSCodeEditor(getWorkspaceFolder());
-      const { isActive } = await fsRepository.get();
+      const { isActive } = await repository.get();
 
       if (isActive) {
-        await exit(vscodeEditor, fsRepository);
+        await exit(vscodeEditor, repository);
       } else {
-        await start(vscodeEditor, fsRepository);
+        await start(vscodeEditor, repository);
       }
     }
   );
@@ -21,7 +21,7 @@ export function activate(context: vscode.ExtensionContext) {
   const previousSlide = vscode.commands.registerCommand(
     "slides.previous",
     async () => {
-      const { isActive } = await fsRepository.get();
+      const { isActive } = await repository.get();
 
       if (isActive) {
         await vscode.commands.executeCommand("workbench.action.previousEditor");
@@ -30,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   const nextSlide = vscode.commands.registerCommand("slides.next", async () => {
-    const { isActive } = await fsRepository.get();
+    const { isActive } = await repository.get();
 
     if (isActive) {
       await vscode.commands.executeCommand("workbench.action.nextEditor");
@@ -41,10 +41,10 @@ export function activate(context: vscode.ExtensionContext) {
     "slides.exit",
     async () => {
       const vscodeEditor = new VSCodeEditor(getWorkspaceFolder());
-      const { isActive } = await fsRepository.get();
+      const { isActive } = await repository.get();
 
       if (isActive) {
-        await exit(vscodeEditor, fsRepository);
+        await exit(vscodeEditor, repository);
       }
     }
   );
@@ -168,19 +168,16 @@ function wait(delayInMs: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, delayInMs));
 }
 
-class FileSystemRepository implements Repository {
-  private rootFolder: Folder;
-  private encoding = "utf-8";
+class VSCodeRepository implements Repository {
+  private memento: vscode.Memento;
 
-  constructor(rootFolder: Folder) {
-    this.rootFolder = rootFolder;
+  constructor(context: vscode.ExtensionContext) {
+    this.memento = context.workspaceState;
   }
 
-  async store(newState: Partial<State>) {
+  async store(newState: Partial<State>): Promise<void> {
     const storedState = { ...this.state, ...newState };
-    fs.writeFileSync(this.pathToState, JSON.stringify(storedState), {
-      encoding: this.encoding
-    });
+    this.memento.update("state", storedState);
   }
 
   async get(): Promise<State> {
@@ -189,22 +186,9 @@ class FileSystemRepository implements Repository {
 
   private get state(): State {
     const defaultState: State = { settings: null, isActive: false };
+    const storedState = this.memento.get("state");
 
-    if (!fs.existsSync(this.pathToState)) {
-      return defaultState;
-    }
-
-    const storedState = JSON.parse(
-      fs.readFileSync(this.pathToState, {
-        encoding: this.encoding
-      })
-    );
-
-    if (!this.isValidState(storedState)) {
-      return defaultState;
-    }
-
-    return storedState;
+    return this.isValidState(storedState) ? storedState : defaultState;
   }
 
   private isValidState(data: unknown): data is State {
@@ -218,10 +202,6 @@ class FileSystemRepository implements Repository {
       // @ts-ignore https://github.com/microsoft/TypeScript/issues/21732
       typeof data.isActive === "boolean"
     );
-  }
-
-  private get pathToState(): Path {
-    return this.rootFolder.pathTo(".vscode-slides.json");
   }
 }
 
