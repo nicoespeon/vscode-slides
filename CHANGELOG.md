@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2019-10-26
+
 ### Breaking changes
 
 - Leverage VS Code workspace data storage to persist the state. Slides won't create a `.vscode-slides.json` in your workspace anymore, which is great! But that means it won't rely on the existing ones, so **it will consider current settings to be the default ones**. You might need to reset them manually.
@@ -48,7 +50,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Shortcuts to navigate between slides** when activated.
 - **Shortcut to deactivate Slides** when activated.
 
-[unreleased]: https://github.com/nicoespeon/vscode-slides/compare/1.0.0...HEAD
+[unreleased]: https://github.com/nicoespeon/vscode-slides/compare/2.0.0...HEAD
+[2.0.0]: https://github.com/nicoespeon/vscode-slides/compare/1.0.0...2.0.0
 [1.0.0]: https://github.com/nicoespeon/vscode-slides/compare/0.2.1...1.0.0
 [0.2.1]: https://github.com/nicoespeon/vscode-slides/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/nicoespeon/vscode-slides/compare/0.1.0...0.2.0
