@@ -39,10 +39,12 @@ You can also re-use _Toggle Slides mode_ to deactivate Slides.
 
 ## Pre-requisite
 
-Slides is opinionated. To work efficiently, you first need to install:
+Slides is opinionated. By default, you'll need to install:
 
 1. [The "GitHub Clean White" theme][recommended-theme] on VS Code
 1. [The "SF Mono" font][recommended-font] on your machine
+
+If you don't want to use these, you can configure Slides theme and font family. Open VS Code settings and search for "slides".
 
 ## Installation
 

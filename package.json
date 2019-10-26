@@ -98,6 +98,21 @@
         "key": "ctrl+escape",
         "mac": "cmd+escape"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Slides",
+      "properties": {
+        "slides.theme": {
+          "type": "string",
+          "default": "GitHub Clean White",
+          "description": "Name of the theme to use. Theme should be installed. A light one is usually better."
+        },
+        "slides.fontFamily": {
+          "type": "string",
+          "default": "SF Mono",
+          "description": "Font family to use. It should be installed on your machine."
+        }
+      }
+    }
   }
 }

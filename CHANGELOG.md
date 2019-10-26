@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Make **theme** and **font family** configurable.
+
 ## [1.0.0] - 2019-10-24
 
 ### Added

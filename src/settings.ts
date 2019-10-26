@@ -1,4 +1,4 @@
-export const settings = `{
+export const settings = {
   "//a": "This theme is familiar to devs",
   "!a": "You need to install this theme",
   "workbench.colorTheme": "GitHub Clean White",
@@ -35,7 +35,7 @@ export const settings = `{
   "terminal.integrated.fontSize": 28,
 
   "//i": "Rely on a simple shell, avoid fancy configuration",
-  "!i": "It's even better if you add \`export PS1='\\$ '\` to your .bash_profile",
+  "!i": "It's even better if you add `export PS1='\\$ '` to your .bash_profile",
   "terminal.integrated.shell.linux": "/bin/bash",
   "terminal.integrated.shell.osx": "/bin/bash",
 
@@ -44,4 +44,4 @@ export const settings = `{
 
   "//k": "Disable preview so we can open all files at once",
   "workbench.editor.enablePreview": false
-}`;
+};

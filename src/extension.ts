@@ -104,7 +104,7 @@ class VSCodeEditor implements Editor {
     );
   }
 
-  async getSettings() {
+  async getSettings(): Promise<Settings> {
     if (!fs.existsSync(this.pathToSettings)) {
       return "{}";
     }
@@ -141,6 +141,15 @@ class VSCodeEditor implements Editor {
 
   showMessage(message: string) {
     vscode.window.showInformationMessage(message);
+  }
+
+  getConfiguration(): Configuration {
+    const configuration = vscode.workspace.getConfiguration("slides");
+
+    return {
+      theme: configuration.get("theme"),
+      fontFamily: configuration.get("fontFamily")
+    };
   }
 
   private openFile(file: Path): void {
@@ -242,8 +251,6 @@ type Path = string;
 
 // Domain
 
-import { settings } from "./settings";
-
 async function exit(editor: Editor, repository: Repository) {
   await restoreSettings(editor, repository);
   await editor.showSideBar();
@@ -280,7 +287,22 @@ async function setSlidesSettings(editor: Editor, repository: Repository) {
   await repository.store({
     settings: await editor.getSettings()
   });
-  await editor.setSettings(settings);
+  await editor.setSettings(getSlidesSettings(editor));
+}
+
+import { settings as defaults } from "./settings";
+
+function getSlidesSettings(editor: Editor): Settings {
+  const configured = editor.getConfiguration();
+
+  return JSON.stringify({
+    ...defaults,
+    "workbench.colorTheme":
+      configured.theme || defaults["workbench.colorTheme"],
+    "editor.fontFamily": configured.fontFamily || defaults["editor.fontFamily"],
+    "terminal.integrated.fontFamily":
+      configured.fontFamily || defaults["terminal.integrated.fontFamily"]
+  });
 }
 
 async function openAllSlides(editor: Editor) {
@@ -297,6 +319,12 @@ interface Editor {
   setSettings(settings: Settings): Promise<void>;
   showError(message: string): void;
   showMessage(message: string): void;
+  getConfiguration(): Configuration;
+}
+
+interface Configuration {
+  theme: string | null | undefined;
+  fontFamily: string | null | undefined;
 }
 
 interface Repository {
