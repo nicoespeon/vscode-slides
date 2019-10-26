@@ -80,6 +80,9 @@ class VSCodeEditor implements Editor {
 
   async closeAllTabs() {
     await vscode.commands.executeCommand("workbench.action.closeAllEditors");
+
+    // Wait so VS Code closes all tabs before we move on.
+    await wait(100);
   }
 
   async openAllFiles() {
