@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- When you have a large number of slides (like 60+), Slides will open all of them in the correct order. It won't be instant, but it will be in the correct order (and still quite fast).
+
 ## [2.0.0] - 2019-10-26
 
 ### Breaking changes

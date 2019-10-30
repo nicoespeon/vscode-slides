@@ -22,10 +22,9 @@ class VSCodeEditor implements Editor {
   }
 
   async openAllFiles() {
-    this.rootFolder.visibleFiles.forEach(file => this.openFile(file));
-
-    // Wait so VS Code opens every file before we focus on the first one.
-    await wait(100);
+    for (const file of this.rootFolder.visibleFiles) {
+      await this.openFile(file);
+    }
 
     await vscode.commands.executeCommand("workbench.action.openEditorAtIndex1");
   }
@@ -88,11 +87,14 @@ class VSCodeEditor implements Editor {
     };
   }
 
-  private openFile(file: Path): void {
+  private async openFile(file: Path): Promise<void> {
     vscode.commands.executeCommand(
       "vscode.open",
       vscode.Uri.file(this.rootFolder.pathTo(file))
     );
+
+    // Wait so VS Code has time to open the file before we move on.
+    await wait(50);
   }
 
   private get pathToSettings(): Path {
