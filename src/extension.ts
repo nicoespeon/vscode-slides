@@ -67,5 +67,5 @@ function getWorkspaceFolder(): Folder {
     );
   }
 
-  return new Folder(workspaceFolders[0].uri.path);
+  return new Folder(workspaceFolders[0].uri.fsPath);
 }
