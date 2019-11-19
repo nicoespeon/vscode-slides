@@ -98,7 +98,7 @@ class VSCodeEditor implements Editor {
   }
 
   private get pathToSettings(): Path {
-    return this.rootFolder.pathTo(".vscode/settings.json");
+    return this.rootFolder.pathTo(path.join(".vscode", "settings.json"));
   }
 }
 

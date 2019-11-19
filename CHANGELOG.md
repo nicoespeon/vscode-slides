@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Make path to settings OS agnostic, so the extension can work on Windows too
+
 ## [2.0.1] - 2019-11-03
 
 ### Fixed
