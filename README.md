@@ -1,6 +1,6 @@
 # 👩‍🏫 VS Code Slides
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
 
 Slides is a Visual Studio Code extension that helps you use your editor as a presentation tool.
 
