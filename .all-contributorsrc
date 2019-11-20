@@ -1,0 +1,37 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "nicoespeon",
+      "name": "Nicolas Carlo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1094774?v=3",
+      "profile": "https://github.com/nicoespeon",
+      "contributions": [
+        "question",
+        "code",
+        "documentation",
+        "review",
+        "ideas"
+      ]
+    },
+    {
+      "login": "divinebovine",
+      "name": "Daniel Dickerson",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2818169?v=4",
+      "profile": "https://github.com/divinebovine",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "vscode-slides",
+  "projectOwner": "nicoespeon",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
