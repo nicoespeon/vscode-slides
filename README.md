@@ -41,6 +41,8 @@ Use `Ctrl Alt p` (`⌘ ⌥ p` on Mac) to toggle Slides mode.
 
 You can also re-use _Toggle Slides mode_ to deactivate Slides.
 
+> If you want to change the default shortcuts, go in VS Code **Preferences > Keyboard Shortcuts** and search for `slides`. You should be able to override them.
+
 ## Pre-requisite
 
 Slides is opinionated. By default, you'll need to install:
