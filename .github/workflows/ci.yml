@@ -4,10 +4,9 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Tests
-      run: yarn test
+      - uses: actions/checkout@v1
+      - name: Tests
+        run: npm test
