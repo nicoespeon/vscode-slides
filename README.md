@@ -20,7 +20,7 @@ This is inspired from [André Staltz's post][andre-staltz-post] where he explain
 
 ### Toggle Slides mode
 
-Use `Ctrl Alt p` (`⌘ ⌥ p` on Mac) to toggle Slides mode.
+Use `Ctrl Alt P` (`⌘ ⌥ P` on Mac) to toggle Slides mode.
 
 **When you activate Slides**, a few things happen:
 
