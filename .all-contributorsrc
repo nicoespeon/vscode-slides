@@ -6,6 +6,19 @@
   "commit": false,
   "contributors": [
     {
+      "login": "nicoespeon",
+      "name": "Nicolas Carlo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1094774?v=3",
+      "profile": "https://github.com/nicoespeon",
+      "contributions": [
+        "question",
+        "code",
+        "documentation",
+        "review",
+        "ideas"
+      ]
+    },
+    {
       "login": "divinebovine",
       "name": "Daniel Dickerson",
       "avatar_url": "https://avatars0.githubusercontent.com/u/2818169?v=4",
