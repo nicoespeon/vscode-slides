@@ -85,12 +85,12 @@
       },
       {
         "command": "slides.previous",
-        "key": "ctrl+left",
+        "key": "ctrl+shift+alt+left",
         "mac": "cmd+left"
       },
       {
         "command": "slides.next",
-        "key": "ctrl+right",
+        "key": "ctrl+shift+alt+right",
         "mac": "cmd+right"
       },
       {
