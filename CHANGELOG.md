@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **(Breaking)** Change keybinding for Windows and Linux users, so it doesn't conflict with VS Code defaults one. Now you'd use `Ctrl Shift Alt →` to go to the next slide and `Ctrl Shift Alt ←` to go to the previous one.
+
 ## [2.0.3] - 2019-11-19
 
 ### Fixed
