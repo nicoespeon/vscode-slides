@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2019-11-23
+
 ### Changed
 
 - **(Breaking)** Change keybinding for Windows and Linux users, so it doesn't conflict with VS Code defaults one. Now you'd use `Ctrl Shift Alt →` to go to the next slide and `Ctrl Shift Alt ←` to go to the previous one.
@@ -72,7 +74,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Shortcuts to navigate between slides** when activated.
 - **Shortcut to deactivate Slides** when activated.
 
-[unreleased]: https://github.com/nicoespeon/vscode-slides/compare/2.0.3...HEAD
+[unreleased]: https://github.com/nicoespeon/vscode-slides/compare/3.0.0...HEAD
+[3.0.0]: https://github.com/nicoespeon/vscode-slides/compare/2.0.3...3.0.0
 [2.0.3]: https://github.com/nicoespeon/vscode-slides/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/nicoespeon/vscode-slides/compare/2.0.1...2.0.2
 [2.0.1]: https://github.com/nicoespeon/vscode-slides/compare/2.0.0...2.0.1
