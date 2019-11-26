@@ -17,6 +17,7 @@ This is inspired from [André Staltz's post][andre-staltz-post] where he explain
 - ⚡ Toggle Slides mode with a shortcut
 - 🎨 Apply optimized settings for presentation
 - 👐 Handy shortcuts to navigate between slides
+- Allow Markdown files to be rendered as previews for presentation
 
 ### Toggle Slides mode
 
@@ -33,11 +34,11 @@ Use `Ctrl Alt P` (`⌘ ⌥ P` on Mac) to toggle Slides mode.
 
 ### Navigate between tabs (when Slides is active)
 
-| Shortcut             | Shortcut on Mac | Operation            |
-| -------------------- | --------------- | -------------------- |
-| `Ctrl Shift Alt →`   | `⌘ →`           | Go to next slide     |
-| `Ctrl Shift Alt ←`   | `⌘ ←`           | Go to previous slide |
-| `Ctrl Esc`           | `⌘ Esc`         | Deactivate Slides    |
+| Shortcut           | Shortcut on Mac | Operation            |
+| ------------------ | --------------- | -------------------- |
+| `Ctrl Shift Alt →` | `⌘ →`           | Go to next slide     |
+| `Ctrl Shift Alt ←` | `⌘ ←`           | Go to previous slide |
+| `Ctrl Esc`         | `⌘ Esc`         | Deactivate Slides    |
 
 You can also re-use _Toggle Slides mode_ to deactivate Slides.
 

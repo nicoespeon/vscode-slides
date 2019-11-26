@@ -30,7 +30,11 @@ describe("start", () => {
   it("should override default slide settings with editor configuration", async () => {
     const editor = new FakeEditor();
     const repository = new InMemoryRepository();
-    const configuration = { theme: "A custom theme", fontFamily: "Helvetica" };
+    const configuration = {
+      theme: "A custom theme",
+      fontFamily: "Helvetica",
+      useMdPreview: false
+    };
     jest.spyOn(editor, "getConfiguration").mockReturnValue(configuration);
 
     await start(editor, repository);
@@ -41,6 +45,7 @@ describe("start", () => {
     expect(settings["terminal.integrated.fontFamily"]).toBe(
       configuration.fontFamily
     );
+    expect(settings["workbench.useMdPreview"]).toBe(false);
   });
 
   it("should close all editor tabs", async () => {
@@ -200,7 +205,7 @@ class FakeEditor implements Editor {
   showMessage() {}
 
   getConfiguration(): Configuration {
-    return { theme: null, fontFamily: null };
+    return { theme: null, fontFamily: null, useMdPreview: false };
   }
 }
 

@@ -83,7 +83,8 @@ class VSCodeEditor implements Editor {
 
     return {
       theme: configuration.get("theme"),
-      fontFamily: configuration.get("fontFamily")
+      fontFamily: configuration.get("fontFamily"),
+      useMdPreview: configuration.get<boolean>("useMdPreview", false)
     };
   }
 

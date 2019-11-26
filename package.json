@@ -111,6 +111,11 @@
           "type": "string",
           "default": "SF Mono",
           "description": "Font family to use. It should be installed on your machine."
+        },
+        "slides.useMdPreview": {
+          "type": "boolean",
+          "default": false,
+          "description": "Use the Markdown Preview pane to view Markdown files."
         }
       }
     }

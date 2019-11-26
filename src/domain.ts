@@ -51,7 +51,8 @@ function getSlidesSettings(editor: Editor): Settings {
       configured.theme || defaults["workbench.colorTheme"],
     "editor.fontFamily": configured.fontFamily || defaults["editor.fontFamily"],
     "terminal.integrated.fontFamily":
-      configured.fontFamily || defaults["terminal.integrated.fontFamily"]
+      configured.fontFamily || defaults["terminal.integrated.fontFamily"],
+    "workbench.useMdPreview": configured.useMdPreview || false
   });
 }
 
@@ -75,6 +76,10 @@ interface Editor {
 interface Configuration {
   theme: string | null | undefined;
   fontFamily: string | null | undefined;
+  useMdPreview:
+    | boolean
+    | false
+    | "Specifies whether or not to use the MarkDown Preview Pane to view .md files";
 }
 
 interface Repository {
