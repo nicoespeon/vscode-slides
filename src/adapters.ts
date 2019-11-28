@@ -85,7 +85,7 @@ class VSCodeEditor implements Editor {
       theme: configuration.get("theme"),
       fontFamily: configuration.get("fontFamily"),
       useMdPreview: configuration.get<boolean>("useMdPreview", false),
-      slidesFolder: configuration.get<string>("slidesFolder", "./")
+      slidesFolder: configuration.get<string>("slidesFolder", "")
     };
   }
 
