@@ -46,5 +46,8 @@ export const settings = {
   "workbench.editor.enablePreview": false,
 
   "//l": "Use the Markdown Preview pane to view Markdown files",
-  "workbench.useMdPreview": false
+  "workbench.useMdPreview": false,
+
+  "//m": "Use the Markdown Preview pane to view Markdown files",
+  "workbench.slidesFolder": ""
 };

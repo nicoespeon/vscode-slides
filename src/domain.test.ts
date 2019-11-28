@@ -33,7 +33,8 @@ describe("start", () => {
     const configuration = {
       theme: "A custom theme",
       fontFamily: "Helvetica",
-      useMdPreview: false
+      useMdPreview: false,
+      slidesFolder: ""
     };
     jest.spyOn(editor, "getConfiguration").mockReturnValue(configuration);
 
@@ -46,6 +47,7 @@ describe("start", () => {
       configuration.fontFamily
     );
     expect(settings["workbench.useMdPreview"]).toBe(false);
+    expect(settings["workbench.slidesFolder"]).toBe("");
   });
 
   it("should close all editor tabs", async () => {
@@ -205,7 +207,12 @@ class FakeEditor implements Editor {
   showMessage() {}
 
   getConfiguration(): Configuration {
-    return { theme: null, fontFamily: null, useMdPreview: false };
+    return {
+      theme: null,
+      fontFamily: null,
+      useMdPreview: false,
+      slidesFolder: ""
+    };
   }
 }
 

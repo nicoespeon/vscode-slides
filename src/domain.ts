@@ -52,7 +52,8 @@ function getSlidesSettings(editor: Editor): Settings {
     "editor.fontFamily": configured.fontFamily || defaults["editor.fontFamily"],
     "terminal.integrated.fontFamily":
       configured.fontFamily || defaults["terminal.integrated.fontFamily"],
-    "workbench.useMdPreview": configured.useMdPreview || false
+    "workbench.useMdPreview": configured.useMdPreview || false,
+    "workbench.slidesFolder": configured.slidesFolder || ""
   });
 }
 
@@ -80,6 +81,7 @@ interface Configuration {
     | boolean
     | false
     | "Specifies whether or not to use the MarkDown Preview Pane to view .md files";
+  slidesFolder: string | "" | "Project subfolder where the slides are located.";
 }
 
 interface Repository {
