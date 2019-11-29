@@ -15,6 +15,8 @@ async function restoreSettings(editor: Editor, repository: Repository) {
   }
 }
 
+import * as vscode from "vscode";
+
 async function start(editor: Editor, repository: Repository) {
   await setSlidesSettings(editor, repository);
 
@@ -57,9 +59,55 @@ function getSlidesSettings(editor: Editor): Settings {
   });
 }
 
+/*
+ *   The previous version of this method used the editor interface's
+ *   open all files method to open the files in the root folder. To
+ *   make sure that another settings file wasn't created, I had to
+ *   use a more manual process.
+ */
 async function openAllSlides(editor: Editor) {
+  var workspace = vscode.workspace;
+  var workspaceFolders = workspace.workspaceFolders;
+  const slidesFolder = workspace
+    .getConfiguration("slides")
+    .slidesFolder.replace(/.\/|\/$/g, "");
+
   await editor.closeAllTabs();
-  await editor.openAllFiles();
+  if (workspaceFolders !== undefined && workspaceFolders.length >= 1) {
+    var newUri = vscode.Uri.parse(
+      workspaceFolders[0].uri.path + "/" + slidesFolder
+    );
+    try {
+      var files = await workspace.fs.readDirectory(newUri);
+    } catch (e) {
+      console.error(e);
+      throw new Error(
+        "There was an error reading the slides directory. Please ensure that it exists."
+      );
+    }
+
+    //This iterates and opens all of the files in the active folder
+    for (let i = 0; i < files.length; i++) {
+      console.log("Loading file " + files[i][0]);
+      var openUri = vscode.Uri.parse(newUri.path + "/" + files[i][0]);
+      try {
+        await vscode.window.showTextDocument(openUri, {
+          preserveFocus: true,
+          preview: false,
+          viewColumn: vscode.ViewColumn.Active
+        });
+      } catch (e) {
+        console.error("There was an error loading file " + openUri.path);
+        console.error(e);
+        throw new Error("There was an error loading the file " + openUri.path);
+      }
+    }
+
+    //This is needed to make the first-opened document the active one
+    await vscode.window.showTextDocument(
+      vscode.Uri.parse(newUri.path + "/" + files[0][0])
+    );
+  }
 }
 
 interface Editor {
