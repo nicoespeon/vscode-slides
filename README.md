@@ -18,6 +18,7 @@ This is inspired from [André Staltz's post][andre-staltz-post] where he explain
 - 🎨 Apply optimized settings for presentation
 - 👐 Handy shortcuts to navigate between slides
 - Allow Markdown files to be rendered as previews for presentation
+- Allows for custom slides folder for greater flexibility
 
 ### Toggle Slides mode
 
@@ -68,6 +69,8 @@ If you don't want to use these, you can configure Slides theme and font family. 
 ### Tips
 
 - Prefer to keep coding files empty, or with easy content supposed to be known.
+- Leverage the Markdown preview setting to render Markdown files for increased readibility.
+- Separate presentation materials into a separate folder for cohesion.
 
 ## Release Notes
 
