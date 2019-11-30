@@ -17,7 +17,7 @@ This is inspired from [André Staltz's post][andre-staltz-post] where he explain
 - ⚡ Toggle Slides mode with a shortcut
 - 🎨 Apply optimized settings for presentation
 - 👐 Handy shortcuts to navigate between slides
-- Allow Markdown files to be rendered as previews for presentation
+- 📊 Preview Mardown files for better presentations
 
 ### Toggle Slides mode
 
@@ -43,6 +43,16 @@ Use `Ctrl Alt P` (`⌘ ⌥ P` on Mac) to toggle Slides mode.
 You can also re-use _Toggle Slides mode_ to deactivate Slides.
 
 > If you want to change the default shortcuts, go in VS Code **Preferences > Keyboard Shortcuts** and search for `slides`. You should be able to override them.
+
+### Configuration
+
+Here are the default settings of Slides you can override in your VS Code settings.
+
+| Name                  | Description            | Default              |
+| --------------------- | ---------------------- | -------------------- |
+| `slides.theme`        | VS Code theme to use   | `GitHub Clean White` |
+| `slides.fontFamily`   | Font family to use     | `SF Mono`            |
+| `slides.useMdPreview` | Preview Markdown files | `false`              |
 
 ## Pre-requisite
 
