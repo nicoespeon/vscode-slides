@@ -6,9 +6,9 @@ import { start, exit } from "./domain";
 
 export function activate(context: vscode.ExtensionContext) {
   const repository = new VSCodeRepository(context);
-  var curSlideUri: vscode.Uri;
-  var curSlideLanguageId: string;
-  var previewMarkdownFilesSetting: boolean;
+  let curSlideUri: vscode.Uri;
+  let curSlideLanguageId: string;
+  let previewMarkdownFilesSetting: boolean;
 
   const toggleSlides = vscode.commands.registerCommand(
     "slides.toggle",
@@ -23,7 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
         previewMarkdownFilesSetting = vscode.workspace.getConfiguration(
           "slides"
         ).previewMarkdownFiles;
-        let activeWindow = vscode.window.activeTextEditor;
+        const activeWindow = vscode.window.activeTextEditor;
 
         if (previewMarkdownFilesSetting && activeWindow !== undefined) {
           curSlideUri = activeWindow.document.uri;
@@ -51,7 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         await vscode.commands.executeCommand("workbench.action.previousEditor");
-        let activeWindow = vscode.window.activeTextEditor;
+        const activeWindow = vscode.window.activeTextEditor;
 
         if (previewMarkdownFilesSetting && activeWindow !== undefined) {
           curSlideLanguageId = activeWindow.document.languageId;
@@ -75,7 +75,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       await vscode.commands.executeCommand("workbench.action.nextEditor");
-      let activeWindow = vscode.window.activeTextEditor;
+      const activeWindow = vscode.window.activeTextEditor;
 
       if (previewMarkdownFilesSetting && activeWindow !== undefined) {
         curSlideLanguageId = activeWindow.document.languageId;
