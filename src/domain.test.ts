@@ -136,54 +136,82 @@ describe("toggle", () => {
       expect(isActive).toBe(true);
     });
   });
+
+  describe("slides mode was already toggled", () => {
+    shouldExitSlidesMode(async () => {
+      const editor = new FakeEditor();
+      const repository = new InMemoryRepository();
+
+      await toggle(editor, repository);
+
+      return {
+        editor,
+        repository,
+        execute: () => toggle(editor, repository)
+      };
+    });
+  });
 });
 
 describe("exit", () => {
-  it("should restore settings from repository", async () => {
-    const settings: Settings = "{}";
+  shouldExitSlidesMode(async () => {
     const editor = new FakeEditor();
     const repository = new InMemoryRepository();
-    jest.spyOn(editor, "setSettings");
-    repository.store({ isActive: true, settings });
+    repository.store({ isActive: true });
 
-    await exit(editor, repository);
+    return {
+      editor,
+      repository,
+      execute: () => exit(editor, repository)
+    };
+  });
+});
+
+function shouldExitSlidesMode(
+  createContext: () => Promise<{
+    execute: () => Promise<void>;
+    editor: Editor;
+    repository: Repository;
+  }>
+) {
+  it("should restore settings from repository", async () => {
+    const { editor, repository, execute } = await createContext();
+    const settings: Settings = "{}";
+    jest.spyOn(editor, "setSettings");
+    repository.store({ settings });
+
+    await execute();
 
     expect(editor.setSettings).toBeCalledWith(settings);
   });
 
   it("should not restore settings if none are stored", async () => {
-    const editor = new FakeEditor();
-    const repository = new InMemoryRepository();
-    repository.store({ isActive: true });
+    const { editor, execute } = await createContext();
     jest.spyOn(editor, "setSettings");
 
-    await exit(editor, repository);
+    await execute();
 
     expect(editor.setSettings).not.toBeCalled();
   });
 
   it("should show editor sidebar", async () => {
-    const editor = new FakeEditor();
-    const repository = new InMemoryRepository();
-    repository.store({ isActive: true });
+    const { editor, execute } = await createContext();
     jest.spyOn(editor, "showSideBar");
 
-    await exit(editor, repository);
+    await execute();
 
     expect(editor.showSideBar).toBeCalled();
   });
 
   it("should store deactivated state", async () => {
-    const editor = new FakeEditor();
-    const repository = new InMemoryRepository();
-    repository.store({ isActive: true });
+    const { repository, execute } = await createContext();
 
-    await exit(editor, repository);
+    await execute();
 
     const { isActive } = await repository.get();
     expect(isActive).toBe(false);
   });
-});
+}
 
 class FakeEditor implements Editor {
   private settings: Settings | null;
