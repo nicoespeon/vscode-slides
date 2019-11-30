@@ -43,16 +43,14 @@ async function setSlidesSettings(editor: Editor, repository: Repository) {
 import { settings as defaults } from "./settings";
 
 function getSlidesSettings(editor: Editor): Settings {
-  const configured = editor.getConfiguration();
+  const { theme, fontFamily, previewMarkdownFiles } = editor.getConfiguration();
 
   return JSON.stringify({
     ...defaults,
-    "workbench.colorTheme":
-      configured.theme || defaults["workbench.colorTheme"],
-    "editor.fontFamily": configured.fontFamily || defaults["editor.fontFamily"],
-    "terminal.integrated.fontFamily":
-      configured.fontFamily || defaults["terminal.integrated.fontFamily"],
-    ...(configured.previewMarkdownFiles && {
+    ...(theme && { "workbench.colorTheme": theme }),
+    ...(fontFamily && { "editor.fontFamily": fontFamily }),
+    ...(fontFamily && { "terminal.integrated.fontFamily": fontFamily }),
+    ...(previewMarkdownFiles && {
       "slides.previewMarkdownFiles": true
     })
   });
