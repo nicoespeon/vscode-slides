@@ -48,11 +48,11 @@ You can also re-use _Toggle Slides mode_ to deactivate Slides.
 
 Here are the default settings of Slides you can override in your VS Code settings.
 
-| Name                  | Description            | Default              |
-| --------------------- | ---------------------- | -------------------- |
-| `slides.theme`        | VS Code theme to use   | `GitHub Clean White` |
-| `slides.fontFamily`   | Font family to use     | `SF Mono`            |
-| `slides.useMdPreview` | Preview Markdown files | `false`              |
+| Name                          | Description            | Default              |
+| ----------------------------- | ---------------------- | -------------------- |
+| `slides.theme`                | VS Code theme to use   | `GitHub Clean White` |
+| `slides.fontFamily`           | Font family to use     | `SF Mono`            |
+| `slides.previewMarkdownFiles` | Preview Markdown files | `false`              |
 
 ## Pre-requisite
 

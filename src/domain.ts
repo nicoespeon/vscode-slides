@@ -52,7 +52,7 @@ function getSlidesSettings(editor: Editor): Settings {
     "editor.fontFamily": configured.fontFamily || defaults["editor.fontFamily"],
     "terminal.integrated.fontFamily":
       configured.fontFamily || defaults["terminal.integrated.fontFamily"],
-    "workbench.useMdPreview": configured.useMdPreview || false
+    "workbench.previewMarkdownFiles": configured.previewMarkdownFiles || false
   });
 }
 
@@ -76,7 +76,7 @@ interface Editor {
 interface Configuration {
   theme: string | null | undefined;
   fontFamily: string | null | undefined;
-  useMdPreview:
+  previewMarkdownFiles:
     | boolean
     | false
     | "Specifies whether or not to use the MarkDown Preview Pane to view .md files";

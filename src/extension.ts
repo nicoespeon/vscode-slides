@@ -8,7 +8,7 @@ export function activate(context: vscode.ExtensionContext) {
   const repository = new VSCodeRepository(context);
   var curSlideUri: vscode.Uri;
   var curSlideLanguageId: string;
-  var useMdPreviewSetting: boolean;
+  var previewMarkdownFilesSetting: boolean;
 
   const toggleSlides = vscode.commands.registerCommand(
     "slides.toggle",
@@ -20,11 +20,12 @@ export function activate(context: vscode.ExtensionContext) {
         await exit(vscodeEditor, repository);
       } else {
         await start(vscodeEditor, repository);
-        useMdPreviewSetting = vscode.workspace.getConfiguration("slides")
-          .useMdPreview;
+        previewMarkdownFilesSetting = vscode.workspace.getConfiguration(
+          "slides"
+        ).previewMarkdownFiles;
         let activeWindow = vscode.window.activeTextEditor;
 
-        if (useMdPreviewSetting && activeWindow !== undefined) {
+        if (previewMarkdownFilesSetting && activeWindow !== undefined) {
           curSlideUri = activeWindow.document.uri;
           curSlideLanguageId = activeWindow.document.languageId;
 
@@ -42,7 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
       const { isActive } = await repository.get();
 
       if (isActive) {
-        if (useMdPreviewSetting && curSlideLanguageId === "markdown") {
+        if (previewMarkdownFilesSetting && curSlideLanguageId === "markdown") {
           await vscode.commands.executeCommand(
             "workbench.action.closeActiveEditor"
           );
@@ -52,7 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
         await vscode.commands.executeCommand("workbench.action.previousEditor");
         let activeWindow = vscode.window.activeTextEditor;
 
-        if (useMdPreviewSetting && activeWindow !== undefined) {
+        if (previewMarkdownFilesSetting && activeWindow !== undefined) {
           curSlideLanguageId = activeWindow.document.languageId;
           if (activeWindow.document.languageId === "markdown") {
             await vscode.commands.executeCommand("markdown.showPreview");
@@ -66,7 +67,7 @@ export function activate(context: vscode.ExtensionContext) {
     const { isActive } = await repository.get();
 
     if (isActive) {
-      if (useMdPreviewSetting && curSlideLanguageId === "markdown") {
+      if (previewMarkdownFilesSetting && curSlideLanguageId === "markdown") {
         await vscode.commands.executeCommand(
           "workbench.action.closeActiveEditor"
         );
@@ -76,7 +77,7 @@ export function activate(context: vscode.ExtensionContext) {
       await vscode.commands.executeCommand("workbench.action.nextEditor");
       let activeWindow = vscode.window.activeTextEditor;
 
-      if (useMdPreviewSetting && activeWindow !== undefined) {
+      if (previewMarkdownFilesSetting && activeWindow !== undefined) {
         curSlideLanguageId = activeWindow.document.languageId;
         if (activeWindow.document.languageId === "markdown") {
           await vscode.commands.executeCommand("markdown.showPreview");
