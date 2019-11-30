@@ -144,7 +144,7 @@ describe("exit", () => {
     const editor = new FakeEditor();
     const repository = new InMemoryRepository();
     jest.spyOn(editor, "setSettings");
-    repository.store({ settings });
+    repository.store({ isActive: true, settings });
 
     await exit(editor, repository);
 
@@ -154,6 +154,7 @@ describe("exit", () => {
   it("should not restore settings if none are stored", async () => {
     const editor = new FakeEditor();
     const repository = new InMemoryRepository();
+    repository.store({ isActive: true });
     jest.spyOn(editor, "setSettings");
 
     await exit(editor, repository);
@@ -164,6 +165,7 @@ describe("exit", () => {
   it("should show editor sidebar", async () => {
     const editor = new FakeEditor();
     const repository = new InMemoryRepository();
+    repository.store({ isActive: true });
     jest.spyOn(editor, "showSideBar");
 
     await exit(editor, repository);

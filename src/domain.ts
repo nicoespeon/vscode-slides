@@ -1,10 +1,48 @@
-export { exit, start };
+export { toggle, previous, next, exit, start };
 export { Editor, Configuration, Repository, State, Settings };
 
+async function toggle(editor: Editor, repository: Repository) {
+  const { isActive } = await repository.get();
+
+  if (isActive) {
+    await exit(editor, repository);
+  } else {
+    await start(editor, repository);
+  }
+}
+
+async function previous(editor: Editor, repository: Repository) {
+  const { isActive } = await repository.get();
+
+  if (isActive) {
+    // Close & open markdown previews glitches on consecutive mardown slides.
+    // We could improve that if we know what the previous slide would be.
+    await editor.closeMarkdownPreview();
+    await editor.openPreviousFile();
+    await editor.previewIfMarkdown();
+  }
+}
+
+async function next(editor: Editor, repository: Repository) {
+  const { isActive } = await repository.get();
+
+  if (isActive) {
+    // Close & open markdown previews glitches on consecutive mardown slides.
+    // We could improve that if we know what the next slide would be.
+    await editor.closeMarkdownPreview();
+    await editor.openNextFile();
+    await editor.previewIfMarkdown();
+  }
+}
+
 async function exit(editor: Editor, repository: Repository) {
-  await restoreSettings(editor, repository);
-  await editor.showSideBar();
-  await repository.store({ isActive: false });
+  const { isActive } = await repository.get();
+
+  if (isActive) {
+    await restoreSettings(editor, repository);
+    await editor.showSideBar();
+    await repository.store({ isActive: false });
+  }
 }
 
 async function restoreSettings(editor: Editor, repository: Repository) {
@@ -31,6 +69,7 @@ async function start(editor: Editor, repository: Repository) {
 
   await editor.hideSideBar();
   await repository.store({ isActive: true });
+  await editor.previewIfMarkdown();
 }
 
 async function setSlidesSettings(editor: Editor, repository: Repository) {

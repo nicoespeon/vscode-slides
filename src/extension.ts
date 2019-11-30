@@ -2,62 +2,26 @@ import * as vscode from "vscode";
 
 import { VSCodeRepository, VSCodeEditor } from "./adapters";
 import { Folder } from "./adapters";
-import { start, exit } from "./domain";
+import { exit, toggle, previous, next } from "./domain";
 
 export function activate(context: vscode.ExtensionContext) {
   const vscodeEditor = new VSCodeEditor(getWorkspaceFolder());
   const repository = new VSCodeRepository(context);
 
-  const toggleSlides = vscode.commands.registerCommand(
-    "slides.toggle",
-    async () => {
-      const { isActive } = await repository.get();
-
-      if (isActive) {
-        await exit(vscodeEditor, repository);
-      } else {
-        await start(vscodeEditor, repository);
-        await vscodeEditor.previewIfMarkdown();
-      }
-    }
+  const toggleSlides = vscode.commands.registerCommand("slides.toggle", () =>
+    toggle(vscodeEditor, repository)
   );
 
-  const previousSlide = vscode.commands.registerCommand(
-    "slides.previous",
-    async () => {
-      const { isActive } = await repository.get();
-
-      if (isActive) {
-        // Close & open markdown previews glitches on consecutive mardown slides.
-        // We could improve that if we know what the previous slide would be.
-        await vscodeEditor.closeMarkdownPreview();
-        await vscodeEditor.openPreviousFile();
-        await vscodeEditor.previewIfMarkdown();
-      }
-    }
+  const previousSlide = vscode.commands.registerCommand("slides.previous", () =>
+    previous(vscodeEditor, repository)
   );
 
-  const nextSlide = vscode.commands.registerCommand("slides.next", async () => {
-    const { isActive } = await repository.get();
+  const nextSlide = vscode.commands.registerCommand("slides.next", () =>
+    next(vscodeEditor, repository)
+  );
 
-    if (isActive) {
-      // Close & open markdown previews glitches on consecutive mardown slides.
-      // We could improve that if we know what the next slide would be.
-      await vscodeEditor.closeMarkdownPreview();
-      await vscodeEditor.openNextFile();
-      await vscodeEditor.previewIfMarkdown();
-    }
-  });
-
-  const exitSlides = vscode.commands.registerCommand(
-    "slides.exit",
-    async () => {
-      const { isActive } = await repository.get();
-
-      if (isActive) {
-        await exit(vscodeEditor, repository);
-      }
-    }
+  const exitSlides = vscode.commands.registerCommand("slides.exit", () =>
+    exit(vscodeEditor, repository)
   );
 
   context.subscriptions.push(toggleSlides);
