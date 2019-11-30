@@ -2,99 +2,26 @@ import * as vscode from "vscode";
 
 import { VSCodeRepository, VSCodeEditor } from "./adapters";
 import { Folder } from "./adapters";
-import { start, exit } from "./domain";
+import { exit, toggle, previous, next } from "./domain";
 
 export function activate(context: vscode.ExtensionContext) {
+  const vscodeEditor = new VSCodeEditor(getWorkspaceFolder());
   const repository = new VSCodeRepository(context);
-  var curSlideUri: vscode.Uri;
-  var curSlideLanguageId: string;
-  var useMdPreviewSetting: boolean;
 
-  const toggleSlides = vscode.commands.registerCommand(
-    "slides.toggle",
-    async () => {
-      const vscodeEditor = new VSCodeEditor(getWorkspaceFolder());
-      const { isActive } = await repository.get();
-
-      if (isActive) {
-        await exit(vscodeEditor, repository);
-      } else {
-        await start(vscodeEditor, repository);
-        useMdPreviewSetting = vscode.workspace.getConfiguration("slides")
-          .useMdPreview;
-        let activeWindow = vscode.window.activeTextEditor;
-
-        if (useMdPreviewSetting && activeWindow !== undefined) {
-          curSlideUri = activeWindow.document.uri;
-          curSlideLanguageId = activeWindow.document.languageId;
-
-          if (activeWindow.document.languageId === "markdown") {
-            await vscode.commands.executeCommand("markdown.showPreview");
-          }
-        }
-      }
-    }
+  const toggleSlides = vscode.commands.registerCommand("slides.toggle", () =>
+    toggle(vscodeEditor, repository)
   );
 
-  const previousSlide = vscode.commands.registerCommand(
-    "slides.previous",
-    async () => {
-      const { isActive } = await repository.get();
-
-      if (isActive) {
-        if (useMdPreviewSetting && curSlideLanguageId === "markdown") {
-          await vscode.commands.executeCommand(
-            "workbench.action.closeActiveEditor"
-          );
-          await vscode.workspace.openTextDocument(curSlideUri);
-        }
-
-        await vscode.commands.executeCommand("workbench.action.previousEditor");
-        let activeWindow = vscode.window.activeTextEditor;
-
-        if (useMdPreviewSetting && activeWindow !== undefined) {
-          curSlideLanguageId = activeWindow.document.languageId;
-          if (activeWindow.document.languageId === "markdown") {
-            await vscode.commands.executeCommand("markdown.showPreview");
-          }
-        }
-      }
-    }
+  const previousSlide = vscode.commands.registerCommand("slides.previous", () =>
+    previous(vscodeEditor, repository)
   );
 
-  const nextSlide = vscode.commands.registerCommand("slides.next", async () => {
-    const { isActive } = await repository.get();
+  const nextSlide = vscode.commands.registerCommand("slides.next", () =>
+    next(vscodeEditor, repository)
+  );
 
-    if (isActive) {
-      if (useMdPreviewSetting && curSlideLanguageId === "markdown") {
-        await vscode.commands.executeCommand(
-          "workbench.action.closeActiveEditor"
-        );
-        await vscode.workspace.openTextDocument(curSlideUri);
-      }
-
-      await vscode.commands.executeCommand("workbench.action.nextEditor");
-      let activeWindow = vscode.window.activeTextEditor;
-
-      if (useMdPreviewSetting && activeWindow !== undefined) {
-        curSlideLanguageId = activeWindow.document.languageId;
-        if (activeWindow.document.languageId === "markdown") {
-          await vscode.commands.executeCommand("markdown.showPreview");
-        }
-      }
-    }
-  });
-
-  const exitSlides = vscode.commands.registerCommand(
-    "slides.exit",
-    async () => {
-      const vscodeEditor = new VSCodeEditor(getWorkspaceFolder());
-      const { isActive } = await repository.get();
-
-      if (isActive) {
-        await exit(vscodeEditor, repository);
-      }
-    }
+  const exitSlides = vscode.commands.registerCommand("slides.exit", () =>
+    exit(vscodeEditor, repository)
   );
 
   context.subscriptions.push(toggleSlides);
