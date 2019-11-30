@@ -192,7 +192,8 @@ class FakeEditor implements Editor {
 
   async closeAllTabs() {}
   async openAllFiles() {}
-
+  async openPreviousFile() {}
+  async openNextFile() {}
   async previewIfMarkdown() {}
   async closeMarkdownPreview() {}
 

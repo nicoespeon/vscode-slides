@@ -31,7 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
         // Close & open markdown previews glitches on consecutive mardown slides.
         // We could improve that if we know what the previous slide would be.
         await vscodeEditor.closeMarkdownPreview();
-        await vscode.commands.executeCommand("workbench.action.previousEditor");
+        await vscodeEditor.openPreviousFile();
         await vscodeEditor.previewIfMarkdown();
       }
     }
@@ -44,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
       // Close & open markdown previews glitches on consecutive mardown slides.
       // We could improve that if we know what the next slide would be.
       await vscodeEditor.closeMarkdownPreview();
-      await vscode.commands.executeCommand("workbench.action.nextEditor");
+      await vscodeEditor.openNextFile();
       await vscodeEditor.previewIfMarkdown();
     }
   });
