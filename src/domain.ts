@@ -76,10 +76,7 @@ interface Editor {
 interface Configuration {
   theme: string | null | undefined;
   fontFamily: string | null | undefined;
-  previewMarkdownFiles:
-    | boolean
-    | false
-    | "Specifies whether or not to use the MarkDown Preview Pane to view .md files";
+  previewMarkdownFiles: boolean;
 }
 
 interface Repository {
