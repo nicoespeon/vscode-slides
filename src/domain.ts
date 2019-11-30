@@ -1,10 +1,48 @@
-export { exit, start };
+export { toggle, previous, next, exit };
 export { Editor, Configuration, Repository, State, Settings };
 
+async function toggle(editor: Editor, repository: Repository) {
+  const { isActive } = await repository.get();
+
+  if (isActive) {
+    await exit(editor, repository);
+  } else {
+    await start(editor, repository);
+  }
+}
+
+async function previous(editor: Editor, repository: Repository) {
+  const { isActive } = await repository.get();
+
+  if (isActive) {
+    // Close & open markdown previews glitches on consecutive mardown slides.
+    // We could improve that if we know what the previous slide would be.
+    await editor.closeMarkdownPreview();
+    await editor.openPreviousFile();
+    await editor.previewIfMarkdown();
+  }
+}
+
+async function next(editor: Editor, repository: Repository) {
+  const { isActive } = await repository.get();
+
+  if (isActive) {
+    // Close & open markdown previews glitches on consecutive mardown slides.
+    // We could improve that if we know what the next slide would be.
+    await editor.closeMarkdownPreview();
+    await editor.openNextFile();
+    await editor.previewIfMarkdown();
+  }
+}
+
 async function exit(editor: Editor, repository: Repository) {
-  await restoreSettings(editor, repository);
-  await editor.showSideBar();
-  await repository.store({ isActive: false });
+  const { isActive } = await repository.get();
+
+  if (isActive) {
+    await restoreSettings(editor, repository);
+    await editor.showSideBar();
+    await repository.store({ isActive: false });
+  }
 }
 
 async function restoreSettings(editor: Editor, repository: Repository) {
@@ -31,6 +69,7 @@ async function start(editor: Editor, repository: Repository) {
 
   await editor.hideSideBar();
   await repository.store({ isActive: true });
+  await editor.previewIfMarkdown();
 }
 
 async function setSlidesSettings(editor: Editor, repository: Repository) {
@@ -43,15 +82,16 @@ async function setSlidesSettings(editor: Editor, repository: Repository) {
 import { settings as defaults } from "./settings";
 
 function getSlidesSettings(editor: Editor): Settings {
-  const configured = editor.getConfiguration();
+  const { theme, fontFamily, previewMarkdownFiles } = editor.getConfiguration();
 
   return JSON.stringify({
     ...defaults,
-    "workbench.colorTheme":
-      configured.theme || defaults["workbench.colorTheme"],
-    "editor.fontFamily": configured.fontFamily || defaults["editor.fontFamily"],
-    "terminal.integrated.fontFamily":
-      configured.fontFamily || defaults["terminal.integrated.fontFamily"]
+    ...(theme && { "workbench.colorTheme": theme }),
+    ...(fontFamily && { "editor.fontFamily": fontFamily }),
+    ...(fontFamily && { "terminal.integrated.fontFamily": fontFamily }),
+    ...(previewMarkdownFiles && {
+      "slides.previewMarkdownFiles": true
+    })
   });
 }
 
@@ -63,6 +103,10 @@ async function openAllSlides(editor: Editor) {
 interface Editor {
   closeAllTabs(): Promise<void>;
   openAllFiles(): Promise<void>;
+  openPreviousFile(): Promise<void>;
+  openNextFile(): Promise<void>;
+  previewIfMarkdown(): Promise<void>;
+  closeMarkdownPreview(): Promise<void>;
   hideSideBar(): Promise<void>;
   showSideBar(): Promise<void>;
   getSettings(): Promise<Settings | null>;
@@ -75,6 +119,7 @@ interface Editor {
 interface Configuration {
   theme: string | null | undefined;
   fontFamily: string | null | undefined;
+  previewMarkdownFiles: boolean;
 }
 
 interface Repository {

@@ -9,6 +9,7 @@ export { Folder };
 
 class VSCodeEditor implements Editor {
   private rootFolder: Folder;
+  private previewedMarkdownUri: vscode.Uri | null = null;
 
   constructor(rootFolder: Folder) {
     this.rootFolder = rootFolder;
@@ -27,6 +28,42 @@ class VSCodeEditor implements Editor {
     }
 
     await vscode.commands.executeCommand("workbench.action.openEditorAtIndex1");
+  }
+
+  async openPreviousFile() {
+    await vscode.commands.executeCommand("workbench.action.previousEditor");
+  }
+
+  async openNextFile() {
+    await vscode.commands.executeCommand("workbench.action.nextEditor");
+  }
+
+  async previewIfMarkdown() {
+    const { previewMarkdownFiles } = this.getConfiguration();
+    if (!previewMarkdownFiles) return;
+
+    const activeWindow = vscode.window.activeTextEditor;
+    if (!activeWindow) return;
+    if (activeWindow.document.languageId !== "markdown") return;
+
+    await vscode.commands.executeCommand("markdown.showPreview");
+    this.previewedMarkdownUri = activeWindow.document.uri;
+  }
+
+  async closeMarkdownPreview() {
+    if (this.previewedMarkdownUri && this.isOnMarkdownPreview) {
+      await vscode.commands.executeCommand(
+        "workbench.action.closeActiveEditor"
+      );
+      await vscode.workspace.openTextDocument(this.previewedMarkdownUri);
+    }
+
+    this.previewedMarkdownUri = null;
+  }
+
+  private get isOnMarkdownPreview(): boolean {
+    // Preview is not an active text editor
+    return !vscode.window.activeTextEditor;
   }
 
   async hideSideBar() {
@@ -83,7 +120,11 @@ class VSCodeEditor implements Editor {
 
     return {
       theme: configuration.get("theme"),
-      fontFamily: configuration.get("fontFamily")
+      fontFamily: configuration.get("fontFamily"),
+      previewMarkdownFiles: configuration.get<boolean>(
+        "previewMarkdownFiles",
+        false
+      )
     };
   }
 

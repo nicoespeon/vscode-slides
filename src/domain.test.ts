@@ -1,16 +1,16 @@
-import { start, exit } from "./domain";
+import { toggle, previous, next, exit } from "./domain";
 import { Editor, Settings, Configuration, Repository, State } from "./domain";
 
 import { settings as defaultSettings } from "./settings";
 
-describe("start", () => {
+describe("toggle", () => {
   it("should store current editor settings", async () => {
     const editorSettings: Settings = "{}";
     const editor = new FakeEditor(editorSettings);
     const repository = new InMemoryRepository();
     repository.store({ settings: "" });
 
-    await start(editor, repository);
+    await toggle(editor, repository);
 
     const { settings } = await repository.get();
     expect(settings).toBe(editorSettings);
@@ -21,7 +21,7 @@ describe("start", () => {
     const editor = new FakeEditor(editorSettings);
     const repository = new InMemoryRepository();
 
-    await start(editor, repository);
+    await toggle(editor, repository);
 
     const settings = JSON.parse((await editor.getSettings()) || "");
     expect(settings).toEqual(defaultSettings);
@@ -30,16 +30,23 @@ describe("start", () => {
   it("should override default slide settings with editor configuration", async () => {
     const editor = new FakeEditor();
     const repository = new InMemoryRepository();
-    const configuration = { theme: "A custom theme", fontFamily: "Helvetica" };
+    const configuration = {
+      theme: "A custom theme",
+      fontFamily: "Helvetica",
+      previewMarkdownFiles: true
+    };
     jest.spyOn(editor, "getConfiguration").mockReturnValue(configuration);
 
-    await start(editor, repository);
+    await toggle(editor, repository);
 
     const settings = JSON.parse((await editor.getSettings()) || "");
     expect(settings["workbench.colorTheme"]).toBe(configuration.theme);
     expect(settings["editor.fontFamily"]).toBe(configuration.fontFamily);
     expect(settings["terminal.integrated.fontFamily"]).toBe(
       configuration.fontFamily
+    );
+    expect(settings["slides.previewMarkdownFiles"]).toBe(
+      configuration.previewMarkdownFiles
     );
   });
 
@@ -48,7 +55,7 @@ describe("start", () => {
     const repository = new InMemoryRepository();
     jest.spyOn(editor, "closeAllTabs");
 
-    await start(editor, repository);
+    await toggle(editor, repository);
 
     expect(editor.closeAllTabs).toBeCalled();
   });
@@ -58,7 +65,7 @@ describe("start", () => {
     const repository = new InMemoryRepository();
     jest.spyOn(editor, "openAllFiles");
 
-    await start(editor, repository);
+    await toggle(editor, repository);
 
     expect(editor.openAllFiles).toBeCalled();
   });
@@ -71,7 +78,7 @@ describe("start", () => {
       const repository = new InMemoryRepository();
       jest.spyOn(editor, "showError");
 
-      await start(editor, repository);
+      await toggle(editor, repository);
 
       expect(editor.showError).toBeCalledWith(
         expect.stringContaining(errorMessage)
@@ -83,7 +90,7 @@ describe("start", () => {
       const repository = new InMemoryRepository();
       jest.spyOn(editor, "hideSideBar");
 
-      await start(editor, repository);
+      await toggle(editor, repository);
 
       expect(editor.hideSideBar).not.toBeCalled();
     });
@@ -93,7 +100,7 @@ describe("start", () => {
       const repository = new InMemoryRepository();
       repository.store({ isActive: false });
 
-      await start(editor, repository);
+      await toggle(editor, repository);
 
       const { isActive } = await repository.get();
       expect(isActive).toBe(true);
@@ -113,7 +120,7 @@ describe("start", () => {
       const repository = new InMemoryRepository();
       jest.spyOn(editor, "hideSideBar");
 
-      await start(editor, repository);
+      await toggle(editor, repository);
 
       expect(editor.hideSideBar).toBeCalled();
     });
@@ -123,58 +130,180 @@ describe("start", () => {
       const repository = new InMemoryRepository();
       repository.store({ isActive: false });
 
-      await start(editor, repository);
+      await toggle(editor, repository);
 
       const { isActive } = await repository.get();
       expect(isActive).toBe(true);
     });
   });
+
+  describe("slides mode was already toggled", () => {
+    shouldExitSlidesMode(async () => {
+      const editor = new FakeEditor();
+      const repository = new InMemoryRepository();
+
+      await toggle(editor, repository);
+
+      return {
+        editor,
+        repository,
+        execute: () => toggle(editor, repository)
+      };
+    });
+  });
+});
+
+describe("previous", () => {
+  it("should close previewed markdown", async () => {
+    const editor = new FakeEditor();
+    const repository = new InMemoryRepository();
+    repository.store({ isActive: true });
+    jest.spyOn(editor, "closeMarkdownPreview");
+
+    await previous(editor, repository);
+
+    expect(editor.closeMarkdownPreview).toBeCalled();
+  });
+
+  it("should open previous file", async () => {
+    const editor = new FakeEditor();
+    const repository = new InMemoryRepository();
+    repository.store({ isActive: true });
+    jest.spyOn(editor, "openPreviousFile");
+
+    await previous(editor, repository);
+
+    expect(editor.openPreviousFile).toBeCalled();
+  });
+
+  it("should preview open file if it's markdown", async () => {
+    const editor = new FakeEditor();
+    const repository = new InMemoryRepository();
+    repository.store({ isActive: true });
+    jest.spyOn(editor, "previewIfMarkdown");
+
+    await previous(editor, repository);
+
+    expect(editor.previewIfMarkdown).toBeCalled();
+  });
+
+  it("should not open previous file if slides is not active", async () => {
+    const editor = new FakeEditor();
+    const repository = new InMemoryRepository();
+    repository.store({ isActive: false });
+    jest.spyOn(editor, "openPreviousFile");
+
+    await previous(editor, repository);
+
+    expect(editor.openPreviousFile).not.toBeCalled();
+  });
+});
+
+describe("next", () => {
+  it("should close previewed markdown", async () => {
+    const editor = new FakeEditor();
+    const repository = new InMemoryRepository();
+    repository.store({ isActive: true });
+    jest.spyOn(editor, "closeMarkdownPreview");
+
+    await next(editor, repository);
+
+    expect(editor.closeMarkdownPreview).toBeCalled();
+  });
+
+  it("should open next file", async () => {
+    const editor = new FakeEditor();
+    const repository = new InMemoryRepository();
+    repository.store({ isActive: true });
+    jest.spyOn(editor, "openNextFile");
+
+    await next(editor, repository);
+
+    expect(editor.openNextFile).toBeCalled();
+  });
+
+  it("should preview open file if it's markdown", async () => {
+    const editor = new FakeEditor();
+    const repository = new InMemoryRepository();
+    repository.store({ isActive: true });
+    jest.spyOn(editor, "previewIfMarkdown");
+
+    await next(editor, repository);
+
+    expect(editor.previewIfMarkdown).toBeCalled();
+  });
+
+  it("should not open next file if slides is not active", async () => {
+    const editor = new FakeEditor();
+    const repository = new InMemoryRepository();
+    repository.store({ isActive: false });
+    jest.spyOn(editor, "openNextFile");
+
+    await next(editor, repository);
+
+    expect(editor.openNextFile).not.toBeCalled();
+  });
 });
 
 describe("exit", () => {
-  it("should restore settings from repository", async () => {
-    const settings: Settings = "{}";
+  shouldExitSlidesMode(async () => {
     const editor = new FakeEditor();
     const repository = new InMemoryRepository();
+    repository.store({ isActive: true });
+
+    return {
+      editor,
+      repository,
+      execute: () => exit(editor, repository)
+    };
+  });
+});
+
+function shouldExitSlidesMode(
+  createContext: () => Promise<{
+    execute: () => Promise<void>;
+    editor: Editor;
+    repository: Repository;
+  }>
+) {
+  it("should restore settings from repository", async () => {
+    const { editor, repository, execute } = await createContext();
+    const settings: Settings = "{}";
     jest.spyOn(editor, "setSettings");
     repository.store({ settings });
 
-    await exit(editor, repository);
+    await execute();
 
     expect(editor.setSettings).toBeCalledWith(settings);
   });
 
   it("should not restore settings if none are stored", async () => {
-    const editor = new FakeEditor();
-    const repository = new InMemoryRepository();
+    const { editor, execute } = await createContext();
     jest.spyOn(editor, "setSettings");
 
-    await exit(editor, repository);
+    await execute();
 
     expect(editor.setSettings).not.toBeCalled();
   });
 
   it("should show editor sidebar", async () => {
-    const editor = new FakeEditor();
-    const repository = new InMemoryRepository();
+    const { editor, execute } = await createContext();
     jest.spyOn(editor, "showSideBar");
 
-    await exit(editor, repository);
+    await execute();
 
     expect(editor.showSideBar).toBeCalled();
   });
 
   it("should store deactivated state", async () => {
-    const editor = new FakeEditor();
-    const repository = new InMemoryRepository();
-    repository.store({ isActive: true });
+    const { repository, execute } = await createContext();
 
-    await exit(editor, repository);
+    await execute();
 
     const { isActive } = await repository.get();
     expect(isActive).toBe(false);
   });
-});
+}
 
 class FakeEditor implements Editor {
   private settings: Settings | null;
@@ -185,6 +314,10 @@ class FakeEditor implements Editor {
 
   async closeAllTabs() {}
   async openAllFiles() {}
+  async openPreviousFile() {}
+  async openNextFile() {}
+  async previewIfMarkdown() {}
+  async closeMarkdownPreview() {}
 
   async hideSideBar() {}
   async showSideBar() {}
@@ -200,7 +333,7 @@ class FakeEditor implements Editor {
   showMessage() {}
 
   getConfiguration(): Configuration {
-    return { theme: null, fontFamily: null };
+    return { theme: null, fontFamily: null, previewMarkdownFiles: false };
   }
 }
 

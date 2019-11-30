@@ -2,54 +2,26 @@ import * as vscode from "vscode";
 
 import { VSCodeRepository, VSCodeEditor } from "./adapters";
 import { Folder } from "./adapters";
-import { start, exit } from "./domain";
+import { exit, toggle, previous, next } from "./domain";
 
 export function activate(context: vscode.ExtensionContext) {
+  const vscodeEditor = new VSCodeEditor(getWorkspaceFolder());
   const repository = new VSCodeRepository(context);
 
-  const toggleSlides = vscode.commands.registerCommand(
-    "slides.toggle",
-    async () => {
-      const vscodeEditor = new VSCodeEditor(getWorkspaceFolder());
-      const { isActive } = await repository.get();
-
-      if (isActive) {
-        await exit(vscodeEditor, repository);
-      } else {
-        await start(vscodeEditor, repository);
-      }
-    }
+  const toggleSlides = vscode.commands.registerCommand("slides.toggle", () =>
+    toggle(vscodeEditor, repository)
   );
 
-  const previousSlide = vscode.commands.registerCommand(
-    "slides.previous",
-    async () => {
-      const { isActive } = await repository.get();
-
-      if (isActive) {
-        await vscode.commands.executeCommand("workbench.action.previousEditor");
-      }
-    }
+  const previousSlide = vscode.commands.registerCommand("slides.previous", () =>
+    previous(vscodeEditor, repository)
   );
 
-  const nextSlide = vscode.commands.registerCommand("slides.next", async () => {
-    const { isActive } = await repository.get();
+  const nextSlide = vscode.commands.registerCommand("slides.next", () =>
+    next(vscodeEditor, repository)
+  );
 
-    if (isActive) {
-      await vscode.commands.executeCommand("workbench.action.nextEditor");
-    }
-  });
-
-  const exitSlides = vscode.commands.registerCommand(
-    "slides.exit",
-    async () => {
-      const vscodeEditor = new VSCodeEditor(getWorkspaceFolder());
-      const { isActive } = await repository.get();
-
-      if (isActive) {
-        await exit(vscodeEditor, repository);
-      }
-    }
+  const exitSlides = vscode.commands.registerCommand("slides.exit", () =>
+    exit(vscodeEditor, repository)
   );
 
   context.subscriptions.push(toggleSlides);
