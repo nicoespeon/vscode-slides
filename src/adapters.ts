@@ -9,8 +9,7 @@ export { Folder };
 
 class VSCodeEditor implements Editor {
   private rootFolder: Folder;
-  private curSlideLanguageId: string | undefined;
-  private curSlideUri: vscode.Uri | undefined;
+  private previewedMarkdownUri: vscode.Uri | null = null;
 
   constructor(rootFolder: Folder) {
     this.rootFolder = rootFolder;
@@ -39,22 +38,19 @@ class VSCodeEditor implements Editor {
     if (!activeWindow) return;
     if (activeWindow.document.languageId !== "markdown") return;
 
-    this.curSlideUri = activeWindow.document.uri;
-    this.curSlideLanguageId = activeWindow.document.languageId;
     await vscode.commands.executeCommand("markdown.showPreview");
+    this.previewedMarkdownUri = activeWindow.document.uri;
   }
 
   async closeMarkdownPreview() {
-    if (
-      this.getConfiguration().previewMarkdownFiles &&
-      this.curSlideLanguageId === "markdown" &&
-      this.curSlideUri
-    ) {
+    if (this.previewedMarkdownUri) {
       await vscode.commands.executeCommand(
         "workbench.action.closeActiveEditor"
       );
-      await vscode.workspace.openTextDocument(this.curSlideUri);
+      await vscode.workspace.openTextDocument(this.previewedMarkdownUri);
     }
+
+    this.previewedMarkdownUri = null;
   }
 
   async hideSideBar() {
