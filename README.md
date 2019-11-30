@@ -1,6 +1,6 @@
 # 👩‍🏫 VS Code Slides
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors)
 
 Slides is a Visual Studio Code extension that helps you use your editor as a presentation tool.
 
@@ -116,7 +116,8 @@ Thanks goes to these wonderful people ([emoji key][all-contributors-emoji]):
 <table>
   <tr>
     <td align="center"><a href="https://nicoespeon.com"><img src="https://avatars.githubusercontent.com/u/1094774?v=3" width="100px;" alt="Nicolas Carlo"/><br /><sub><b>Nicolas Carlo</b></sub></a><br /><a href="#question-nicoespeon" title="Answering Questions">💬</a> <a href="https://github.com/nicoespeon/vscode-slides/commits?author=nicoespeon" title="Code">💻</a> <a href="https://github.com/nicoespeon/vscode-slides/commits?author=nicoespeon" title="Documentation">📖</a><br /><a href="#review-nicoespeon" title="Reviewed Pull Requests">👀</a> <a href="#ideas-nicoespeon" title="Ideas">🤔</a></td>
-    <td align="center"><a href="https://github.com/divinebovine"><img src="https://avatars0.githubusercontent.com/u/2818169?v=4" width="100px;" alt="Daniel Dickerson"/><br /><sub><b>Daniel Dickerson</b></sub></a><br /><a href="https://github.com/nicoespeon/vscode-slides/issues?q=author%3Adivinebovine" title="Bug reports">🐛</a> <a href="https://github.com/nicoespeon/vscode-slides/commits?author=divinebovine" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/divinebovine"><img src="https://avatars0.githubusercontent.com/u/2818169?v=4" width="100px;" alt="Daniel Dickerson"/><br /><sub><b>Daniel Dickerson</b></sub></a><br /><a href="https://github.com/nicoespeon/vscode-slides/issues?q=author%3Adivinebovine" title="Bug reports">🐛</a> <a href="https://github.com/nicoespeon/vscode-slides/commits?author=divinebovine" title="Code">💻</a></td></td>
+    <td align="center"><a href="https://github.com/etbrow"><img src="https://avatars0.githubusercontent.com/u/58043405?v=4" width="100px;" alt="Ethan Brown"/><br /><sub><b>Ethan Brown</b></sub></a><br /><a href="https://github.com/nicoespeon/vscode-slides/commits?author=etbrow" title="Code">💻</a> <a href="#ideas-etbrow" title="Ideas">🤔</a></td>
   </tr>
 </table>
 
