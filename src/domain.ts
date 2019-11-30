@@ -64,6 +64,7 @@ async function openAllSlides(editor: Editor) {
 interface Editor {
   closeAllTabs(): Promise<void>;
   openAllFiles(): Promise<void>;
+  previewIfMarkdown(): Promise<void>;
   hideSideBar(): Promise<void>;
   showSideBar(): Promise<void>;
   getSettings(): Promise<Settings | null>;

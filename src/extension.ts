@@ -20,6 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
         await exit(vscodeEditor, repository);
       } else {
         await start(vscodeEditor, repository);
+        await vscodeEditor.previewIfMarkdown();
 
         const activeWindow = vscode.window.activeTextEditor;
         if (
@@ -28,10 +29,6 @@ export function activate(context: vscode.ExtensionContext) {
         ) {
           curSlideUri = activeWindow.document.uri;
           curSlideLanguageId = activeWindow.document.languageId;
-
-          if (activeWindow.document.languageId === "markdown") {
-            await vscode.commands.executeCommand("markdown.showPreview");
-          }
         }
       }
     }
@@ -54,17 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         await vscode.commands.executeCommand("workbench.action.previousEditor");
-
-        const activeWindow = vscode.window.activeTextEditor;
-        if (
-          vscodeEditor.getConfiguration().previewMarkdownFiles &&
-          activeWindow !== undefined
-        ) {
-          curSlideLanguageId = activeWindow.document.languageId;
-          if (activeWindow.document.languageId === "markdown") {
-            await vscode.commands.executeCommand("markdown.showPreview");
-          }
-        }
+        await vscodeEditor.previewIfMarkdown();
       }
     }
   );
@@ -84,17 +71,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       await vscode.commands.executeCommand("workbench.action.nextEditor");
-
-      const activeWindow = vscode.window.activeTextEditor;
-      if (
-        vscodeEditor.getConfiguration().previewMarkdownFiles &&
-        activeWindow !== undefined
-      ) {
-        curSlideLanguageId = activeWindow.document.languageId;
-        if (activeWindow.document.languageId === "markdown") {
-          await vscode.commands.executeCommand("markdown.showPreview");
-        }
-      }
+      await vscodeEditor.previewIfMarkdown();
     }
   });
 

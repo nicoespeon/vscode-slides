@@ -29,6 +29,17 @@ class VSCodeEditor implements Editor {
     await vscode.commands.executeCommand("workbench.action.openEditorAtIndex1");
   }
 
+  async previewIfMarkdown() {
+    const { previewMarkdownFiles } = this.getConfiguration();
+    if (!previewMarkdownFiles) return;
+
+    const activeWindow = vscode.window.activeTextEditor;
+    if (!activeWindow) return;
+    if (activeWindow.document.languageId !== "markdown") return;
+
+    await vscode.commands.executeCommand("markdown.showPreview");
+  }
+
   async hideSideBar() {
     await vscode.commands.executeCommand("workbench.action.maximizeEditor");
   }
