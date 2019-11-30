@@ -43,7 +43,7 @@ class VSCodeEditor implements Editor {
   }
 
   async closeMarkdownPreview() {
-    if (this.previewedMarkdownUri) {
+    if (this.previewedMarkdownUri && this.isOnMarkdownPreview) {
       await vscode.commands.executeCommand(
         "workbench.action.closeActiveEditor"
       );
@@ -51,6 +51,11 @@ class VSCodeEditor implements Editor {
     }
 
     this.previewedMarkdownUri = null;
+  }
+
+  private get isOnMarkdownPreview(): boolean {
+    // Preview is not an active text editor
+    return !vscode.window.activeTextEditor;
   }
 
   async hideSideBar() {
