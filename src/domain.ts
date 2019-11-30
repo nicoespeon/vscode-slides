@@ -52,7 +52,9 @@ function getSlidesSettings(editor: Editor): Settings {
     "editor.fontFamily": configured.fontFamily || defaults["editor.fontFamily"],
     "terminal.integrated.fontFamily":
       configured.fontFamily || defaults["terminal.integrated.fontFamily"],
-    "workbench.previewMarkdownFiles": configured.previewMarkdownFiles || false
+    ...(configured.previewMarkdownFiles && {
+      "slides.previewMarkdownFiles": true
+    })
   });
 }
 

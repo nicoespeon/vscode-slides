@@ -33,7 +33,7 @@ describe("start", () => {
     const configuration = {
       theme: "A custom theme",
       fontFamily: "Helvetica",
-      previewMarkdownFiles: false
+      previewMarkdownFiles: true
     };
     jest.spyOn(editor, "getConfiguration").mockReturnValue(configuration);
 
@@ -45,7 +45,9 @@ describe("start", () => {
     expect(settings["terminal.integrated.fontFamily"]).toBe(
       configuration.fontFamily
     );
-    expect(settings["workbench.previewMarkdownFiles"]).toBe(false);
+    expect(settings["slides.previewMarkdownFiles"]).toBe(
+      configuration.previewMarkdownFiles
+    );
   });
 
   it("should close all editor tabs", async () => {

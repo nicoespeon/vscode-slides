@@ -43,8 +43,5 @@ export const settings = {
   "editor.formatOnSave": false,
 
   "//k": "Disable preview so we can open all files at once",
-  "workbench.editor.enablePreview": false,
-
-  "//l": "Use the Markdown Preview pane to view Markdown files",
-  "slides.previewMarkdownFiles": true
+  "workbench.editor.enablePreview": false
 };
