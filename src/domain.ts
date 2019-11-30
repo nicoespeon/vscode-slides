@@ -65,6 +65,7 @@ interface Editor {
   closeAllTabs(): Promise<void>;
   openAllFiles(): Promise<void>;
   previewIfMarkdown(): Promise<void>;
+  closeMarkdownPreview(): Promise<void>;
   hideSideBar(): Promise<void>;
   showSideBar(): Promise<void>;
   getSettings(): Promise<Settings | null>;

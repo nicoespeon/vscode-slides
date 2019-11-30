@@ -194,6 +194,8 @@ class FakeEditor implements Editor {
   async openAllFiles() {}
 
   async previewIfMarkdown() {}
+  async closeMarkdownPreview() {}
+
   async hideSideBar() {}
   async showSideBar() {}
 

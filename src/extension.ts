@@ -8,9 +8,6 @@ export function activate(context: vscode.ExtensionContext) {
   const vscodeEditor = new VSCodeEditor(getWorkspaceFolder());
   const repository = new VSCodeRepository(context);
 
-  let curSlideUri: vscode.Uri;
-  let curSlideLanguageId: string;
-
   const toggleSlides = vscode.commands.registerCommand(
     "slides.toggle",
     async () => {
@@ -21,15 +18,6 @@ export function activate(context: vscode.ExtensionContext) {
       } else {
         await start(vscodeEditor, repository);
         await vscodeEditor.previewIfMarkdown();
-
-        const activeWindow = vscode.window.activeTextEditor;
-        if (
-          vscodeEditor.getConfiguration().previewMarkdownFiles &&
-          activeWindow !== undefined
-        ) {
-          curSlideUri = activeWindow.document.uri;
-          curSlideLanguageId = activeWindow.document.languageId;
-        }
       }
     }
   );
@@ -40,16 +28,7 @@ export function activate(context: vscode.ExtensionContext) {
       const { isActive } = await repository.get();
 
       if (isActive) {
-        if (
-          vscodeEditor.getConfiguration().previewMarkdownFiles &&
-          curSlideLanguageId === "markdown"
-        ) {
-          await vscode.commands.executeCommand(
-            "workbench.action.closeActiveEditor"
-          );
-          await vscode.workspace.openTextDocument(curSlideUri);
-        }
-
+        await vscodeEditor.closeMarkdownPreview();
         await vscode.commands.executeCommand("workbench.action.previousEditor");
         await vscodeEditor.previewIfMarkdown();
       }
@@ -60,16 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
     const { isActive } = await repository.get();
 
     if (isActive) {
-      if (
-        vscodeEditor.getConfiguration().previewMarkdownFiles &&
-        curSlideLanguageId === "markdown"
-      ) {
-        await vscode.commands.executeCommand(
-          "workbench.action.closeActiveEditor"
-        );
-        await vscode.workspace.openTextDocument(curSlideUri);
-      }
-
+      await vscodeEditor.closeMarkdownPreview();
       await vscode.commands.executeCommand("workbench.action.nextEditor");
       await vscodeEditor.previewIfMarkdown();
     }
