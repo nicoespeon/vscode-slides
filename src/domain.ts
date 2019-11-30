@@ -1,4 +1,4 @@
-export { toggle, previous, next, exit, start };
+export { toggle, previous, next, exit };
 export { Editor, Configuration, Repository, State, Settings };
 
 async function toggle(editor: Editor, repository: Repository) {

@@ -1,16 +1,16 @@
-import { start, exit } from "./domain";
+import { toggle, exit } from "./domain";
 import { Editor, Settings, Configuration, Repository, State } from "./domain";
 
 import { settings as defaultSettings } from "./settings";
 
-describe("start", () => {
+describe("toggle", () => {
   it("should store current editor settings", async () => {
     const editorSettings: Settings = "{}";
     const editor = new FakeEditor(editorSettings);
     const repository = new InMemoryRepository();
     repository.store({ settings: "" });
 
-    await start(editor, repository);
+    await toggle(editor, repository);
 
     const { settings } = await repository.get();
     expect(settings).toBe(editorSettings);
@@ -21,7 +21,7 @@ describe("start", () => {
     const editor = new FakeEditor(editorSettings);
     const repository = new InMemoryRepository();
 
-    await start(editor, repository);
+    await toggle(editor, repository);
 
     const settings = JSON.parse((await editor.getSettings()) || "");
     expect(settings).toEqual(defaultSettings);
@@ -37,7 +37,7 @@ describe("start", () => {
     };
     jest.spyOn(editor, "getConfiguration").mockReturnValue(configuration);
 
-    await start(editor, repository);
+    await toggle(editor, repository);
 
     const settings = JSON.parse((await editor.getSettings()) || "");
     expect(settings["workbench.colorTheme"]).toBe(configuration.theme);
@@ -55,7 +55,7 @@ describe("start", () => {
     const repository = new InMemoryRepository();
     jest.spyOn(editor, "closeAllTabs");
 
-    await start(editor, repository);
+    await toggle(editor, repository);
 
     expect(editor.closeAllTabs).toBeCalled();
   });
@@ -65,7 +65,7 @@ describe("start", () => {
     const repository = new InMemoryRepository();
     jest.spyOn(editor, "openAllFiles");
 
-    await start(editor, repository);
+    await toggle(editor, repository);
 
     expect(editor.openAllFiles).toBeCalled();
   });
@@ -78,7 +78,7 @@ describe("start", () => {
       const repository = new InMemoryRepository();
       jest.spyOn(editor, "showError");
 
-      await start(editor, repository);
+      await toggle(editor, repository);
 
       expect(editor.showError).toBeCalledWith(
         expect.stringContaining(errorMessage)
@@ -90,7 +90,7 @@ describe("start", () => {
       const repository = new InMemoryRepository();
       jest.spyOn(editor, "hideSideBar");
 
-      await start(editor, repository);
+      await toggle(editor, repository);
 
       expect(editor.hideSideBar).not.toBeCalled();
     });
@@ -100,7 +100,7 @@ describe("start", () => {
       const repository = new InMemoryRepository();
       repository.store({ isActive: false });
 
-      await start(editor, repository);
+      await toggle(editor, repository);
 
       const { isActive } = await repository.get();
       expect(isActive).toBe(true);
@@ -120,7 +120,7 @@ describe("start", () => {
       const repository = new InMemoryRepository();
       jest.spyOn(editor, "hideSideBar");
 
-      await start(editor, repository);
+      await toggle(editor, repository);
 
       expect(editor.hideSideBar).toBeCalled();
     });
@@ -130,7 +130,7 @@ describe("start", () => {
       const repository = new InMemoryRepository();
       repository.store({ isActive: false });
 
-      await start(editor, repository);
+      await toggle(editor, repository);
 
       const { isActive } = await repository.get();
       expect(isActive).toBe(true);
