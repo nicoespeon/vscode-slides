@@ -86,7 +86,7 @@ function getSlidesSettings(editor: Editor): Settings {
     theme,
     fontFamily,
     previewMarkdownFiles,
-    slidesFolder
+    folder
   } = editor.getConfiguration();
 
   return JSON.stringify({
@@ -97,7 +97,7 @@ function getSlidesSettings(editor: Editor): Settings {
     ...(previewMarkdownFiles && {
       "slides.previewMarkdownFiles": true
     }),
-    ...(slidesFolder && { "workbench.slidesFolder": slidesFolder })
+    ...(folder && { "slides.folder": folder })
   });
 }
 
@@ -126,7 +126,7 @@ interface Configuration {
   theme: string | null | undefined;
   fontFamily: string | null | undefined;
   previewMarkdownFiles: boolean;
-  slidesFolder: string | "" | undefined;
+  folder: string | undefined;
 }
 
 interface Repository {

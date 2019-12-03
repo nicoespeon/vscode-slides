@@ -125,7 +125,7 @@ class VSCodeEditor implements Editor {
         "previewMarkdownFiles",
         false
       ),
-      slidesFolder: configuration.get<string>("slidesFolder", "")
+      folder: configuration.get<string>("folder", "")
     };
   }
 

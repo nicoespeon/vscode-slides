@@ -34,7 +34,7 @@ describe("toggle", () => {
       theme: "A custom theme",
       fontFamily: "Helvetica",
       previewMarkdownFiles: true,
-      slidesFolder: ""
+      folder: "slides/content"
     };
     jest.spyOn(editor, "getConfiguration").mockReturnValue(configuration);
 
@@ -49,7 +49,7 @@ describe("toggle", () => {
     expect(settings["slides.previewMarkdownFiles"]).toBe(
       configuration.previewMarkdownFiles
     );
-    expect(settings["workbench.slidesFolder"]).toBe("");
+    expect(settings["slides.folder"]).toBe("slides/content");
   });
 
   it("should close all editor tabs", async () => {
@@ -339,7 +339,7 @@ class FakeEditor implements Editor {
       theme: null,
       fontFamily: null,
       previewMarkdownFiles: false,
-      slidesFolder: ""
+      folder: ""
     };
   }
 }

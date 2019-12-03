@@ -48,11 +48,12 @@ You can also re-use _Toggle Slides mode_ to deactivate Slides.
 
 Here are the default settings of Slides you can override in your VS Code settings.
 
-| Name                          | Description            | Default              |
-| ----------------------------- | ---------------------- | -------------------- |
-| `slides.theme`                | VS Code theme to use   | `GitHub Clean White` |
-| `slides.fontFamily`           | Font family to use     | `SF Mono`            |
-| `slides.previewMarkdownFiles` | Preview Markdown files | `false`              |
+| Name                          | Description                    | Default               |
+| ----------------------------- | ------------------------------ | --------------------- |
+| `slides.theme`                | VS Code theme to use           | `GitHub Clean White`  |
+| `slides.fontFamily`           | Font family to use             | `SF Mono`             |
+| `slides.previewMarkdownFiles` | Preview Markdown files         | `false`               |
+| `slides.folder`               | Relative path to slides folder | Workspace root folder |
 
 ## Pre-requisite
 
@@ -78,8 +79,8 @@ If you don't want to use these, you can configure Slides theme and font family. 
 ### Tips
 
 - Prefer to keep coding files empty, or with easy content supposed to be known.
-- Leverage the Markdown preview setting to render Markdown files for increased readibility.
-- Separate presentation materials into a separate folder for cohesion.
+- Leverage `slides.previewMarkdownFiles` setting to render Markdown files for increased readability.
+- Leverage `slides.folder` setting to regroup your slides into a folder for better cohesion.
 
 ## Release Notes
 
