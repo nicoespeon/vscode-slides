@@ -82,12 +82,7 @@ async function setSlidesSettings(editor: Editor, repository: Repository) {
 import { settings as defaults } from "./settings";
 
 function getSlidesSettings(editor: Editor): Settings {
-  const {
-    theme,
-    fontFamily,
-    previewMarkdownFiles,
-    folder
-  } = editor.getConfiguration();
+  const { theme, fontFamily, previewMarkdownFiles } = editor.getConfiguration();
 
   return JSON.stringify({
     ...defaults,
@@ -96,8 +91,7 @@ function getSlidesSettings(editor: Editor): Settings {
     ...(fontFamily && { "terminal.integrated.fontFamily": fontFamily }),
     ...(previewMarkdownFiles && {
       "slides.previewMarkdownFiles": true
-    }),
-    ...(folder && { "slides.folder": folder })
+    })
   });
 }
 
@@ -108,7 +102,7 @@ async function openAllSlides(editor: Editor) {
 
 interface Editor {
   closeAllTabs(): Promise<void>;
-  openAllFiles(folder: string): Promise<void>;
+  openAllFiles(): Promise<void>;
   openPreviousFile(): Promise<void>;
   openNextFile(): Promise<void>;
   previewIfMarkdown(): Promise<void>;
@@ -126,7 +120,6 @@ interface Configuration {
   theme: string | null | undefined;
   fontFamily: string | null | undefined;
   previewMarkdownFiles: boolean;
-  folder: string | undefined;
 }
 
 interface Repository {

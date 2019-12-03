@@ -33,8 +33,7 @@ describe("toggle", () => {
     const configuration = {
       theme: "A custom theme",
       fontFamily: "Helvetica",
-      previewMarkdownFiles: true,
-      folder: "slides/content"
+      previewMarkdownFiles: true
     };
     jest.spyOn(editor, "getConfiguration").mockReturnValue(configuration);
 
@@ -49,7 +48,6 @@ describe("toggle", () => {
     expect(settings["slides.previewMarkdownFiles"]).toBe(
       configuration.previewMarkdownFiles
     );
-    expect(settings["slides.folder"]).toBe("slides/content");
   });
 
   it("should close all editor tabs", async () => {
@@ -338,8 +336,7 @@ class FakeEditor implements Editor {
     return {
       theme: null,
       fontFamily: null,
-      previewMarkdownFiles: false,
-      folder: ""
+      previewMarkdownFiles: false
     };
   }
 }
