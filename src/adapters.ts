@@ -23,8 +23,11 @@ class VSCodeEditor implements Editor {
   }
 
   async openAllFiles() {
-    for (const file of this.rootFolder.visibleFiles) {
-      await this.openFile(file);
+    for (const file of this.filesFolder.visibleFiles) {
+      vscode.commands.executeCommand("vscode.open", vscode.Uri.file(file));
+
+      // Wait so VS Code has time to open the file before we move on.
+      await wait(50);
     }
 
     await vscode.commands.executeCommand("workbench.action.openEditorAtIndex1");
@@ -128,14 +131,11 @@ class VSCodeEditor implements Editor {
     };
   }
 
-  private async openFile(file: Path): Promise<void> {
-    vscode.commands.executeCommand(
-      "vscode.open",
-      vscode.Uri.file(this.rootFolder.pathTo(file))
-    );
+  private get filesFolder(): Folder {
+    const configuration = vscode.workspace.getConfiguration("slides");
+    const relativePathToFolder = configuration.get<string>("folder", "");
 
-    // Wait so VS Code has time to open the file before we move on.
-    await wait(50);
+    return this.rootFolder.goTo(relativePathToFolder);
   }
 
   private get pathToSettings(): Path {
@@ -198,11 +198,16 @@ class Folder {
         fileOrDirectory =>
           !fs.statSync(this.pathTo(fileOrDirectory)).isDirectory()
       )
-      .filter(file => !file.startsWith("."));
+      .filter(file => !file.startsWith("."))
+      .map(file => this.pathTo(file));
   }
 
   pathTo(relativePath: Path): Path {
     return path.join(this.path, relativePath);
+  }
+
+  goTo(relativePath: Path): Folder {
+    return new Folder(this.pathTo(relativePath));
   }
 }
 

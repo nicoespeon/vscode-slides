@@ -333,7 +333,11 @@ class FakeEditor implements Editor {
   showMessage() {}
 
   getConfiguration(): Configuration {
-    return { theme: null, fontFamily: null, previewMarkdownFiles: false };
+    return {
+      theme: null,
+      fontFamily: null,
+      previewMarkdownFiles: false
+    };
   }
 }
 

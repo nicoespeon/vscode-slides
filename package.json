@@ -116,6 +116,11 @@
           "type": "boolean",
           "default": false,
           "description": "Use the Markdown Preview pane to view Markdown files."
+        },
+        "slides.folder": {
+          "type": "string",
+          "default": "",
+          "description": "Project subfolder where the slides are located."
         }
       }
     }

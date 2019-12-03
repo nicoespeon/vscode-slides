@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- New setting called `folder`. If you prefer to put your slides in a subfolder, you can configure the relative path to this folder.
+
 - New setting called `previewMarkdownFiles`. When `true` it uses preview mode for Markdown slides. When the user moves away from the Markdown slide, the preview is closed and regenerated for the next Markdown file:
 
 ![Demo of preview markdown files setting][preview-markdown-files]
