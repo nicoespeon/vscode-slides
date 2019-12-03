@@ -5,13 +5,13 @@ import * as path from "path";
 import { Editor, Settings, Configuration, Repository, State } from "./domain";
 
 export { VSCodeEditor, VSCodeRepository };
-export { Folder };
+export { FileSystemFolder };
 
 class VSCodeEditor implements Editor {
-  private rootFolder: Folder;
+  private rootFolder: FileSystemFolder;
   private previewedMarkdownUri: vscode.Uri | null = null;
 
-  constructor(rootFolder: Folder) {
+  constructor(rootFolder: FileSystemFolder) {
     this.rootFolder = rootFolder;
   }
 
@@ -185,7 +185,7 @@ class VSCodeRepository implements Repository {
   }
 }
 
-class Folder {
+class FileSystemFolder {
   private path: Path;
 
   constructor(path: Path) {

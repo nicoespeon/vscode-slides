@@ -108,7 +108,7 @@ async function openAllSlides(editor: Editor) {
 
 interface Editor {
   closeAllTabs(): Promise<void>;
-  openAllFiles(): Promise<void>;
+  openAllFiles(folder: string): Promise<void>;
   openPreviousFile(): Promise<void>;
   openNextFile(): Promise<void>;
   previewIfMarkdown(): Promise<void>;
