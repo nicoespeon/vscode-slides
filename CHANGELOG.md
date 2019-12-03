@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- New setting called `previewMarkdownFiles`. When `true` it uses preview mode for Markdown slides. When the user moves away from the Markdown slide, the preview is closed and regenerated for the next Markdown file.
+- New setting called `previewMarkdownFiles`. When `true` it uses preview mode for Markdown slides. When the user moves away from the Markdown slide, the preview is closed and regenerated for the next Markdown file:
+
+![Demo of preview markdown files setting][preview-markdown-files]
 
 ## [3.0.0] - 2019-11-23
 
@@ -88,3 +90,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.2.1]: https://github.com/nicoespeon/vscode-slides/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/nicoespeon/vscode-slides/compare/0.1.0...0.2.0
 [0.1.0]: https://github.com/nicoespeon/vscode-slides/compare/8fdc599d586b5ad4614d038d232c840eeebe2412...0.1.0
+
+<!-- Assets -->
+
+[preview-markdown-files]: https://github.com/nicoespeon/vscode-slides/blob/master/assets/features/preview-markdown-files.gif?raw=true

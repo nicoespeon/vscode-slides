@@ -6,11 +6,13 @@ dist/**
 node_modules/**
 src/**
 .adr-dir
+.all-contributorsrc
 .gitignore
 **/tsconfig.json
 **/tslint.json
 **/*.map
 **/*.ts
+**/*.afdesign
 wallaby.js
 jest.config.js
 yarn-error.log
