@@ -5,13 +5,13 @@ import * as path from "path";
 import { Editor, Settings, Configuration, Repository, State } from "./domain";
 
 export { VSCodeEditor, VSCodeRepository };
-export { FileSystemFolder };
+export { Folder };
 
 class VSCodeEditor implements Editor {
-  private rootFolder: FileSystemFolder;
+  private rootFolder: Folder;
   private previewedMarkdownUri: vscode.Uri | null = null;
 
-  constructor(rootFolder: FileSystemFolder) {
+  constructor(rootFolder: Folder) {
     this.rootFolder = rootFolder;
   }
 
@@ -131,7 +131,7 @@ class VSCodeEditor implements Editor {
     };
   }
 
-  private get filesFolder(): FileSystemFolder {
+  private get filesFolder(): Folder {
     const configuration = vscode.workspace.getConfiguration("slides");
     const relativePathToFolder = configuration.get<string>("folder", "");
 
@@ -184,7 +184,7 @@ class VSCodeRepository implements Repository {
   }
 }
 
-class FileSystemFolder {
+class Folder {
   private path: Path;
 
   constructor(path: Path) {
@@ -206,8 +206,8 @@ class FileSystemFolder {
     return path.join(this.path, relativePath);
   }
 
-  goTo(relativePath: Path): FileSystemFolder {
-    return new FileSystemFolder(this.pathTo(relativePath));
+  goTo(relativePath: Path): Folder {
+    return new Folder(this.pathTo(relativePath));
   }
 }
 

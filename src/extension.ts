@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 
 import { VSCodeRepository, VSCodeEditor } from "./adapters";
-import { FileSystemFolder } from "./adapters";
+import { Folder } from "./adapters";
 import { exit, toggle, previous, next } from "./domain";
 
 export function activate(context: vscode.ExtensionContext) {
@@ -30,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(exitSlides);
 }
 
-function getWorkspaceFolder(): FileSystemFolder {
+function getWorkspaceFolder(): Folder {
   const workspaceFolders = vscode.workspace.workspaceFolders;
 
   if (!workspaceFolders || workspaceFolders.length < 1) {
@@ -39,5 +39,5 @@ function getWorkspaceFolder(): FileSystemFolder {
     );
   }
 
-  return new FileSystemFolder(workspaceFolders[0].uri.fsPath);
+  return new Folder(workspaceFolders[0].uri.fsPath);
 }
