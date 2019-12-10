@@ -191,7 +191,7 @@ class Folder {
     this.path = path;
   }
 
-  get visibleFiles(): Path[] {
+  get visibleFiles(): File[] {
     return fs
       .readdirSync(this.path)
       .filter(
@@ -212,3 +212,4 @@ class Folder {
 }
 
 type Path = string;
+type File = string;
