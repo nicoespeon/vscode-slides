@@ -25,10 +25,10 @@ class VSCodeEditor implements Editor {
     const { previewMarkdownFiles } = this.getConfiguration();
 
     for (const file of this.filesFolder.visibleFiles) {
-      if (previewMarkdownFiles && file.endsWith(".md")) {
+      if (previewMarkdownFiles && file.isMarkdown) {
         await this.openMarkdownPreview(file);
       } else {
-        vscode.commands.executeCommand("vscode.open", vscode.Uri.file(file));
+        vscode.commands.executeCommand("vscode.open", file.uri);
       }
 
       // Wait so VS Code has time to open the file before we move on.
@@ -41,7 +41,7 @@ class VSCodeEditor implements Editor {
   private async openMarkdownPreview(file: File) {
     // Signature of the command we use:
     // https://github.com/microsoft/vscode/blob/f44dc0853786a1a1c9f5dce5cd94941c2a795655/extensions/markdown-language-features/src/commands/showPreview.ts#L61
-    const uri = vscode.Uri.file(file);
+    const uri = file.uri;
     const allUris = null;
     const settings = {
       // Lock the Preview so it doesn't replace the ones already open.
@@ -194,7 +194,7 @@ class Folder {
           !fs.statSync(this.pathTo(fileOrDirectory)).isDirectory()
       )
       .filter(file => !file.startsWith("."))
-      .map(file => this.pathTo(file));
+      .map(file => new File(this.pathTo(file)));
   }
 
   pathTo(relativePath: Path): Path {
@@ -206,5 +206,20 @@ class Folder {
   }
 }
 
+class File {
+  private path: Path;
+
+  constructor(path: Path) {
+    this.path = path;
+  }
+
+  get uri(): vscode.Uri {
+    return vscode.Uri.file(this.path);
+  }
+
+  get isMarkdown(): boolean {
+    return this.path.endsWith(".md");
+  }
+}
+
 type Path = string;
-type File = string;
