@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- If you set `previewMarkdownFiles` to `true`, all Markdown previews will open instead of the raw files when presentation starts. That means no more glitches when moving to the next slide 👌
+
+![Demo of the improvement][preview-markdown-files-without-glitch]
+
 ## [3.1.0] - 2019-12-02
 
 ### Added
@@ -99,3 +105,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <!-- Assets -->
 
 [preview-markdown-files]: https://github.com/nicoespeon/vscode-slides/blob/master/assets/features/preview-markdown-files.gif?raw=true
+[preview-markdown-files-without-glitch]: https://github.com/nicoespeon/vscode-slides/blob/master/assets/features/preview-markdown-files-without-glitch.gif?raw=true

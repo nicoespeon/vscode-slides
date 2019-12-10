@@ -15,11 +15,7 @@ async function previous(editor: Editor, repository: Repository) {
   const { isActive } = await repository.get();
 
   if (isActive) {
-    // Close & open markdown previews glitches on consecutive mardown slides.
-    // We could improve that if we know what the previous slide would be.
-    await editor.closeMarkdownPreview();
     await editor.openPreviousFile();
-    await editor.previewIfMarkdown();
   }
 }
 
@@ -27,11 +23,7 @@ async function next(editor: Editor, repository: Repository) {
   const { isActive } = await repository.get();
 
   if (isActive) {
-    // Close & open markdown previews glitches on consecutive mardown slides.
-    // We could improve that if we know what the next slide would be.
-    await editor.closeMarkdownPreview();
     await editor.openNextFile();
-    await editor.previewIfMarkdown();
   }
 }
 
@@ -69,7 +61,6 @@ async function start(editor: Editor, repository: Repository) {
 
   await editor.hideSideBar();
   await repository.store({ isActive: true });
-  await editor.previewIfMarkdown();
 }
 
 async function setSlidesSettings(editor: Editor, repository: Repository) {
@@ -105,8 +96,6 @@ interface Editor {
   openAllFiles(): Promise<void>;
   openPreviousFile(): Promise<void>;
   openNextFile(): Promise<void>;
-  previewIfMarkdown(): Promise<void>;
-  closeMarkdownPreview(): Promise<void>;
   hideSideBar(): Promise<void>;
   showSideBar(): Promise<void>;
   getSettings(): Promise<Settings | null>;

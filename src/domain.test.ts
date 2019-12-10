@@ -154,17 +154,6 @@ describe("toggle", () => {
 });
 
 describe("previous", () => {
-  it("should close previewed markdown", async () => {
-    const editor = new FakeEditor();
-    const repository = new InMemoryRepository();
-    repository.store({ isActive: true });
-    jest.spyOn(editor, "closeMarkdownPreview");
-
-    await previous(editor, repository);
-
-    expect(editor.closeMarkdownPreview).toBeCalled();
-  });
-
   it("should open previous file", async () => {
     const editor = new FakeEditor();
     const repository = new InMemoryRepository();
@@ -174,17 +163,6 @@ describe("previous", () => {
     await previous(editor, repository);
 
     expect(editor.openPreviousFile).toBeCalled();
-  });
-
-  it("should preview open file if it's markdown", async () => {
-    const editor = new FakeEditor();
-    const repository = new InMemoryRepository();
-    repository.store({ isActive: true });
-    jest.spyOn(editor, "previewIfMarkdown");
-
-    await previous(editor, repository);
-
-    expect(editor.previewIfMarkdown).toBeCalled();
   });
 
   it("should not open previous file if slides is not active", async () => {
@@ -200,17 +178,6 @@ describe("previous", () => {
 });
 
 describe("next", () => {
-  it("should close previewed markdown", async () => {
-    const editor = new FakeEditor();
-    const repository = new InMemoryRepository();
-    repository.store({ isActive: true });
-    jest.spyOn(editor, "closeMarkdownPreview");
-
-    await next(editor, repository);
-
-    expect(editor.closeMarkdownPreview).toBeCalled();
-  });
-
   it("should open next file", async () => {
     const editor = new FakeEditor();
     const repository = new InMemoryRepository();
@@ -220,17 +187,6 @@ describe("next", () => {
     await next(editor, repository);
 
     expect(editor.openNextFile).toBeCalled();
-  });
-
-  it("should preview open file if it's markdown", async () => {
-    const editor = new FakeEditor();
-    const repository = new InMemoryRepository();
-    repository.store({ isActive: true });
-    jest.spyOn(editor, "previewIfMarkdown");
-
-    await next(editor, repository);
-
-    expect(editor.previewIfMarkdown).toBeCalled();
   });
 
   it("should not open next file if slides is not active", async () => {
@@ -316,8 +272,6 @@ class FakeEditor implements Editor {
   async openAllFiles() {}
   async openPreviousFile() {}
   async openNextFile() {}
-  async previewIfMarkdown() {}
-  async closeMarkdownPreview() {}
 
   async hideSideBar() {}
   async showSideBar() {}

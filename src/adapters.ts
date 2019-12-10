@@ -9,7 +9,6 @@ export { Folder };
 
 class VSCodeEditor implements Editor {
   private rootFolder: Folder;
-  private previewedMarkdownUri: vscode.Uri | null = null;
 
   constructor(rootFolder: Folder) {
     this.rootFolder = rootFolder;
@@ -23,8 +22,14 @@ class VSCodeEditor implements Editor {
   }
 
   async openAllFiles() {
+    const { previewMarkdownFiles } = this.getConfiguration();
+
     for (const file of this.filesFolder.visibleFiles) {
-      vscode.commands.executeCommand("vscode.open", vscode.Uri.file(file));
+      if (previewMarkdownFiles && file.endsWith(".md")) {
+        await this.openMarkdownPreview(file);
+      } else {
+        vscode.commands.executeCommand("vscode.open", vscode.Uri.file(file));
+      }
 
       // Wait so VS Code has time to open the file before we move on.
       await wait(50);
@@ -33,40 +38,30 @@ class VSCodeEditor implements Editor {
     await vscode.commands.executeCommand("workbench.action.openEditorAtIndex1");
   }
 
+  private async openMarkdownPreview(file: File) {
+    // Signature of the command we use:
+    // https://github.com/microsoft/vscode/blob/f44dc0853786a1a1c9f5dce5cd94941c2a795655/extensions/markdown-language-features/src/commands/showPreview.ts#L61
+    const uri = vscode.Uri.file(file);
+    const allUris = null;
+    const settings = {
+      // Lock the Preview so it doesn't replace the ones already open.
+      locked: true
+    };
+
+    await vscode.commands.executeCommand(
+      "markdown.showPreview",
+      uri,
+      allUris,
+      settings
+    );
+  }
+
   async openPreviousFile() {
     await vscode.commands.executeCommand("workbench.action.previousEditor");
   }
 
   async openNextFile() {
     await vscode.commands.executeCommand("workbench.action.nextEditor");
-  }
-
-  async previewIfMarkdown() {
-    const { previewMarkdownFiles } = this.getConfiguration();
-    if (!previewMarkdownFiles) return;
-
-    const activeWindow = vscode.window.activeTextEditor;
-    if (!activeWindow) return;
-    if (activeWindow.document.languageId !== "markdown") return;
-
-    await vscode.commands.executeCommand("markdown.showPreview");
-    this.previewedMarkdownUri = activeWindow.document.uri;
-  }
-
-  async closeMarkdownPreview() {
-    if (this.previewedMarkdownUri && this.isOnMarkdownPreview) {
-      await vscode.commands.executeCommand(
-        "workbench.action.closeActiveEditor"
-      );
-      await vscode.workspace.openTextDocument(this.previewedMarkdownUri);
-    }
-
-    this.previewedMarkdownUri = null;
-  }
-
-  private get isOnMarkdownPreview(): boolean {
-    // Preview is not an active text editor
-    return !vscode.window.activeTextEditor;
   }
 
   async hideSideBar() {
