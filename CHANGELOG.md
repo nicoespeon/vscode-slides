@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.2.0] - 2019-12-09
+
 ### Changed
 
 - If you set `previewMarkdownFiles` to `true`, all Markdown previews will open instead of the raw files when presentation starts. That means no more glitches when moving to the next slide 👌
@@ -90,7 +92,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Shortcuts to navigate between slides** when activated.
 - **Shortcut to deactivate Slides** when activated.
 
-[unreleased]: https://github.com/nicoespeon/vscode-slides/compare/3.1.0...HEAD
+[unreleased]: https://github.com/nicoespeon/vscode-slides/compare/3.2.0...HEAD
+[3.2.0]: https://github.com/nicoespeon/vscode-slides/compare/3.1.0...3.2.0
 [3.1.0]: https://github.com/nicoespeon/vscode-slides/compare/3.0.0...3.1.0
 [3.0.0]: https://github.com/nicoespeon/vscode-slides/compare/2.0.3...3.0.0
 [2.0.3]: https://github.com/nicoespeon/vscode-slides/compare/2.0.2...2.0.3
