@@ -1,11 +1,14 @@
 import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
+import util from "util";
 
 import { Editor, Settings, Configuration, Repository, State } from "./domain";
 
 export { VSCodeEditor, VSCodeRepository };
 export { Folder };
+
+const wait = util.promisify(setTimeout);
 
 class VSCodeEditor implements Editor {
   private rootFolder: Folder;
@@ -136,10 +139,6 @@ class VSCodeEditor implements Editor {
   private get pathToSettings(): Path {
     return this.rootFolder.pathTo(path.join(".vscode", "settings.json"));
   }
-}
-
-function wait(delayInMs: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, delayInMs));
 }
 
 class VSCodeRepository implements Repository {
