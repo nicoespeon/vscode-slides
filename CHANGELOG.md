@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- In recent versions of VS Code, settings didn't have time to be saved before opening the slides, resulting in a non-functionning behavior. We now give enough time to the editor to save the settings before opening the slides, so *it works*™.
+
 ## [3.2.0] - 2019-12-09
 
 ### Changed

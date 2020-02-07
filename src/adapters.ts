@@ -101,6 +101,9 @@ class VSCodeEditor implements Editor {
     writeSettings.insert(settingsFileUri, new vscode.Position(0, 0), settings);
     await vscode.workspace.applyEdit(writeSettings);
 
+    // Give VS Code enough time to create the settings before saving.
+    await wait(500);
+
     // Save to apply changes directly.
     await vscode.workspace.saveAll();
 
