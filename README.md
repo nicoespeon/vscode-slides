@@ -1,4 +1,7 @@
 # 👩‍🏫 VS Code Slides
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
 
@@ -113,6 +116,18 @@ To help you get your feet wet and become familiar with our contribution process,
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key][all-contributors-emoji]):
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/joeparislbcc"><img src="https://avatars1.githubusercontent.com/u/7649433?v=4" width="100px;" alt=""/><br /><sub><b>Joe Paris</b></sub></a><br /><a href="https://github.com/nicoespeon/vscode-slides/issues?q=author%3Ajoeparislbcc" title="Bug reports">🐛</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
