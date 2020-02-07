@@ -110,7 +110,7 @@ Read our [contributing guide][contributing] to learn about our development proce
 
 To help you get your feet wet and become familiar with our contribution process, we have a list of [good first issues][good-first-issues] that contains things with a relatively limited scope. This is a great place to get started!
 
-## Contributors ✨
+## Contributors
 
 Thanks goes to these wonderful people ([emoji key][all-contributors-emoji]):
 
