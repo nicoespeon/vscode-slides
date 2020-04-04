@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
-import util from "util";
+import util, { TextDecoder } from "util";
 
 import { Editor, Settings, Configuration, Repository, State } from "./domain";
 
@@ -121,8 +121,18 @@ class VSCodeEditor implements Editor {
 
   getConfiguration(): Configuration {
     const configuration = vscode.workspace.getConfiguration("slides");
-
+    let slidesrc;
+    if (this.slidesRcExist()) {
+      try {
+        const buffer = fs.readFileSync(this.pathToSlidesrc);
+        const slidestr = new TextDecoder().decode(buffer);
+        slidesrc = JSON.parse(slidestr);
+      } catch {
+        slidesrc = {};
+      }
+    }
     return {
+      ...slidesrc,
       theme: configuration.get("theme"),
       fontFamily: configuration.get("fontFamily"),
       previewMarkdownFiles: configuration.get<boolean>(
@@ -141,6 +151,13 @@ class VSCodeEditor implements Editor {
 
   private get pathToSettings(): Path {
     return this.rootFolder.pathTo(path.join(".vscode", "settings.json"));
+  }
+
+  private get pathToSlidesrc(): Path {
+    return this.rootFolder.pathTo(".slidesrc");
+  }
+  slidesRcExist(): boolean {
+    return fs.existsSync(this.pathToSlidesrc);
   }
 }
 

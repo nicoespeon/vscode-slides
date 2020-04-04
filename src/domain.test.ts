@@ -49,7 +49,15 @@ describe("toggle", () => {
       configuration.previewMarkdownFiles
     );
   });
+  it("should override default slide settings with slidesrc configuration", async () => {
+    const editor = new FakeEditor(undefined, { "markdown.fontSize": 24 });
+    const repository = new InMemoryRepository();
 
+    await toggle(editor, repository);
+
+    const settings = JSON.parse((await editor.getSettings()) || "");
+    expect(settings["markdown.fontSize"]).toEqual(24);
+  });
   it("should close all editor tabs", async () => {
     const editor = new FakeEditor();
     const repository = new InMemoryRepository();
@@ -263,9 +271,10 @@ function shouldExitSlidesMode(
 
 class FakeEditor implements Editor {
   private settings: Settings | null;
-
-  constructor(settings?: Settings) {
+  private _fakeRC: any;
+  constructor(settings?: Settings, fakeRC?: any) {
     this.settings = settings || null;
+    this._fakeRC = fakeRC || null;
   }
 
   async closeAllTabs() {}
@@ -288,10 +297,14 @@ class FakeEditor implements Editor {
 
   getConfiguration(): Configuration {
     return {
+      ...(this.slidesRcExist() && this._fakeRC),
       theme: null,
       fontFamily: null,
       previewMarkdownFiles: false
     };
+  }
+  slidesRcExist(): boolean {
+    return this._fakeRC !== null;
   }
 }
 

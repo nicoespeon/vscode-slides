@@ -73,16 +73,29 @@ async function setSlidesSettings(editor: Editor, repository: Repository) {
 import { settings as defaults } from "./settings";
 
 function getSlidesSettings(editor: Editor): Settings {
-  const { theme, fontFamily, previewMarkdownFiles } = editor.getConfiguration();
-
-  return JSON.stringify({
-    ...defaults,
-    ...(theme && { "workbench.colorTheme": theme }),
-    ...(fontFamily && { "editor.fontFamily": fontFamily }),
-    ...(fontFamily && { "terminal.integrated.fontFamily": fontFamily }),
-    ...(previewMarkdownFiles && {
+  const config = editor.getConfiguration();
+  const stdConfig = {
+    ...(config.theme && { "workbench.colorTheme": config.theme }),
+    ...(config.fontFamily && { "editor.fontFamily": config.fontFamily }),
+    ...(config.fontFamily && {
+      "terminal.integrated.fontFamily": config.fontFamily
+    }),
+    ...(config.previewMarkdownFiles && {
       "slides.previewMarkdownFiles": true
     })
+  };
+  const extendedConfig = {
+    ...config
+  };
+  // Pruning standardConfig stuff so we don't get unnecessary entries in the
+  // merged object.
+  delete extendedConfig.theme;
+  delete extendedConfig.fontFamily;
+  delete extendedConfig.previewMarkdownFiles;
+  return JSON.stringify({
+    ...defaults,
+    ...stdConfig,
+    ...(editor.slidesRcExist() && extendedConfig)
   });
 }
 
@@ -103,6 +116,7 @@ interface Editor {
   showError(message: string): void;
   showMessage(message: string): void;
   getConfiguration(): Configuration;
+  slidesRcExist(): boolean;
 }
 
 interface Configuration {
