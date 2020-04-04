@@ -297,10 +297,10 @@ class FakeEditor implements Editor {
 
   getConfiguration(): Configuration {
     return {
-      ...(this.slidesRcExist() && this._fakeRC),
       theme: null,
       fontFamily: null,
-      previewMarkdownFiles: false
+      previewMarkdownFiles: false,
+      ...(this.slidesRcExist() && this._fakeRC)
     };
   }
   slidesRcExist(): boolean {
