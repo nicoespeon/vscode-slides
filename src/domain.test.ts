@@ -49,14 +49,19 @@ describe("toggle", () => {
       configuration.previewMarkdownFiles
     );
   });
-  it("should override default slide settings with slidesrc configuration", async () => {
-    const editor = new FakeEditor(undefined, { "markdown.fontSize": 24 });
+
+  it("should override settings with project custom configuration", async () => {
+    const editor = new FakeEditor(undefined, {
+      "markdown.fontSize": 24,
+      "anything.else": "isValid"
+    });
     const repository = new InMemoryRepository();
 
     await toggle(editor, repository);
 
     const settings = JSON.parse((await editor.getSettings()) || "");
-    expect(settings["markdown.fontSize"]).toEqual(24);
+    expect(settings["markdown.fontSize"]).toBe(24);
+    expect(settings["anything.else"]).toBe("isValid");
   });
 
   it("should close all editor tabs", async () => {
