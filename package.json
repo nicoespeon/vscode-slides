@@ -121,6 +121,11 @@
           "type": "string",
           "default": "",
           "description": "Project subfolder where the slides are located."
+        },
+        "slides.vscodeSettings": {
+          "type": "object",
+          "default": {},
+          "description": "VS Code settings you want to set in presentation mode."
         }
       }
     }
