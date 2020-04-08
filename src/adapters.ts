@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
-import util, { TextDecoder } from "util";
+import util from "util";
 
 import {
   Editor,
@@ -128,12 +128,19 @@ class VSCodeEditor implements Editor {
 
   getConfiguration(): Configuration {
     const configuration = vscode.workspace.getConfiguration("slides");
+
+    const configuredSettings = configuration.get("vscodeSettings");
+    const editorSettings: AnyObject =
+      typeof configuredSettings === "object" && configuredSettings !== null
+        ? configuredSettings
+        : {};
+
     return {
       previewMarkdownFiles: configuration.get<boolean>(
         "previewMarkdownFiles",
         false
       ),
-      editorSettings: {}
+      editorSettings
     };
   }
 
