@@ -73,7 +73,12 @@ async function setSlidesSettings(editor: Editor, repository: Repository) {
 import { settings as defaults } from "./settings";
 
 function getSlidesSettings(editor: Editor): Settings {
-  const { theme, fontFamily, previewMarkdownFiles } = editor.getConfiguration();
+  const {
+    theme,
+    fontFamily,
+    previewMarkdownFiles,
+    editorSettings
+  } = editor.getConfiguration();
 
   return JSON.stringify({
     // First, we use Slides defaults
@@ -87,6 +92,7 @@ function getSlidesSettings(editor: Editor): Settings {
     ...(previewMarkdownFiles && {
       "slides.previewMarkdownFiles": true
     }),
+    ...editorSettings,
     // Finally, we override with project custom configuration
     ...editor.getProjectConfiguration()
   });

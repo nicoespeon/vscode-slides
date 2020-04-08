@@ -27,17 +27,17 @@ describe("toggle", () => {
     expect(settings).toEqual(defaultSettings);
   });
 
-  it("should override default slide settings with editor configuration", async () => {
+  it("should override default slide settings with editor settings", async () => {
     const editor = new FakeEditor();
     const repository = new InMemoryRepository();
     jest.spyOn(editor, "getConfiguration").mockReturnValue({
-      theme: "A custom theme",
-      fontFamily: "Helvetica",
+      theme: "TODO: to be removed",
+      fontFamily: "TODO: to be removed",
       previewMarkdownFiles: true,
       editorSettings: {
         "workbench.colorTheme": "A custom theme",
         "editor.fontFamily": "Helvetica",
-        "terminal.integrated.fontFamily": "Helvetica"
+        "terminal.integrated.fontFamily": "Arial"
       }
     });
 
@@ -46,7 +46,7 @@ describe("toggle", () => {
     const settings = JSON.parse((await editor.getSettings()) || "");
     expect(settings["workbench.colorTheme"]).toBe("A custom theme");
     expect(settings["editor.fontFamily"]).toBe("Helvetica");
-    expect(settings["terminal.integrated.fontFamily"]).toBe("Helvetica");
+    expect(settings["terminal.integrated.fontFamily"]).toBe("Arial");
     expect(settings["slides.previewMarkdownFiles"]).toBe(true);
   });
 
