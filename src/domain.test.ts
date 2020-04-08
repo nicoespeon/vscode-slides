@@ -30,7 +30,7 @@ describe("toggle", () => {
   it("should override default slide settings with editor configuration", async () => {
     const editor = new FakeEditor();
     const repository = new InMemoryRepository();
-    const configuration = {
+    const configuration: Configuration = {
       theme: "A custom theme",
       fontFamily: "Helvetica",
       previewMarkdownFiles: true
