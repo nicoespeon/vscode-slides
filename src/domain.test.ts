@@ -48,27 +48,6 @@ describe("toggle", () => {
     expect(settings["slides.previewMarkdownFiles"]).toBe(true);
   });
 
-  it("should override settings with project custom configuration", async () => {
-    const editor = new FakeEditor(undefined);
-    jest.spyOn(editor, "getConfiguration").mockReturnValue({
-      previewMarkdownFiles: true,
-      editorSettings: {}
-    });
-    jest.spyOn(editor, "getProjectConfiguration").mockReturnValue({
-      theme: "Project specific theme",
-      "markdown.fontSize": 24,
-      "anything.else": "isValid"
-    });
-    const repository = new InMemoryRepository();
-
-    await toggle(editor, repository);
-
-    const settings = JSON.parse((await editor.getSettings()) || "");
-    expect(settings["theme"]).toBe("Project specific theme");
-    expect(settings["markdown.fontSize"]).toBe(24);
-    expect(settings["anything.else"]).toBe("isValid");
-  });
-
   it("should close all editor tabs", async () => {
     const editor = new FakeEditor();
     const repository = new InMemoryRepository();

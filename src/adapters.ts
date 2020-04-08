@@ -137,29 +137,6 @@ class VSCodeEditor implements Editor {
     };
   }
 
-  getProjectConfiguration(): AnyObject {
-    const NO_CONFIG = {};
-    const pathToProjectConfiguration = this.rootFolder.pathTo(".slidesrc");
-    const hasProjectConfiguration = fs.existsSync(pathToProjectConfiguration);
-
-    if (!hasProjectConfiguration) {
-      return NO_CONFIG;
-    }
-
-    try {
-      return this.tryToReadJSON(pathToProjectConfiguration);
-    } catch (err) {
-      this.showError(`I failed to read .slidesrc because "${err}"`);
-      return NO_CONFIG;
-    }
-  }
-
-  private tryToReadJSON(pathToSlidesRc: string) {
-    const buffer = fs.readFileSync(pathToSlidesRc);
-    const slidestr = new TextDecoder().decode(buffer);
-    return JSON.parse(slidestr);
-  }
-
   private get filesFolder(): Folder {
     const configuration = vscode.workspace.getConfiguration("slides");
     const relativePathToFolder = configuration.get<string>("folder", "");

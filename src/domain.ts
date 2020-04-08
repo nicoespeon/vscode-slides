@@ -80,8 +80,7 @@ function getSlidesSettings(editor: Editor): Settings {
     ...(previewMarkdownFiles && {
       "slides.previewMarkdownFiles": true
     }),
-    ...editorSettings,
-    ...editor.getProjectConfiguration()
+    ...editorSettings
   });
 }
 
@@ -102,7 +101,6 @@ interface Editor {
   showError(message: string): void;
   showMessage(message: string): void;
   getConfiguration(): Configuration;
-  getProjectConfiguration(): AnyObject;
 }
 
 interface Configuration {
