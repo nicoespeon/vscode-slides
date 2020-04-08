@@ -8,9 +8,13 @@ Architecture decisions for this project [are documented here][adrs], using the [
 
 > Pre-requisite: you have installed [git][install-git], [node][install-node] and [yarn][install-yarn].
 
-1. Clone the repo: `git clone https://github.com/nicoespeon/vscode-slides.git`
+1. Clone the repo:
+
+- With SSH => `git clone git@github.com:nicoespeon/vscode-slides.git`
+- With HTTPS => `git clone https://github.com/nicoespeon/vscode-slides.git`
+
 1. Go into the cloned repository: `cd vscode-slides`
-1. Install dependencies: `yarn install`
+1. Install dependencies: `yarn install`
 
 The project uses [TypeScript][typescript], [Jest][jest] for the tests and [Prettier][prettier] for the formatting.
 
