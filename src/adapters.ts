@@ -128,18 +128,7 @@ class VSCodeEditor implements Editor {
 
   getConfiguration(): Configuration {
     const configuration = vscode.workspace.getConfiguration("slides");
-    let slidesrc;
-    if (this.slidesRcExist) {
-      try {
-        const buffer = fs.readFileSync(this.pathToSlidesrc);
-        const slidestr = new TextDecoder().decode(buffer);
-        slidesrc = JSON.parse(slidestr);
-      } catch {
-        slidesrc = {};
-      }
-    }
     return {
-      ...slidesrc,
       theme: configuration.get("theme"),
       fontFamily: configuration.get("fontFamily"),
       previewMarkdownFiles: configuration.get<boolean>(
@@ -150,8 +139,26 @@ class VSCodeEditor implements Editor {
   }
 
   getProjectConfiguration(): AnyObject {
-    // TODO: implement
-    return {};
+    const NO_CONFIG = {};
+    const pathToProjectConfiguration = this.rootFolder.pathTo(".slidesrc");
+    const hasProjectConfiguration = fs.existsSync(pathToProjectConfiguration);
+
+    if (!hasProjectConfiguration) {
+      return NO_CONFIG;
+    }
+
+    try {
+      return this.tryToReadJSON(pathToProjectConfiguration);
+    } catch (err) {
+      this.showError(`I failed to read .slidesrc because "${err}"`);
+      return NO_CONFIG;
+    }
+  }
+
+  private tryToReadJSON(pathToSlidesRc: string) {
+    const buffer = fs.readFileSync(pathToSlidesRc);
+    const slidestr = new TextDecoder().decode(buffer);
+    return JSON.parse(slidestr);
   }
 
   private get filesFolder(): Folder {
@@ -163,14 +170,6 @@ class VSCodeEditor implements Editor {
 
   private get pathToSettings(): Path {
     return this.rootFolder.pathTo(path.join(".vscode", "settings.json"));
-  }
-
-  private get pathToSlidesrc(): Path {
-    return this.rootFolder.pathTo(".slidesrc");
-  }
-
-  private get slidesRcExist(): boolean {
-    return fs.existsSync(this.pathToSlidesrc);
   }
 }
 
