@@ -73,21 +73,21 @@ async function setSlidesSettings(editor: Editor, repository: Repository) {
 import { settings as defaults } from "./settings";
 
 function getSlidesSettings(editor: Editor): Settings {
-  const config = editor.getConfiguration();
-  const stdConfig = {
-    ...(config.theme && { "workbench.colorTheme": config.theme }),
-    ...(config.fontFamily && { "editor.fontFamily": config.fontFamily }),
-    ...(config.fontFamily && {
-      "terminal.integrated.fontFamily": config.fontFamily
-    }),
-    ...(config.previewMarkdownFiles && {
-      "slides.previewMarkdownFiles": true
-    })
-  };
+  const { theme, fontFamily, previewMarkdownFiles } = editor.getConfiguration();
 
   return JSON.stringify({
+    // First, we use Slides defaults
     ...defaults,
-    ...stdConfig,
+    // Then, we override with Slides extension configuration
+    ...(theme && { "workbench.colorTheme": theme }),
+    ...(fontFamily && { "editor.fontFamily": fontFamily }),
+    ...(fontFamily && {
+      "terminal.integrated.fontFamily": fontFamily
+    }),
+    ...(previewMarkdownFiles && {
+      "slides.previewMarkdownFiles": true
+    }),
+    // Finally, we override with project custom configuration
     ...editor.getProjectConfiguration()
   });
 }
