@@ -116,6 +116,7 @@ interface Configuration {
   theme: string | null | undefined;
   fontFamily: string | null | undefined;
   previewMarkdownFiles: boolean;
+  editorSettings: AnyObject;
 }
 
 type AnyObject = { [key: string]: any };

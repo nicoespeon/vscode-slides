@@ -33,7 +33,12 @@ describe("toggle", () => {
     jest.spyOn(editor, "getConfiguration").mockReturnValue({
       theme: "A custom theme",
       fontFamily: "Helvetica",
-      previewMarkdownFiles: true
+      previewMarkdownFiles: true,
+      editorSettings: {
+        "workbench.colorTheme": "A custom theme",
+        "editor.fontFamily": "Helvetica",
+        "terminal.integrated.fontFamily": "Helvetica"
+      }
     });
 
     await toggle(editor, repository);
@@ -50,7 +55,8 @@ describe("toggle", () => {
     jest.spyOn(editor, "getConfiguration").mockReturnValue({
       theme: "A custom theme",
       fontFamily: "Helvetica",
-      previewMarkdownFiles: true
+      previewMarkdownFiles: true,
+      editorSettings: {}
     });
     jest.spyOn(editor, "getProjectConfiguration").mockReturnValue({
       theme: "Project specific theme",
@@ -307,7 +313,8 @@ class FakeEditor implements Editor {
     return {
       theme: null,
       fontFamily: null,
-      previewMarkdownFiles: false
+      previewMarkdownFiles: false,
+      editorSettings: {}
     };
   }
 

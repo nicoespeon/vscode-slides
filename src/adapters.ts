@@ -134,7 +134,8 @@ class VSCodeEditor implements Editor {
       previewMarkdownFiles: configuration.get<boolean>(
         "previewMarkdownFiles",
         false
-      )
+      ),
+      editorSettings: {}
     };
   }
 
