@@ -129,8 +129,6 @@ class VSCodeEditor implements Editor {
   getConfiguration(): Configuration {
     const configuration = vscode.workspace.getConfiguration("slides");
     return {
-      theme: configuration.get("theme"),
-      fontFamily: configuration.get("fontFamily"),
       previewMarkdownFiles: configuration.get<boolean>(
         "previewMarkdownFiles",
         false

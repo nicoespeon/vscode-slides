@@ -31,8 +31,6 @@ describe("toggle", () => {
     const editor = new FakeEditor();
     const repository = new InMemoryRepository();
     jest.spyOn(editor, "getConfiguration").mockReturnValue({
-      theme: "TODO: to be removed",
-      fontFamily: "TODO: to be removed",
       previewMarkdownFiles: true,
       editorSettings: {
         "workbench.colorTheme": "A custom theme",
@@ -53,8 +51,6 @@ describe("toggle", () => {
   it("should override settings with project custom configuration", async () => {
     const editor = new FakeEditor(undefined);
     jest.spyOn(editor, "getConfiguration").mockReturnValue({
-      theme: "A custom theme",
-      fontFamily: "Helvetica",
       previewMarkdownFiles: true,
       editorSettings: {}
     });
@@ -311,8 +307,6 @@ class FakeEditor implements Editor {
 
   getConfiguration(): Configuration {
     return {
-      theme: null,
-      fontFamily: null,
       previewMarkdownFiles: false,
       editorSettings: {}
     };
