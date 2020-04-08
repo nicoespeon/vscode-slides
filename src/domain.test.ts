@@ -1,4 +1,4 @@
-import { toggle, previous, next, exit } from "./domain";
+import { toggle, previous, next, exit, AnyObject } from "./domain";
 import { Editor, Settings, Configuration, Repository, State } from "./domain";
 
 import { settings as defaultSettings } from "./settings";
@@ -46,7 +46,13 @@ describe("toggle", () => {
   });
 
   it("should override settings with project custom configuration", async () => {
-    const editor = new FakeEditor(undefined, {
+    const editor = new FakeEditor(undefined);
+    jest.spyOn(editor, "getConfiguration").mockReturnValue({
+      theme: "A custom theme",
+      fontFamily: "Helvetica",
+      previewMarkdownFiles: true
+    });
+    jest.spyOn(editor, "getProjectConfiguration").mockReturnValue({
       theme: "Project specific theme",
       "markdown.fontSize": 24,
       "anything.else": "isValid"
@@ -274,11 +280,9 @@ function shouldExitSlidesMode(
 
 class FakeEditor implements Editor {
   private settings: Settings | null;
-  private _fakeRC: any;
 
-  constructor(settings?: Settings, fakeRC?: any) {
+  constructor(settings?: Settings) {
     this.settings = settings || null;
-    this._fakeRC = fakeRC || null;
   }
 
   async closeAllTabs() {}
@@ -303,13 +307,16 @@ class FakeEditor implements Editor {
     return {
       theme: null,
       fontFamily: null,
-      previewMarkdownFiles: false,
-      ...(this.slidesRcExist() && this._fakeRC)
+      previewMarkdownFiles: false
     };
   }
 
+  getProjectConfiguration(): AnyObject {
+    return {};
+  }
+
   slidesRcExist(): boolean {
-    return this._fakeRC !== null;
+    return true;
   }
 }
 

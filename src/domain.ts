@@ -1,5 +1,5 @@
 export { toggle, previous, next, exit };
-export { Editor, Configuration, Repository, State, Settings };
+export { Editor, Configuration, AnyObject, Repository, State, Settings };
 
 async function toggle(editor: Editor, repository: Repository) {
   const { isActive } = await repository.get();
@@ -84,9 +84,7 @@ function getSlidesSettings(editor: Editor): Settings {
       "slides.previewMarkdownFiles": true
     })
   };
-  const extendedConfig = {
-    ...config
-  };
+  const extendedConfig = editor.getProjectConfiguration();
   return JSON.stringify({
     ...defaults,
     ...stdConfig,
@@ -111,6 +109,7 @@ interface Editor {
   showError(message: string): void;
   showMessage(message: string): void;
   getConfiguration(): Configuration;
+  getProjectConfiguration(): AnyObject;
   slidesRcExist(): boolean;
 }
 
@@ -119,6 +118,8 @@ interface Configuration {
   fontFamily: string | null | undefined;
   previewMarkdownFiles: boolean;
 }
+
+type AnyObject = { [key: string]: any };
 
 interface Repository {
   store(state: Partial<State>): Promise<void>;

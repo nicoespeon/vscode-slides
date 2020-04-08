@@ -3,7 +3,14 @@ import * as fs from "fs";
 import * as path from "path";
 import util, { TextDecoder } from "util";
 
-import { Editor, Settings, Configuration, Repository, State } from "./domain";
+import {
+  Editor,
+  Settings,
+  Configuration,
+  Repository,
+  State,
+  AnyObject
+} from "./domain";
 
 export { VSCodeEditor, VSCodeRepository };
 export { Folder };
@@ -140,6 +147,11 @@ class VSCodeEditor implements Editor {
         false
       )
     };
+  }
+
+  getProjectConfiguration(): AnyObject {
+    // TODO: implement
+    return {};
   }
 
   private get filesFolder(): Folder {
