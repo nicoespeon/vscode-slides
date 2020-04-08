@@ -84,11 +84,11 @@ function getSlidesSettings(editor: Editor): Settings {
       "slides.previewMarkdownFiles": true
     })
   };
-  const extendedConfig = editor.getProjectConfiguration();
+
   return JSON.stringify({
     ...defaults,
     ...stdConfig,
-    ...(editor.slidesRcExist() && extendedConfig)
+    ...editor.getProjectConfiguration()
   });
 }
 
@@ -110,7 +110,6 @@ interface Editor {
   showMessage(message: string): void;
   getConfiguration(): Configuration;
   getProjectConfiguration(): AnyObject;
-  slidesRcExist(): boolean;
 }
 
 interface Configuration {

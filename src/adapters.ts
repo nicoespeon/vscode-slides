@@ -129,7 +129,7 @@ class VSCodeEditor implements Editor {
   getConfiguration(): Configuration {
     const configuration = vscode.workspace.getConfiguration("slides");
     let slidesrc;
-    if (this.slidesRcExist()) {
+    if (this.slidesRcExist) {
       try {
         const buffer = fs.readFileSync(this.pathToSlidesrc);
         const slidestr = new TextDecoder().decode(buffer);
@@ -168,7 +168,8 @@ class VSCodeEditor implements Editor {
   private get pathToSlidesrc(): Path {
     return this.rootFolder.pathTo(".slidesrc");
   }
-  slidesRcExist(): boolean {
+
+  private get slidesRcExist(): boolean {
     return fs.existsSync(this.pathToSlidesrc);
   }
 }

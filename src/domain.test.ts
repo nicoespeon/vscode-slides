@@ -314,10 +314,6 @@ class FakeEditor implements Editor {
   getProjectConfiguration(): AnyObject {
     return {};
   }
-
-  slidesRcExist(): boolean {
-    return true;
-  }
 }
 
 class InMemoryRepository implements Repository {
