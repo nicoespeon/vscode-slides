@@ -58,6 +58,7 @@ describe("toggle", () => {
     const settings = JSON.parse((await editor.getSettings()) || "");
     expect(settings["markdown.fontSize"]).toEqual(24);
   });
+
   it("should close all editor tabs", async () => {
     const editor = new FakeEditor();
     const repository = new InMemoryRepository();
@@ -272,6 +273,7 @@ function shouldExitSlidesMode(
 class FakeEditor implements Editor {
   private settings: Settings | null;
   private _fakeRC: any;
+
   constructor(settings?: Settings, fakeRC?: any) {
     this.settings = settings || null;
     this._fakeRC = fakeRC || null;
@@ -303,6 +305,7 @@ class FakeEditor implements Editor {
       ...(this.slidesRcExist() && this._fakeRC)
     };
   }
+
   slidesRcExist(): boolean {
     return this._fakeRC !== null;
   }
