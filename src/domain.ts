@@ -87,11 +87,6 @@ function getSlidesSettings(editor: Editor): Settings {
   const extendedConfig = {
     ...config
   };
-  // Pruning standardConfig stuff so we don't get unnecessary entries in the
-  // merged object.
-  delete extendedConfig.theme;
-  delete extendedConfig.fontFamily;
-  delete extendedConfig.previewMarkdownFiles;
   return JSON.stringify({
     ...defaults,
     ...stdConfig,

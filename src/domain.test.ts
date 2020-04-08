@@ -52,6 +52,7 @@ describe("toggle", () => {
 
   it("should override settings with project custom configuration", async () => {
     const editor = new FakeEditor(undefined, {
+      theme: "Project specific theme",
       "markdown.fontSize": 24,
       "anything.else": "isValid"
     });
@@ -60,6 +61,7 @@ describe("toggle", () => {
     await toggle(editor, repository);
 
     const settings = JSON.parse((await editor.getSettings()) || "");
+    expect(settings["theme"]).toBe("Project specific theme");
     expect(settings["markdown.fontSize"]).toBe(24);
     expect(settings["anything.else"]).toBe("isValid");
   });
