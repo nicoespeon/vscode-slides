@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.0] - 2020-04-08
+
 ### Removed (breaking)
 
 - `slides.theme` and `slides.fontFamily` configuration. These can now be configured directly with the new `slides.vscodeSettings` object that was added (see details below).
@@ -129,7 +131,8 @@ Have a look at [Slides default settings](https://github.com/nicoespeon/vscode-sl
 - **Shortcuts to navigate between slides** when activated.
 - **Shortcut to deactivate Slides** when activated.
 
-[unreleased]: https://github.com/nicoespeon/vscode-slides/compare/3.2.1...HEAD
+[unreleased]: https://github.com/nicoespeon/vscode-slides/compare/4.0.0...HEAD
+[4.0.0]: https://github.com/nicoespeon/vscode-slides/compare/3.2.1...4.0.0
 [3.2.1]: https://github.com/nicoespeon/vscode-slides/compare/3.2.0...3.2.1
 [3.2.0]: https://github.com/nicoespeon/vscode-slides/compare/3.1.0...3.2.0
 [3.1.0]: https://github.com/nicoespeon/vscode-slides/compare/3.0.0...3.1.0
