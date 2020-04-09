@@ -1,7 +1,6 @@
 export const settings = {
-  "//a": "This theme is familiar to devs",
-  "!a": "You need to install this theme",
-  "workbench.colorTheme": "GitHub Clean White",
+  "//a": "A light theme is easier to read",
+  "workbench.colorTheme": "Visual Studio Light",
 
   "//b": "Minor tweaks to improve contrast & make cursor stands out",
   "workbench.colorCustomizations": {

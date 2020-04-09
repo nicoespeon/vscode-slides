@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Make "Visual Studio Light" the default theme. It renders Markdown files correctly and "Github Clean White" seems to have broken with recent VS Code updates. Plus, it's a default theme so that's less custom stuff to install.
+
 ## [4.0.0] - 2020-04-08
 
 ### Removed (breaking)

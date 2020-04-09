@@ -49,7 +49,6 @@ You can also re-use _Toggle Slides mode_ to deactivate Slides.
 
 Slides is opinionated. By default, you'll need to install:
 
-1. [The "GitHub Clean White" theme][recommended-theme] on VS Code
 1. [The "SF Mono" font][recommended-font] on your machine
 
 If you don't want to use these, you can override Slides settings with the `slides.vscodeSettings` configuration.
@@ -162,7 +161,6 @@ Contributions of any kind are welcome!
 [semver]: http://semver.org/
 [all-contributors]: https://allcontributors.org
 [all-contributors-emoji]: https://allcontributors.org/docs/en/emoji-key
-[recommended-theme]: https://marketplace.visualstudio.com/items?itemName=saviorisdead.Theme-GitHubCleanWhite
 [recommended-font]: https://github.com/ZulwiyozaPutra/SF-Mono-Font
 
 <!-- Repo links -->
