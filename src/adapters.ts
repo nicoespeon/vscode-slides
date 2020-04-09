@@ -31,10 +31,8 @@ class VSCodeEditor implements Editor {
     await wait(100);
   }
 
-  async openAllFiles({ previewMarkdownFiles }: Configuration) {
-    const configuration = vscode.workspace.getConfiguration("slides");
-    const relativePathToFolder = configuration.get<string>("folder", "");
-    const filesFolder = this.rootFolder.goTo(relativePathToFolder);
+  async openAllFiles({ previewMarkdownFiles, folder }: Configuration) {
+    const filesFolder = this.rootFolder.goTo(folder);
 
     for (const file of filesFolder.visibleFiles) {
       if (previewMarkdownFiles && file.isMarkdown) {
@@ -142,6 +140,7 @@ class VSCodeEditor implements Editor {
         "previewMarkdownFiles",
         false
       ),
+      folder: configuration.get<string>("folder", ""),
       editorSettings
     };
   }

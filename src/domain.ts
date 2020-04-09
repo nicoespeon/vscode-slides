@@ -108,6 +108,7 @@ interface Editor {
 
 interface Configuration {
   previewMarkdownFiles: boolean;
+  folder: string;
   editorSettings: AnyObject;
 }
 

@@ -32,6 +32,7 @@ describe("toggle", () => {
     const repository = new InMemoryRepository();
     jest.spyOn(editor, "getConfiguration").mockReturnValue({
       previewMarkdownFiles: true,
+      folder: "",
       editorSettings: {
         "workbench.colorTheme": "A custom theme",
         "editor.fontFamily": "Helvetica",
@@ -287,6 +288,7 @@ class FakeEditor implements Editor {
   getConfiguration(): Configuration {
     return {
       previewMarkdownFiles: false,
+      folder: "",
       editorSettings: {}
     };
   }
