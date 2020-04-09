@@ -46,7 +46,6 @@ describe("toggle", () => {
     expect(settings["workbench.colorTheme"]).toBe("A custom theme");
     expect(settings["editor.fontFamily"]).toBe("Helvetica");
     expect(settings["terminal.integrated.fontFamily"]).toBe("Arial");
-    expect(settings["slides.previewMarkdownFiles"]).toBe(true);
   });
 
   it("should close all editor tabs", async () => {

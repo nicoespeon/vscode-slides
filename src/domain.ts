@@ -76,13 +76,10 @@ async function setSlidesSettings(editor: Editor, repository: Repository) {
 import { settings as defaults } from "./settings";
 
 function getSlidesSettings(editor: Editor): Settings {
-  const { previewMarkdownFiles, editorSettings } = editor.getConfiguration();
+  const { editorSettings } = editor.getConfiguration();
 
   return JSON.stringify({
     ...defaults,
-    ...(previewMarkdownFiles && {
-      "slides.previewMarkdownFiles": true
-    }),
     ...editorSettings
   });
 }
