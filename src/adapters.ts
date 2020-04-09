@@ -31,10 +31,12 @@ class VSCodeEditor implements Editor {
     await wait(100);
   }
 
-  async openAllFiles() {
-    const { previewMarkdownFiles } = this.getConfiguration();
+  async openAllFiles({ previewMarkdownFiles }: Configuration) {
+    const configuration = vscode.workspace.getConfiguration("slides");
+    const relativePathToFolder = configuration.get<string>("folder", "");
+    const filesFolder = this.rootFolder.goTo(relativePathToFolder);
 
-    for (const file of this.filesFolder.visibleFiles) {
+    for (const file of filesFolder.visibleFiles) {
       if (previewMarkdownFiles && file.isMarkdown) {
         await this.openMarkdownPreview(file);
       } else {
@@ -142,13 +144,6 @@ class VSCodeEditor implements Editor {
       ),
       editorSettings
     };
-  }
-
-  private get filesFolder(): Folder {
-    const configuration = vscode.workspace.getConfiguration("slides");
-    const relativePathToFolder = configuration.get<string>("folder", "");
-
-    return this.rootFolder.goTo(relativePathToFolder);
   }
 
   private get pathToSettings(): Path {

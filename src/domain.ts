@@ -46,10 +46,13 @@ async function restoreSettings(editor: Editor, repository: Repository) {
 }
 
 async function start(editor: Editor, repository: Repository) {
+  // Get editor configuration before we override it with Slides settings.
+  const configuration = editor.getConfiguration();
+
   await setSlidesSettings(editor, repository);
 
   try {
-    await openAllSlides(editor);
+    await openAllSlides(editor, configuration);
   } catch (error) {
     editor.showMessage(
       "I kept the sidebar open so you can open files manually!"
@@ -84,14 +87,14 @@ function getSlidesSettings(editor: Editor): Settings {
   });
 }
 
-async function openAllSlides(editor: Editor) {
+async function openAllSlides(editor: Editor, configuration: Configuration) {
   await editor.closeAllTabs();
-  await editor.openAllFiles();
+  await editor.openAllFiles(configuration);
 }
 
 interface Editor {
   closeAllTabs(): Promise<void>;
-  openAllFiles(): Promise<void>;
+  openAllFiles(configuration: Configuration): Promise<void>;
   openPreviousFile(): Promise<void>;
   openNextFile(): Promise<void>;
   hideSideBar(): Promise<void>;
