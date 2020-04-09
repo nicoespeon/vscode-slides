@@ -103,6 +103,8 @@ interface Editor {
   getConfiguration(): Configuration;
 }
 
+// Note: considering current usage, we might split Slides
+// config (folder, previewMarkdownFiles) from editor settings.
 interface Configuration {
   previewMarkdownFiles: boolean;
   folder: string;
