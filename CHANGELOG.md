@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed (breaking)
+
+- `slides.theme` and `slides.fontFamily` configuration. These can now be configured directly with the new `slides.vscodeSettings` object that was added (see details below).
+
+### Added
+
+- Thanks to @omnoms, you can now override Slides settings with the `slides.vscodeSettings` object. It takes a VS Code setting configuration and will apply it on top of Slides default settings when you enter presentation mode.
+
+For example, if you want to change the theme, font family and font size of the presentation mode, set the following configuration in your VS Code `settings.json`:
+
+```json
+{
+  "slides.vscodeSettings": {
+    "workbench.colorTheme": "Frantic Light (rainglow)",
+
+    "editor.fontFamily": "Arial",
+    "terminal.integrated.fontFamily": "Arial",
+
+    "editor.fontSize": 42
+  }
+}
+```
+
+Any valid VS Code setting will work.
+
+Have a look at [Slides default settings](https://github.com/nicoespeon/vscode-slides/blob/master/src/settings.ts) to learn more.
+
+### Fixed
+
+- It was not possible to configure Slides settings in the Workspace because the settings were overridden by the extension itself. This is now fixed. You can configure Slides from anywhere 👍
+
 ## [3.2.1] - 2020-02-06
 
 ### Fixed
