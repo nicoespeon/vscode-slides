@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Thanks to @omnoms, you can now override Slides settings with the `slides.vscodeSettings` object. It takes a VS Code setting configuration and will apply it on top of Slides default settings when you enter presentation mode.
+- Thanks to [@omnoms](https://github.com/omnoms), you can now override Slides settings with the `slides.vscodeSettings` object. It takes a VS Code setting configuration and will apply it on top of Slides default settings when you enter presentation mode.
 
 For example, if you want to change the theme, font family and font size of the presentation mode, set the following configuration in your VS Code `settings.json`:
 
