@@ -3,7 +3,14 @@ import * as fs from "fs";
 import * as path from "path";
 import util from "util";
 
-import { Editor, Settings, Configuration, Repository, State } from "./domain";
+import {
+  Editor,
+  Settings,
+  Configuration,
+  Repository,
+  State,
+  AnyObject
+} from "./domain";
 
 export { VSCodeEditor, VSCodeRepository };
 export { Folder };
@@ -24,10 +31,10 @@ class VSCodeEditor implements Editor {
     await wait(100);
   }
 
-  async openAllFiles() {
-    const { previewMarkdownFiles } = this.getConfiguration();
+  async openAllFiles({ previewMarkdownFiles, folder }: Configuration) {
+    const filesFolder = this.rootFolder.goTo(folder);
 
-    for (const file of this.filesFolder.visibleFiles) {
+    for (const file of filesFolder.visibleFiles) {
       if (previewMarkdownFiles && file.isMarkdown) {
         await this.openMarkdownPreview(file);
       } else {
@@ -122,21 +129,20 @@ class VSCodeEditor implements Editor {
   getConfiguration(): Configuration {
     const configuration = vscode.workspace.getConfiguration("slides");
 
+    const configuredSettings = configuration.get("vscodeSettings");
+    const editorSettings: AnyObject =
+      typeof configuredSettings === "object" && configuredSettings !== null
+        ? configuredSettings
+        : {};
+
     return {
-      theme: configuration.get("theme"),
-      fontFamily: configuration.get("fontFamily"),
       previewMarkdownFiles: configuration.get<boolean>(
         "previewMarkdownFiles",
         false
-      )
+      ),
+      folder: configuration.get<string>("folder", ""),
+      editorSettings
     };
-  }
-
-  private get filesFolder(): Folder {
-    const configuration = vscode.workspace.getConfiguration("slides");
-    const relativePathToFolder = configuration.get<string>("folder", "");
-
-    return this.rootFolder.goTo(relativePathToFolder);
   }
 
   private get pathToSettings(): Path {

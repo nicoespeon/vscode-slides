@@ -102,16 +102,6 @@
     "configuration": {
       "title": "Slides",
       "properties": {
-        "slides.theme": {
-          "type": "string",
-          "default": "GitHub Clean White",
-          "description": "Name of the theme to use. Theme should be installed. A light one is usually better."
-        },
-        "slides.fontFamily": {
-          "type": "string",
-          "default": "SF Mono",
-          "description": "Font family to use. It should be installed on your machine."
-        },
         "slides.previewMarkdownFiles": {
           "type": "boolean",
           "default": false,
@@ -121,6 +111,11 @@
           "type": "string",
           "default": "",
           "description": "Project subfolder where the slides are located."
+        },
+        "slides.vscodeSettings": {
+          "type": "object",
+          "default": {},
+          "description": "VS Code settings you want to set in presentation mode."
         }
       }
     }

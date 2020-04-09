@@ -1,6 +1,6 @@
 # 👩‍🏫 VS Code Slides
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors)
 
 Slides is a Visual Studio Code extension that helps you use your editor as a presentation tool.
 
@@ -15,9 +15,10 @@ This is inspired from [André Staltz's post][andre-staltz-post] where he explain
 ## Features
 
 - ⚡ Toggle Slides mode with a shortcut
-- 🎨 Apply optimized settings for presentation
 - 👐 Handy shortcuts to navigate between slides
 - 📊 Preview Mardown files for better presentations
+- 🎨 Optimized settings for presentation
+- 👩‍🎨 Customize settings to your needs
 
 ### Toggle Slides mode
 
@@ -44,17 +45,6 @@ You can also re-use _Toggle Slides mode_ to deactivate Slides.
 
 > If you want to change the default shortcuts, go in VS Code **Preferences > Keyboard Shortcuts** and search for `slides`. You should be able to override them.
 
-### Configuration
-
-Here are the default settings of Slides you can override in your VS Code settings.
-
-| Name                          | Description                    | Default               |
-| ----------------------------- | ------------------------------ | --------------------- |
-| `slides.theme`                | VS Code theme to use           | `GitHub Clean White`  |
-| `slides.fontFamily`           | Font family to use             | `SF Mono`             |
-| `slides.previewMarkdownFiles` | Preview Markdown files         | `false`               |
-| `slides.folder`               | Relative path to slides folder | Workspace root folder |
-
 ## Pre-requisite
 
 Slides is opinionated. By default, you'll need to install:
@@ -62,7 +52,36 @@ Slides is opinionated. By default, you'll need to install:
 1. [The "GitHub Clean White" theme][recommended-theme] on VS Code
 1. [The "SF Mono" font][recommended-font] on your machine
 
-If you don't want to use these, you can configure Slides theme and font family. Open VS Code settings and search for "slides".
+If you don't want to use these, you can override Slides settings with the `slides.vscodeSettings` configuration.
+
+## Configuration
+
+Here are the default settings of Slides you can override in your VS Code settings.
+
+| Name                          | Description                           | Default               |
+| ----------------------------- | ------------------------------------- | --------------------- |
+| `slides.previewMarkdownFiles` | Preview Markdown files                | `false`               |
+| `slides.folder`               | Relative path to slides folder        | Workspace root folder |
+| `slides.vscodeSettings`       | Custom settings for presentation mode | {}                    |
+
+In your VS Code `settings.json` you can set any valid VS Code setting you want to apply in presentation mode.
+
+For example:
+
+```json
+{
+  "slides.vscodeSettings": {
+    "workbench.colorTheme": "Frantic Light (rainglow)",
+
+    "editor.fontFamily": "Arial",
+    "terminal.integrated.fontFamily": "Arial",
+
+    "editor.fontSize": 42
+  }
+}
+```
+
+Have a look at [Slides default settings](https://github.com/nicoespeon/vscode-slides/blob/master/src/settings.ts) to learn more.
 
 ## Installation
 
@@ -118,10 +137,11 @@ Thanks goes to these wonderful people ([emoji key][all-contributors-emoji]):
 <!-- prettier-ignore -->
 <table>
   <tr>
-    <td align="center"><a href="https://nicoespeon.com"><img src="https://avatars.githubusercontent.com/u/1094774?v=3" width="100px;" alt="Nicolas Carlo"/><br /><sub><b>Nicolas Carlo</b></sub></a><br /><a href="#question-nicoespeon" title="Answering Questions">💬</a> <a href="https://github.com/nicoespeon/vscode-slides/commits?author=nicoespeon" title="Code">💻</a> <a href="https://github.com/nicoespeon/vscode-slides/commits?author=nicoespeon" title="Documentation">📖</a><br /><a href="#review-nicoespeon" title="Reviewed Pull Requests">👀</a> <a href="#ideas-nicoespeon" title="Ideas">🤔</a></td>
-    <td align="center"><a href="https://github.com/divinebovine"><img src="https://avatars0.githubusercontent.com/u/2818169?v=4" width="100px;" alt="Daniel Dickerson"/><br /><sub><b>Daniel Dickerson</b></sub></a><br /><a href="https://github.com/nicoespeon/vscode-slides/issues?q=author%3Adivinebovine" title="Bug reports">🐛</a> <a href="https://github.com/nicoespeon/vscode-slides/commits?author=divinebovine" title="Code">💻</a></td></td>
-    <td align="center"><a href="https://github.com/etbrow"><img src="https://avatars0.githubusercontent.com/u/58043405?v=4" width="100px;" alt="Ethan Brown"/><br /><sub><b>Ethan Brown</b></sub></a><br /><a href="https://github.com/nicoespeon/vscode-slides/commits?author=etbrow" title="Code">💻</a> <a href="#ideas-etbrow" title="Ideas">🤔</a></td>
-    <td align="center"><a href="https://github.com/joeparislbcc"><img src="https://avatars0.githubusercontent.com/u/7649433?v=4" width="100px;" alt="Joe Paris"/><br /><sub><b>Joe Paris</b></sub></a><br /><a href="https://github.com/nicoespeon/vscode-slides/issues?q=author%3Ajoeparislbcc" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://nicoespeon.com"><img src="https://github.com/nicoespeon.png" width="100px;" alt="Nicolas Carlo"/><br /><sub><b>Nicolas Carlo</b></sub></a><br /><a href="#question-nicoespeon" title="Answering Questions">💬</a> <a href="https://github.com/nicoespeon/vscode-slides/commits?author=nicoespeon" title="Code">💻</a> <a href="https://github.com/nicoespeon/vscode-slides/commits?author=nicoespeon" title="Documentation">📖</a><br /><a href="#review-nicoespeon" title="Reviewed Pull Requests">👀</a> <a href="#ideas-nicoespeon" title="Ideas">🤔</a></td>
+    <td align="center"><a href="https://github.com/divinebovine"><img src="https://github.com/divinebovine.png" width="100px;" alt="Daniel Dickerson"/><br /><sub><b>Daniel Dickerson</b></sub></a><br /><a href="https://github.com/nicoespeon/vscode-slides/issues?q=author%3Adivinebovine" title="Bug reports">🐛</a> <a href="https://github.com/nicoespeon/vscode-slides/commits?author=divinebovine" title="Code">💻</a></td></td>
+    <td align="center"><a href="https://github.com/etbrow"><img src="https://github.com/etbrow.png" width="100px;" alt="Ethan Brown"/><br /><sub><b>Ethan Brown</b></sub></a><br /><a href="https://github.com/nicoespeon/vscode-slides/commits?author=etbrow" title="Code">💻</a> <a href="#ideas-etbrow" title="Ideas">🤔</a></td>
+    <td align="center"><a href="https://github.com/joeparislbcc"><img src="https://github.com/joeparislbcc.png" width="100px;" alt="Joe Paris"/><br /><sub><b>Joe Paris</b></sub></a><br /><a href="https://github.com/nicoespeon/vscode-slides/issues?q=author%3Ajoeparislbcc" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/omnoms"><img src="https://github.com/omnoms.png" width="100px;" alt="Marko V"/><br /><sub><b>Marko V</b></sub></a><br /><a href="https://github.com/nicoespeon/vscode-slides/commits?author=omnoms" title="Code">💻</a> <a href="#ideas-omnoms" title="Ideas">🤔</a></td>
   </tr>
 </table>
 

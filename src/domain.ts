@@ -1,5 +1,5 @@
 export { toggle, previous, next, exit };
-export { Editor, Configuration, Repository, State, Settings };
+export { Editor, Configuration, AnyObject, Repository, State, Settings };
 
 async function toggle(editor: Editor, repository: Repository) {
   const { isActive } = await repository.get();
@@ -46,10 +46,13 @@ async function restoreSettings(editor: Editor, repository: Repository) {
 }
 
 async function start(editor: Editor, repository: Repository) {
+  // Get editor configuration before we override it with Slides settings.
+  const configuration = editor.getConfiguration();
+
   await setSlidesSettings(editor, repository);
 
   try {
-    await openAllSlides(editor);
+    await openAllSlides(editor, configuration);
   } catch (error) {
     editor.showMessage(
       "I kept the sidebar open so you can open files manually!"
@@ -73,27 +76,22 @@ async function setSlidesSettings(editor: Editor, repository: Repository) {
 import { settings as defaults } from "./settings";
 
 function getSlidesSettings(editor: Editor): Settings {
-  const { theme, fontFamily, previewMarkdownFiles } = editor.getConfiguration();
+  const { editorSettings } = editor.getConfiguration();
 
   return JSON.stringify({
     ...defaults,
-    ...(theme && { "workbench.colorTheme": theme }),
-    ...(fontFamily && { "editor.fontFamily": fontFamily }),
-    ...(fontFamily && { "terminal.integrated.fontFamily": fontFamily }),
-    ...(previewMarkdownFiles && {
-      "slides.previewMarkdownFiles": true
-    })
+    ...editorSettings
   });
 }
 
-async function openAllSlides(editor: Editor) {
+async function openAllSlides(editor: Editor, configuration: Configuration) {
   await editor.closeAllTabs();
-  await editor.openAllFiles();
+  await editor.openAllFiles(configuration);
 }
 
 interface Editor {
   closeAllTabs(): Promise<void>;
-  openAllFiles(): Promise<void>;
+  openAllFiles(configuration: Configuration): Promise<void>;
   openPreviousFile(): Promise<void>;
   openNextFile(): Promise<void>;
   hideSideBar(): Promise<void>;
@@ -105,11 +103,15 @@ interface Editor {
   getConfiguration(): Configuration;
 }
 
+// Note: considering current usage, we might split Slides
+// config (folder, previewMarkdownFiles) from editor settings.
 interface Configuration {
-  theme: string | null | undefined;
-  fontFamily: string | null | undefined;
   previewMarkdownFiles: boolean;
+  folder: string;
+  editorSettings: AnyObject;
 }
+
+type AnyObject = { [key: string]: any };
 
 interface Repository {
   store(state: Partial<State>): Promise<void>;

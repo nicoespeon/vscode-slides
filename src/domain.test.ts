@@ -1,4 +1,4 @@
-import { toggle, previous, next, exit } from "./domain";
+import { toggle, previous, next, exit, AnyObject } from "./domain";
 import { Editor, Settings, Configuration, Repository, State } from "./domain";
 
 import { settings as defaultSettings } from "./settings";
@@ -27,27 +27,25 @@ describe("toggle", () => {
     expect(settings).toEqual(defaultSettings);
   });
 
-  it("should override default slide settings with editor configuration", async () => {
+  it("should override default slide settings with editor settings", async () => {
     const editor = new FakeEditor();
     const repository = new InMemoryRepository();
-    const configuration = {
-      theme: "A custom theme",
-      fontFamily: "Helvetica",
-      previewMarkdownFiles: true
-    };
-    jest.spyOn(editor, "getConfiguration").mockReturnValue(configuration);
+    jest.spyOn(editor, "getConfiguration").mockReturnValue({
+      previewMarkdownFiles: true,
+      folder: "",
+      editorSettings: {
+        "workbench.colorTheme": "A custom theme",
+        "editor.fontFamily": "Helvetica",
+        "terminal.integrated.fontFamily": "Arial"
+      }
+    });
 
     await toggle(editor, repository);
 
     const settings = JSON.parse((await editor.getSettings()) || "");
-    expect(settings["workbench.colorTheme"]).toBe(configuration.theme);
-    expect(settings["editor.fontFamily"]).toBe(configuration.fontFamily);
-    expect(settings["terminal.integrated.fontFamily"]).toBe(
-      configuration.fontFamily
-    );
-    expect(settings["slides.previewMarkdownFiles"]).toBe(
-      configuration.previewMarkdownFiles
-    );
+    expect(settings["workbench.colorTheme"]).toBe("A custom theme");
+    expect(settings["editor.fontFamily"]).toBe("Helvetica");
+    expect(settings["terminal.integrated.fontFamily"]).toBe("Arial");
   });
 
   it("should close all editor tabs", async () => {
@@ -288,10 +286,14 @@ class FakeEditor implements Editor {
 
   getConfiguration(): Configuration {
     return {
-      theme: null,
-      fontFamily: null,
-      previewMarkdownFiles: false
+      previewMarkdownFiles: false,
+      folder: "",
+      editorSettings: {}
     };
+  }
+
+  getProjectConfiguration(): AnyObject {
+    return {};
   }
 }
 
