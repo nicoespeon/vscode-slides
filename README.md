@@ -100,6 +100,18 @@ Have a look at [Slides default settings](https://github.com/nicoespeon/vscode-sl
 - Leverage `slides.previewMarkdownFiles` setting to render Markdown files for increased readability.
 - Leverage `slides.folder` setting to regroup your slides into a folder for better cohesion.
 
+## FAQ
+
+### The plugin seems to have screwed up my editor settings, help!
+
+When you enter presentation mode, the plugin writes a `.vscode/settings.json` file in your project. If there was an existing one, it stores it in cache.
+
+When you exit presentation mode, the plugin should restore the previous `settings.json` (if there was one).
+
+If you get stuck with the presentation style, even though you're not in presentation mode anymore (e.g. you've uninstalled the plugin), you can get rid of the `.vscode/settings.json` file to get back to normal. You may lose the original project `settings.json` if that happens, but I rarely saw that happen.
+
+Related issues: [#19](https://github.com/nicoespeon/vscode-slides/issues/19) and [#39](https://github.com/nicoespeon/vscode-slides/issues/39)
+
 ## Release Notes
 
 [Have a look at our CHANGELOG][changelog] to get the details of all changes between versions.
