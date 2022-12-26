@@ -84,38 +84,22 @@ class VSCodeEditor implements Editor {
     );
   }
 
-  async getSettings(): Promise<Settings> {
+  getSettings(): string {
     if (!fs.existsSync(this.pathToSettings)) {
       return "{}";
     }
 
-    const settings = await vscode.workspace.openTextDocument(
-      this.pathToSettings
-    );
-    return settings.getText();
+    return fs.readFileSync(this.pathToSettings, { encoding: "utf-8" });
   }
 
-  async setSettings(settings: Settings) {
-    const settingsFileUri = vscode.Uri.file(this.pathToSettings);
+  setSettings(settings: Settings) {
+    const dir = path.dirname(this.pathToSettings);
 
-    // We perform distinct operations so the combination always work.
-    // Sometimes it didn't work when we batched them in one `applyEdit()`.
-    const createFile = new vscode.WorkspaceEdit();
-    createFile.createFile(settingsFileUri, { overwrite: true });
-    await vscode.workspace.applyEdit(createFile);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
 
-    const writeSettings = new vscode.WorkspaceEdit();
-    writeSettings.insert(settingsFileUri, new vscode.Position(0, 0), settings);
-    await vscode.workspace.applyEdit(writeSettings);
-
-    // Give VS Code enough time to create the settings before saving.
-    await wait(500);
-
-    // Save to apply changes directly.
-    await vscode.workspace.saveAll();
-
-    // Wait so VS Code adopts new settings before we move on.
-    await wait(200);
+    fs.writeFileSync(this.pathToSettings, settings);
   }
 
   showError(message: string) {

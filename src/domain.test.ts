@@ -274,10 +274,10 @@ class FakeEditor implements Editor {
   async hideSideBar() {}
   async showSideBar() {}
 
-  async getSettings() {
+  getSettings() {
     return this.settings;
   }
-  async setSettings(settings: Settings) {
+  setSettings(settings: Settings) {
     this.settings = settings;
   }
 
