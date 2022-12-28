@@ -41,7 +41,7 @@ async function restoreSettings(editor: Editor, repository: Repository) {
   const { settings } = await repository.get();
 
   if (settings) {
-    await editor.setSettings(settings);
+    editor.setSettings(settings);
   }
 }
 
@@ -68,9 +68,10 @@ async function start(editor: Editor, repository: Repository) {
 
 async function setSlidesSettings(editor: Editor, repository: Repository) {
   await repository.store({
-    settings: await editor.getSettings()
+    settings: editor.getSettings()
   });
-  await editor.setSettings(getSlidesSettings(editor));
+
+  editor.setSettings(getSlidesSettings(editor));
 }
 
 import { settings as defaults } from "./settings";
@@ -96,8 +97,8 @@ interface Editor {
   openNextFile(): Promise<void>;
   hideSideBar(): Promise<void>;
   showSideBar(): Promise<void>;
-  getSettings(): Promise<Settings | null>;
-  setSettings(settings: Settings): Promise<void>;
+  getSettings(): Settings | null;
+  setSettings(settings: Settings): void;
   showError(message: string): void;
   showMessage(message: string): void;
   getConfiguration(): Configuration;
