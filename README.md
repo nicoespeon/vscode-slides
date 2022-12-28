@@ -1,9 +1,10 @@
 # 👩‍🏫 VS Code Slides
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors)
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors)
+
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Slides is a Visual Studio Code extension that helps you use your editor as a presentation tool.
 
@@ -146,24 +147,10 @@ To help you get your feet wet and become familiar with our contribution process,
 ## Contributors
 
 Thanks goes to these wonderful people ([emoji key][all-contributors-emoji]):
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tbody>
-    <tr>
-      <td align="center"><a href="http://lucasfeliciano.com"><img src="https://avatars.githubusercontent.com/u/968014?v=4?s=100" width="100px;" alt="Lucas Feliciano"/><br /><sub><b>Lucas Feliciano</b></sub></a><br /><a href="https://github.com/nicoespeon/vscode-slides/commits?author=lucasfeliciano" title="Code">💻</a> <a href="https://github.com/nicoespeon/vscode-slides/issues?q=author%3Alucasfeliciano" title="Bug reports">🐛</a></td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
+<!-- markdownlint-disable -->
 <table>
   <tr>
     <td align="center"><a href="https://nicoespeon.com"><img src="https://github.com/nicoespeon.png" width="100px;" alt="Nicolas Carlo"/><br /><sub><b>Nicolas Carlo</b></sub></a><br /><a href="#question-nicoespeon" title="Answering Questions">💬</a> <a href="https://github.com/nicoespeon/vscode-slides/commits?author=nicoespeon" title="Code">💻</a> <a href="https://github.com/nicoespeon/vscode-slides/commits?author=nicoespeon" title="Documentation">📖</a><br /><a href="#review-nicoespeon" title="Reviewed Pull Requests">👀</a> <a href="#ideas-nicoespeon" title="Ideas">🤔</a></td>
@@ -171,9 +158,11 @@ Thanks goes to these wonderful people ([emoji key][all-contributors-emoji]):
     <td align="center"><a href="https://github.com/etbrow"><img src="https://github.com/etbrow.png" width="100px;" alt="Ethan Brown"/><br /><sub><b>Ethan Brown</b></sub></a><br /><a href="https://github.com/nicoespeon/vscode-slides/commits?author=etbrow" title="Code">💻</a> <a href="#ideas-etbrow" title="Ideas">🤔</a></td>
     <td align="center"><a href="https://github.com/joeparislbcc"><img src="https://github.com/joeparislbcc.png" width="100px;" alt="Joe Paris"/><br /><sub><b>Joe Paris</b></sub></a><br /><a href="https://github.com/nicoespeon/vscode-slides/issues?q=author%3Ajoeparislbcc" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/omnoms"><img src="https://github.com/omnoms.png" width="100px;" alt="Marko V"/><br /><sub><b>Marko V</b></sub></a><br /><a href="https://github.com/nicoespeon/vscode-slides/commits?author=omnoms" title="Code">💻</a> <a href="#ideas-omnoms" title="Ideas">🤔</a></td>
+    <td align="center"><a href="http://lucasfeliciano.com"><img src="https://avatars.githubusercontent.com/u/968014?v=4?s=100" width="100px;" alt="Lucas Feliciano"/><br /><sub><b>Lucas Feliciano</b></sub></a><br /><a href="https://github.com/nicoespeon/vscode-slides/commits?author=lucasfeliciano" title="Code">💻</a> <a href="https://github.com/nicoespeon/vscode-slides/issues?q=author%3Alucasfeliciano" title="Bug reports">🐛</a></td>
   </tr>
 </table>
-
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.

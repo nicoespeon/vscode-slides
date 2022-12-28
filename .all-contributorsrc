@@ -7,6 +7,58 @@
   "commitConvention": "angular",
   "contributors": [
     {
+      "login": "nicoespeon",
+      "name": "Nicolas Carlo",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1094774?v=4",
+      "profile": "https://nicoespeon.com/",
+      "contributions": [
+        "ideas",
+        "code",
+        "doc",
+        "review",
+        "question"
+      ]
+    },
+    {
+      "login": "divinebovine",
+      "name": "Daniel Dickerson",
+      "avatar_url": "https://github.com/divinebovine.png",
+      "profile": "https://github.com/divinebovine",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "etbrow",
+      "name": "Ethan Brown",
+      "avatar_url": "https://github.com/etbrow.png",
+      "profile": "https://github.com/etbrow",
+      "contributions": [
+        "ideas",
+        "code"
+      ]
+    },
+    {
+      "login": "joeparislbcc",
+      "name": "Joe Paris",
+      "avatar_url": "https://github.com/joeparislbcc.png",
+      "profile": "https://github.com/joeparislbcc",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "omnoms",
+      "name": "Marko V",
+      "avatar_url": "https://github.com/omnoms.png",
+      "profile": "https://github.com/omnoms",
+      "contributions": [
+        "ideas",
+        "code"
+      ]
+    },
+    {
       "login": "lucasfeliciano",
       "name": "Lucas Feliciano",
       "avatar_url": "https://avatars.githubusercontent.com/u/968014?v=4",
