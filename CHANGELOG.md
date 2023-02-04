@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.2.0] - 2023-02-04
+
+### Changed
+
+- Activation of the extension is now delayed [after VS Code has fully started](https://code.visualstudio.com/api/references/activation-events#onStartupFinished). Thus, it won't slow down your editor start time. It may also fix issues such as `Command 'slides.toggle' not found`.
+
 ## [4.1.0] - 2022-12-28
 
 ### Changed
@@ -141,7 +147,8 @@ Have a look at [Slides default settings](https://github.com/nicoespeon/vscode-sl
 - **Shortcuts to navigate between slides** when activated.
 - **Shortcut to deactivate Slides** when activated.
 
-[unreleased]: https://github.com/nicoespeon/vscode-slides/compare/4.1.0...HEAD
+[unreleased]: https://github.com/nicoespeon/vscode-slides/compare/4.2.0...HEAD
+[4.2.0]: https://github.com/nicoespeon/vscode-slides/compare/4.1.0...4.2.0
 [4.1.0]: https://github.com/nicoespeon/vscode-slides/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/nicoespeon/vscode-slides/compare/3.2.1...4.0.0
 [3.2.1]: https://github.com/nicoespeon/vscode-slides/compare/3.2.0...3.2.1
