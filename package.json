@@ -29,7 +29,8 @@
     "theme": "light"
   },
   "engines": {
-    "vscode": "^1.39.0"
+    "vscode": "^1.39.0",
+    "node": "16"
   },
   "main": "./out/extension.js",
   "scripts": {

@@ -4,8 +4,9 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "type": "npm",
-      "script": "watch",
+      "type": "shell",
+      "label": "Watch",
+      "command": ". ${env:NVM_DIR}/nvm.sh && nvm use 16 && yarn watch",
       "problemMatcher": "$tsc-watch",
       "isBackground": true,
       "presentation": {
@@ -15,6 +16,14 @@
         "kind": "build",
         "isDefault": true
       }
+    },
+    {
+      "type": "shell",
+      "label": "Build",
+      "command": ". ${env:NVM_DIR}/nvm.sh && nvm use 16 && yarn build",
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": ["$tsc-watch"]
     }
   ]
 }
