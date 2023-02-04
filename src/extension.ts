@@ -1,8 +1,7 @@
 import * as vscode from "vscode";
 
-import { VSCodeRepository, VSCodeEditor } from "./adapters";
-import { Folder } from "./adapters";
-import { exit, toggle, previous, next } from "./domain";
+import { Folder, VSCodeEditor, VSCodeRepository } from "./adapters";
+import { exit, next, previous, toggle } from "./domain";
 
 export function activate(context: vscode.ExtensionContext) {
   const vscodeEditor = new VSCodeEditor(getWorkspaceFolder());
@@ -34,6 +33,9 @@ function getWorkspaceFolder(): Folder {
   const workspaceFolders = vscode.workspace.workspaceFolders;
 
   if (!workspaceFolders || workspaceFolders.length < 1) {
+    vscode.window.showErrorMessage(
+      "vscode-slides couldn't retrieve VS Code settings because it can't find any workspace folder in this project. Please open a folder and reload the window."
+    );
     throw new Error(
       "There are no workspace folder. We can't retrieve VS Code settings."
     );
