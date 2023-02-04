@@ -66,10 +66,7 @@
     "webpack-cli": "3.3.9"
   },
   "activationEvents": [
-    "onCommand:slides.toggle",
-    "onCommand:slides.previous",
-    "onCommand:slides.next",
-    "onCommand:slides.exit"
+    "onStartupFinished"
   ],
   "contributes": {
     "commands": [
