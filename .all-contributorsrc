@@ -67,6 +67,15 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "theherk",
+      "name": "Adam Sherwood",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3605078?v=4",
+      "profile": "http://www.theherk.com",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
