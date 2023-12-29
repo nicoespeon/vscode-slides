@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- The extension failed to hide the sidebar with newer versions of VS Code because the command was renamed. Thanks @timvahlbrock for catching it!
+
 ## [4.2.0] - 2023-02-04
 
 ### Changed
