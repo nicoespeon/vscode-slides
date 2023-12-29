@@ -1,7 +1,7 @@
 # 👩‍🏫 VS Code Slides
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Slides is a Visual Studio Code extension that helps you use your editor as a presentation tool.
@@ -159,6 +159,9 @@ Thanks goes to these wonderful people ([emoji key][all-contributors-emoji]):
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/omnoms"><img src="https://github.com/omnoms.png?s=100" width="100px;" alt="Marko V"/><br /><sub><b>Marko V</b></sub></a><br /><a href="#ideas-omnoms" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/nicoespeon/vscode-slides/commits?author=omnoms" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://lucasfeliciano.com"><img src="https://avatars.githubusercontent.com/u/968014?v=4?s=100" width="100px;" alt="Lucas Feliciano"/><br /><sub><b>Lucas Feliciano</b></sub></a><br /><a href="https://github.com/nicoespeon/vscode-slides/commits?author=lucasfeliciano" title="Code">💻</a> <a href="https://github.com/nicoespeon/vscode-slides/issues?q=author%3Alucasfeliciano" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://www.theherk.com"><img src="https://avatars.githubusercontent.com/u/3605078?v=4?s=100" width="100px;" alt="Adam Sherwood"/><br /><sub><b>Adam Sherwood</b></sub></a><br /><a href="#ideas-theherk" title="Ideas, Planning, & Feedback">🤔</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/timvahlbrock"><img src="https://avatars.githubusercontent.com/u/25803754?v=4?s=100" width="100px;" alt="Tim Vahlbrock"/><br /><sub><b>Tim Vahlbrock</b></sub></a><br /><a href="https://github.com/nicoespeon/vscode-slides/issues?q=author%3Atimvahlbrock" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>

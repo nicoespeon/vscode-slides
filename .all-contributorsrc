@@ -76,6 +76,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "timvahlbrock",
+      "name": "Tim Vahlbrock",
+      "avatar_url": "https://avatars.githubusercontent.com/u/25803754?v=4",
+      "profile": "https://github.com/timvahlbrock",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
@@ -83,5 +92,6 @@
   "repoType": "github",
   "repoHost": "https://github.com",
   "projectName": "vscode-slides",
-  "projectOwner": "nicoespeon"
+  "projectOwner": "nicoespeon",
+  "commitType": "docs"
 }
