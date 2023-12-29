@@ -75,7 +75,10 @@ class VSCodeEditor implements Editor {
   }
 
   async hideSideBar() {
-    await vscode.commands.executeCommand("workbench.action.maximizeEditor");
+    await vscode.commands.executeCommand("workbench.action.closeSidebar");
+    await vscode.commands.executeCommand(
+      "workbench.action.minimizeOtherEditors"
+    );
   }
 
   async showSideBar() {
