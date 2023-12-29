@@ -51,19 +51,13 @@ async function start(editor: Editor, repository: Repository) {
 
   await setSlidesSettings(editor, repository);
 
-  try {
-    await openAllSlides(editor, configuration);
-  } catch (error) {
-    editor.showMessage(
-      "I kept the sidebar open so you can open files manually!"
-    );
-    editor.showError(`I failed to open all slides because: ${error}`);
-    await repository.store({ isActive: true });
-    return;
-  }
+  // Save the fact Slides is active so we can toggle settings back
+  await repository.store({
+    isActive: true
+  });
 
+  await openAllSlides(editor, configuration);
   await editor.hideSideBar();
-  await repository.store({ isActive: true });
 }
 
 async function setSlidesSettings(editor: Editor, repository: Repository) {
