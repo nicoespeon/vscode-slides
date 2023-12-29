@@ -16,3 +16,4 @@ src/**
 wallaby.js
 jest.config.js
 yarn-error.log
+playground/**

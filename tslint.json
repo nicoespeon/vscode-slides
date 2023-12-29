@@ -8,5 +8,8 @@
     "semicolon": [true, "always"],
     "triple-equals": true
   },
-  "defaultSeverity": "warning"
+  "defaultSeverity": "warning",
+  "linterOptions": {
+    "exclude": ["playground/**"]
+  }
 }
