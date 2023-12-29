@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.2.1] - 2023-12-29
+
 ### Fixed
 
 - The extension failed to hide the sidebar with newer versions of VS Code because the command was renamed. Thanks @timvahlbrock for catching it!
@@ -151,7 +153,8 @@ Have a look at [Slides default settings](https://github.com/nicoespeon/vscode-sl
 - **Shortcuts to navigate between slides** when activated.
 - **Shortcut to deactivate Slides** when activated.
 
-[unreleased]: https://github.com/nicoespeon/vscode-slides/compare/4.2.0...HEAD
+[unreleased]: https://github.com/nicoespeon/vscode-slides/compare/4.2.1...HEAD
+[4.2.1]: https://github.com/nicoespeon/vscode-slides/compare/4.2.0...4.2.1
 [4.2.0]: https://github.com/nicoespeon/vscode-slides/compare/4.1.0...4.2.0
 [4.1.0]: https://github.com/nicoespeon/vscode-slides/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/nicoespeon/vscode-slides/compare/3.2.1...4.0.0
