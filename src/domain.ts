@@ -56,8 +56,12 @@ async function start(editor: Editor, repository: Repository) {
     isActive: true
   });
 
-  await openAllSlides(editor, configuration);
-  await editor.hideSideBar();
+  try {
+    await openAllSlides(editor, configuration);
+    await editor.hideSideBar();
+  } catch (error) {
+    editor.showError(`Something went wrong: ${error}`);
+  }
 }
 
 async function setSlidesSettings(editor: Editor, repository: Repository) {
